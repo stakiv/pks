@@ -3,8 +3,12 @@
 
 1. Установка Flutter SDK и Android Studio
 
+![image](https://github.com/user-attachments/assets/39b948fc-553a-479f-8e00-0b889c6962a6)
+
   
 2. Добавление пути `C:\Users\Viktoria\flutter\flutter\bin` в path в переменных средах
+
+![image](https://github.com/user-attachments/assets/ae4287a5-2552-4e80-bdfe-826db1163b4e)
 
    
 3. Проверка установки с помощью `flutter doctor`
