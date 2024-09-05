@@ -12,22 +12,22 @@
 ![image](https://github.com/user-attachments/assets/fac7eaa4-e0ba-4e4a-816b-1d55f6e2ddcc)
 
 
-4. Создание нового проекта pr1
+4. Создание нового проекта pr1 с помощью `flutter create`
 
 ![image](https://github.com/user-attachments/assets/7cb9bc0b-3ac9-41da-82a2-8ba54b34cde4)
 
 
-5. Проверка с помощью `flutter emulators`
+5. Проверка эмуляторов с помощью `flutter emulators`
    
 ![image](https://github.com/user-attachments/assets/5758b5f7-b84a-4ad4-9d9f-53a691217645)
 
 
-6. Проверка с помощью `flutter devices`
+6. Проверка устройств с помощью `flutter devices`
    
 ![image](https://github.com/user-attachments/assets/a322170a-0b15-4b9e-8f25-d6a3ab17185e)
 
 
-7. Добавление нужной строки в файл main.dart
+7. Добавление строки в файл main.dart
 
 ![image](https://github.com/user-attachments/assets/3c56d0f0-29af-4cd2-8ac8-121474ff9ddd)
 
