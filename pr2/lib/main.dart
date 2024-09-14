@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-const Color whitem = Color(0x101010);
+const Color whitem = Color(0xFFFFFFFF); //white
 const Color lightPink = Color(0xFFF8BBD0);
 const Color darkPink = Color(0xFF880E4F);
-const Color light = Color(0xFFFFFFFF);
-const Color dark = Color(0xFF303030);
-const Color lightGrey = Color(0xFF616161);
+const Color blackk = Color(0xFF000000); //black
+const Color lightGrey = Color(0xFFEEEEEE);
+
+const Color light = Color(0x101010);
+const Color darkGrey = Color(0xFF757575);
+
 
 void main() {
   runApp(const MyApp());
@@ -26,9 +29,8 @@ class MyApp extends StatelessWidget {
           ).copyWith(
             background: whitem,
             secondary: light,
-            primary: lightPink,
             onPrimary: darkPink,
-            onSecondary: dark,
+            onSecondary: darkGrey,
           ),
         useMaterial3: true,
       ),
@@ -50,9 +52,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: whitem,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: whitem,
       ),
       
       body: Center(
@@ -61,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Text(
                 'Авторизация',
-                style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 30)
+                style: TextStyle(color: blackk, fontSize: 30)
               ),
               const SizedBox(height: 70),
               Padding(
@@ -70,9 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     TextField(style: TextStyle(fontSize: 20, color: light), decoration: InputDecoration(
                       filled: true,
-                      fillColor: Theme.of(context).colorScheme.onSecondary,
+                      fillColor: lightGrey,
                       hintText: "Логин",
-                      hintStyle: TextStyle(color: lightGrey),
+                      hintStyle: TextStyle(color: darkGrey),
                       contentPadding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 13.0),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0), // Задание радиуса углов
@@ -87,9 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     const SizedBox(height: 20),
                     TextField(style: TextStyle(fontSize: 20, color: light), decoration: InputDecoration(
                       filled: true,
-                      fillColor: Theme.of(context).colorScheme.onSecondary,
+                      fillColor: lightGrey,
                       hintText: "Пароль",
-                      hintStyle: TextStyle(color: lightGrey),
+                      hintStyle: TextStyle(color: darkGrey),
                       contentPadding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 13.0),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0), // Задание радиуса углов
@@ -110,9 +112,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         });
                       },
                       controlAffinity: ListTileControlAffinity.leading,
-                      title: Text('Запомнить меня', style: TextStyle(fontSize: 18, color: lightGrey)), 
-                      activeColor: lightGrey,
-                      checkColor: dark,
+                      title: Text('Запомнить меня', style: TextStyle(fontSize: 18, color: darkGrey)), 
+                      activeColor: darkGrey,
+                      checkColor: lightGrey,
                       contentPadding: const EdgeInsets.all(0), // Удаление лишнего padding
                     ),
                     const SizedBox(height: 37),
@@ -122,12 +124,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: Colors.pink,
+                          backgroundColor: darkPink,
                           elevation: 0,
                           padding: EdgeInsets.symmetric(vertical: 13.0, horizontal: 30.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
-                            side: const BorderSide(width: 2, color: Colors.black)
+                            side: const BorderSide(width: 2, color: Colors.transparent)
                           ),
                         ),
                         child: Text("Войти", style: TextStyle(fontSize: 18)),
@@ -140,20 +142,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                          backgroundColor: Theme.of(context).colorScheme.background,
+                          foregroundColor: darkPink,
+                          backgroundColor: whitem,
                           elevation: 0,
                           padding: EdgeInsets.symmetric(vertical: 13.0, horizontal: 30.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(width: 2, color: Theme.of(context).colorScheme.onPrimary)
+                            side: BorderSide(width: 2, color: darkPink)
                           ),
                         ),
                         child: Text("Регистрация", style: TextStyle(fontSize: 18)),
                       ),
                     ),
                     const SizedBox(height: 18),
-                    Text("Восстановить пароль", style: TextStyle(fontSize: 18, color: lightGrey)),
+                    Text("Восстановить пароль", style: TextStyle(fontSize: 18, color: darkGrey)),
                     
                   ],
                 ),
