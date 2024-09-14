@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-const Color whitem = Color(0xFFFFFFFF); 
+const Color whitem = Color(0xFFFFFFFF); //white
 const Color lightPink = Color(0xFFF8BBD0);
 const Color darkPink = Color(0xFF880E4F);
-const Color blackk = Color(0xFF000000); 
+const Color blackk = Color(0xFF000000); //black
 const Color lightGrey = Color(0xFFEEEEEE);
 const Color darkGrey = Color(0xFF757575);
 
+const Color light = Color(0x101010);
 
 
 
@@ -28,7 +29,6 @@ class MyApp extends StatelessWidget {
           seedColor: lightPink,
           ).copyWith(
             background: whitem,
-            secondary: light,
             onPrimary: darkPink,
             onSecondary: darkGrey,
           ),
@@ -63,14 +63,14 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Text(
                 'Авторизация',
-                style: TextStyle(color: blackk, fontSize: 30)
+                style: TextStyle(color: blackk, fontSize: 30, fontWeight: FontWeight.w600)
               ),
               const SizedBox(height: 70),
               Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    TextField(style: TextStyle(fontSize: 20, color: light), decoration: InputDecoration(
+                    TextField(style: TextStyle(fontSize: 20, color: blackk), decoration: InputDecoration(
                       filled: true,
                       fillColor: lightGrey,
                       hintText: "Логин",
@@ -82,12 +82,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0), 
-                        borderSide: const BorderSide(color: light, width: 2), 
+                        borderSide: const BorderSide(color: darkGrey, width: 2), 
                       ),
                     ),
                     ),
                     const SizedBox(height: 20),
-                    TextField(style: TextStyle(fontSize: 20, color: light), decoration: InputDecoration(
+                    TextField(style: TextStyle(fontSize: 20, color: blackk), decoration: InputDecoration(
                       filled: true,
                       fillColor: lightGrey,
                       hintText: "Пароль",
@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0), 
-                        borderSide: const BorderSide(color: light, width: 2), 
+                        borderSide: const BorderSide(color: darkGrey, width: 2), 
                       ),
                     ),
                     ),
