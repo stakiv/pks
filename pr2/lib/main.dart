@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-const Color whitem = Color(0xFFFFFFFF); //white
+const Color whitem = Color(0xFFFFFFFF); 
 const Color lightPink = Color(0xFFF8BBD0);
 const Color darkPink = Color(0xFF880E4F);
-const Color blackk = Color(0xFF000000); //black
+const Color blackk = Color(0xFF000000); 
 const Color lightGrey = Color(0xFFEEEEEE);
-
-const Color light = Color(0x101010);
 const Color darkGrey = Color(0xFF757575);
+
+
 
 
 void main() {
@@ -77,12 +77,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       hintStyle: TextStyle(color: darkGrey),
                       contentPadding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 13.0),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Задание радиуса углов
-                        borderSide: const BorderSide(color: Colors.transparent), // Прозрачный цвет границы
+                        borderRadius: BorderRadius.circular(10.0), 
+                        borderSide: const BorderSide(color: Colors.transparent), 
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Задание радиуса углов
-                        borderSide: const BorderSide(color: light, width: 2), // Прозрачный цвет границы
+                        borderRadius: BorderRadius.circular(10.0), 
+                        borderSide: const BorderSide(color: light, width: 2), 
                       ),
                     ),
                     ),
@@ -94,12 +94,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       hintStyle: TextStyle(color: darkGrey),
                       contentPadding: const EdgeInsets.symmetric(vertical: 13.0, horizontal: 13.0),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Задание радиуса углов
-                        borderSide: const BorderSide(color: Colors.transparent), // Прозрачный цвет границы
+                        borderRadius: BorderRadius.circular(10.0), 
+                        borderSide: const BorderSide(color: Colors.transparent), 
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0), // Задание радиуса углов
-                        borderSide: const BorderSide(color: light, width: 2), // Прозрачный цвет границы
+                        borderRadius: BorderRadius.circular(10.0), 
+                        borderSide: const BorderSide(color: light, width: 2), 
                       ),
                     ),
                     ),
