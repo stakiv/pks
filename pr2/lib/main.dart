@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 
 const Color whitem = Color(0xFFFFFFFF); //white
 const Color lightPink = Color(0xFFF8BBD0);
-const Color darkPink = Color(0xFF880E4F);
+const Color bluee = Color(0xFF2962FF);
 const Color blackk = Color(0xFF000000); //black
 const Color lightGrey = Color(0xFFEEEEEE);
 const Color darkGrey = Color(0xFF757575);
-
-const Color light = Color(0x101010);
 
 
 
@@ -29,7 +27,6 @@ class MyApp extends StatelessWidget {
           seedColor: lightPink,
           ).copyWith(
             background: whitem,
-            onPrimary: darkPink,
             onSecondary: darkGrey,
           ),
         useMaterial3: true,
@@ -87,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ),
                     const SizedBox(height: 20),
-                    TextField(style: TextStyle(fontSize: 20, color: blackk), decoration: InputDecoration(
+                    TextField(style: TextStyle(fontSize: 20, color: blackk), obscureText: true, decoration: InputDecoration(
                       filled: true,
                       fillColor: lightGrey,
                       hintText: "Пароль",
@@ -105,18 +102,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     SizedBox(height: 15),
                     CheckboxListTile(
-                      value: _isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _isChecked = value ?? false;
-                        });
-                      },
-                      controlAffinity: ListTileControlAffinity.leading,
-                      title: Text('Запомнить меня', style: TextStyle(fontSize: 18, color: darkGrey)), 
-                      activeColor: darkGrey,
-                      checkColor: lightGrey,
-                      contentPadding: const EdgeInsets.all(0), // Удаление лишнего padding
+                          value: _isChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              _isChecked = value ?? false;
+                            });
+                          },
+                          controlAffinity: ListTileControlAffinity.leading,
+                          title: Text('Запомнить меня', style: TextStyle(fontSize: 18, color: darkGrey)), 
+                          activeColor: darkGrey,
+                          checkColor: lightGrey,
+                          contentPadding: const EdgeInsets.all(0), 
                     ),
+                    
                     const SizedBox(height: 37),
                     Container(
                       width: double.infinity,
@@ -124,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: darkPink,
+                          backgroundColor: bluee,
                           elevation: 0,
                           padding: EdgeInsets.symmetric(vertical: 13.0, horizontal: 30.0),
                           shape: RoundedRectangleBorder(
@@ -142,13 +140,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: darkPink,
+                          foregroundColor: bluee,
                           backgroundColor: whitem,
                           elevation: 0,
                           padding: EdgeInsets.symmetric(vertical: 13.0, horizontal: 30.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(width: 2, color: darkPink)
+                            side: BorderSide(width: 2, color: Colors.blue)
                           ),
                         ),
                         child: Text("Регистрация", style: TextStyle(fontSize: 18)),
