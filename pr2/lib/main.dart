@@ -45,6 +45,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   bool _isChecked = false;
   @override
   Widget build(BuildContext context) {
@@ -101,18 +102,29 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ),
                     SizedBox(height: 15),
-                    CheckboxListTile(
-                          value: _isChecked,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _isChecked = value ?? false;
-                            });
-                          },
-                          controlAffinity: ListTileControlAffinity.leading,
-                          title: Text('Запомнить меня', style: TextStyle(fontSize: 18, color: darkGrey)), 
-                          activeColor: darkGrey,
-                          checkColor: lightGrey,
-                          contentPadding: const EdgeInsets.all(0), 
+                    Column(
+                      mainAxisAlignment:
+                          MainAxisAlignment.center, 
+                      children: [
+                        Row(
+                          mainAxisAlignment:
+                              MainAxisAlignment.center, 
+                          children: [
+                            Checkbox(
+                              value: _isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  _isChecked = value ?? false;
+                                });
+                              },
+                              side: const BorderSide(color: darkGrey, width: 1.5),
+                              checkColor: darkGrey,
+                              fillColor: MaterialStateProperty.all(whitem),),
+                            const Text('Запомнить меня', style: TextStyle(fontSize: 18, color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     
                     const SizedBox(height: 37),
