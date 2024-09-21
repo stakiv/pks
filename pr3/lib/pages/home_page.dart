@@ -34,11 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
             itemCount: info.flavors.length,
             itemBuilder: (BuildContext context, int index) {
               return ListItem(
-                  flavorName: info.flavors[index],
-                  image: info.images[index],
-                  description: info.desc[index],
-                  price: info.prices[index],
-                  feature: info.features[index]);
+                flavor: info.flavors[index],
+              );
             }),
       ),
     );

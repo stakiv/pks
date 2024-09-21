@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pr3/components/list_item.dart';
 
 class ItamPage extends StatelessWidget {
   const ItamPage(

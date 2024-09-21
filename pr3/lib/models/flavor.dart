@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Flavor {
   final int id;
   final String flavorName;

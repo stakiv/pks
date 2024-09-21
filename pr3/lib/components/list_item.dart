@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:pr3/models/flavor.dart';
 import 'package:pr3/pages/itam_page.dart';
 
 class ListItem extends StatelessWidget {
-  const ListItem(
-      {super.key,
-      required this.flavorName,
-      required this.image,
-      required this.description,
-      required this.price,
-      required this.feature});
-  final String flavorName;
-  final String image;
-  final String description;
-  final int price;
-  final String feature;
+  const ListItem({
+    super.key,
+    required this.flavor,
+  });
+  final Flavor flavor;
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +16,17 @@ class ListItem extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => ItamPage(
-            flavorName: flavorName,
-            image: image,
-            description: description,
-            price: price,
-            feature: feature,
+            flavorName: flavor.flavorName,
+            image: flavor.image,
+            description: flavor.description,
+            price: flavor.price,
+            feature: flavor.feature,
           ),
         ),
       ),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.white,
-            //border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.circular(20.0)),
+            color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
         padding: const EdgeInsets.all(10),
         width: double.infinity,
         child: Column(
@@ -42,7 +34,7 @@ class ListItem extends StatelessWidget {
             Row(
               children: [
                 Image.network(
-                  image,
+                  flavor.image,
                   width: 120,
                   height: 120,
                   fit: BoxFit.cover,
@@ -57,7 +49,7 @@ class ListItem extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          flavorName,
+                          flavor.flavorName,
                           style: const TextStyle(
                               fontSize: 18,
                               color: Colors.black,
@@ -66,7 +58,7 @@ class ListItem extends StatelessWidget {
                       ),
                       Flexible(
                         child: Text(
-                          description,
+                          flavor.description,
                           maxLines: 2,
                           style: const TextStyle(
                               fontSize: 15,
