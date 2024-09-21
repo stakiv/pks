@@ -61,9 +61,19 @@ class ListItem extends StatelessWidget {
                           flavor.description,
                           maxLines: 2,
                           style: const TextStyle(
-                              fontSize: 15,
+                              fontSize: 16,
                               color: Color.fromARGB(255, 65, 65, 65)),
                         ),
+                      ),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Text(
+                        "Цена: ${flavor.price.toString()}",
+                        style: const TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 65, 65, 65),
+                            fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
