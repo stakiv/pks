@@ -23,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        backgroundColor: Colors.amber[50],
+        backgroundColor: const Color.fromRGBO(255, 248, 225, 1),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),

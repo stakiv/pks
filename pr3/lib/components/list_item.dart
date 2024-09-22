@@ -80,6 +80,26 @@ class ListItem extends StatelessWidget {
                 )
               ],
             ),
+            TextButton(
+                onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ItamPage(
+                          flavorName: flavor.flavorName,
+                          image: flavor.image,
+                          description: flavor.description,
+                          price: flavor.price,
+                          feature: flavor.feature,
+                        ),
+                      ),
+                    ),
+                child: const Text(
+                  'Узнать больше',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Color.fromRGBO(148, 133, 84, 1),
+                      fontWeight: FontWeight.w500),
+                ))
           ],
         ),
       ),
