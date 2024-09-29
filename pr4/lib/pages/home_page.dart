@@ -88,39 +88,166 @@ class _AddFlavorScreenState extends State<AddFlavorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amber[50],
       appBar: AppBar(
-        title: const Text("Добавить новый вкус"),
+        title: const Text(
+          "Добавить новый вкус",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 21.0,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
+            const SizedBox(
+              height: 50,
+            ),
             TextField(
               controller: _nameFlavorController,
-              decoration: const InputDecoration(labelText: "Введите название"),
+              decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 255, 255, 255),
+                  hintText: "Название вкуса",
+                  hintStyle: const TextStyle(
+                    color: Color.fromRGBO(160, 149, 108, 1),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 13.0, horizontal: 13.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(color: Colors.transparent),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(
+                        color: Color.fromRGBO(108, 98, 63, 1), width: 1),
+                  )),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             TextField(
               controller: _imageController,
-              decoration:
-                  const InputDecoration(labelText: "Ссылка на картинку"),
+              decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 255, 255, 255),
+                  hintText: "Ссылка на картинку",
+                  hintStyle: const TextStyle(
+                    color: Color.fromRGBO(160, 149, 108, 1),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 13.0, horizontal: 13.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(color: Colors.transparent),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(
+                        color: Color.fromRGBO(108, 98, 63, 1), width: 1),
+                  )),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             TextField(
               controller: _descController,
-              decoration: const InputDecoration(labelText: "Описание"),
+              decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 255, 255, 255),
+                  hintText: "Описание",
+                  hintStyle: const TextStyle(
+                    color: Color.fromRGBO(160, 149, 108, 1),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 13.0, horizontal: 13.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(color: Colors.transparent),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(
+                        color: Color.fromRGBO(108, 98, 63, 1), width: 1),
+                  )),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             TextField(
               controller: _dopController,
-              decoration:
-                  const InputDecoration(labelText: "Дополнительная информация"),
+              decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 255, 255, 255),
+                  hintText: "Дополнительная информация",
+                  hintStyle: const TextStyle(
+                    color: Color.fromRGBO(160, 149, 108, 1),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 13.0, horizontal: 13.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(color: Colors.transparent),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(
+                        color: Color.fromRGBO(108, 98, 63, 1), width: 1),
+                  )),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             TextField(
               controller: _priceController,
-              decoration: const InputDecoration(labelText: "Цена"),
+              decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 255, 255, 255),
+                  hintText: "Цена",
+                  hintStyle: const TextStyle(
+                    color: Color.fromRGBO(160, 149, 108, 1),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 13.0, horizontal: 13.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(color: Colors.transparent),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(
+                        color: Color.fromRGBO(108, 98, 63, 1), width: 1),
+                  )),
             ),
             const SizedBox(
-              height: 20,
+              height: 40,
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Color.fromRGBO(145, 132, 85, 1),
+                backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+                elevation: 0,
+                padding: const EdgeInsets.symmetric(
+                    vertical: 13.0, horizontal: 30.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    side: const BorderSide(
+                        width: 2, color: Color.fromRGBO(145, 132, 85, 1))),
+              ),
               onPressed: () {
                 listLength += 1;
                 int price = int.parse(_priceController.text);
@@ -144,7 +271,13 @@ class _AddFlavorScreenState extends State<AddFlavorScreen> {
                   print("не все поля заполнены");
                 }
               },
-              child: const Text("Сохранить"),
+              child: const Text(
+                "Сохранить",
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             )
           ],
         ),
