@@ -6,8 +6,10 @@ class ListItem extends StatelessWidget {
   const ListItem({
     super.key,
     required this.flavor,
+    required this.onDelete,
   });
   final Flavor flavor;
+  final Function(Flavor) onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +79,10 @@ class ListItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
+                IconButton(
+                    onPressed: () => onDelete(flavor),
+                    icon: const Icon(Icons.delete)),
               ],
             ),
             TextButton(

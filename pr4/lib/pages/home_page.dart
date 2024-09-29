@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pr4/components/list_item.dart';
+import 'package:pr4/models/flavor.dart';
 import 'package:pr4/models/info.dart' as info;
 
 class MyHomePage extends StatefulWidget {
@@ -15,9 +16,10 @@ class _MyHomePageState extends State<MyHomePage> {
       context,
       MaterialPageRoute(builder: (context) => AddFlavorScreen()),
     );
-    if (result != null && result.isNotEmpty) {
+    if (result != null) {
+      print('добавление нового вкуса $result');
       setState(() {
-        info.flavors.add(result);
+        info.flavors.add(result as Flavor);
       });
     }
   }
@@ -56,10 +58,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   return ListTile(
                     title: ListItem(
                       flavor: info.flavors[index],
+                      onDelete: (flavor) {
+                        _removeFlavor(info.flavors.indexOf(flavor));
+                      },
                     ),
-                    trailing: IconButton(
-                        onPressed: () => _removeFlavor(index),
-                        icon: const Icon(Icons.delete)),
                   );
                 }),
         floatingActionButton: FloatingActionButton(
@@ -76,7 +78,12 @@ class AddFlavorScreen extends StatefulWidget {
 }
 
 class _AddFlavorScreenState extends State<AddFlavorScreen> {
-  final TextEditingController _flavorController = TextEditingController();
+  final TextEditingController _nameFlavorController = TextEditingController();
+  final TextEditingController _imageController = TextEditingController();
+  final TextEditingController _descController = TextEditingController();
+  final TextEditingController _dopController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  int listLength = info.flavors.length;
 
   @override
   Widget build(BuildContext context) {
@@ -89,17 +96,52 @@ class _AddFlavorScreenState extends State<AddFlavorScreen> {
         child: Column(
           children: [
             TextField(
-              controller: _flavorController,
+              controller: _nameFlavorController,
               decoration: const InputDecoration(labelText: "Введите название"),
+            ),
+            TextField(
+              controller: _imageController,
+              decoration:
+                  const InputDecoration(labelText: "Ссылка на картинку"),
+            ),
+            TextField(
+              controller: _descController,
+              decoration: const InputDecoration(labelText: "Описание"),
+            ),
+            TextField(
+              controller: _dopController,
+              decoration:
+                  const InputDecoration(labelText: "Дополнительная информация"),
+            ),
+            TextField(
+              controller: _priceController,
+              decoration: const InputDecoration(labelText: "Цена"),
             ),
             const SizedBox(
               height: 20,
             ),
             ElevatedButton(
               onPressed: () {
-                String newFlavor = _flavorController.text;
-                if (newFlavor.isNotEmpty) {
+                listLength += 1;
+                int price = int.parse(_priceController.text);
+
+                if (_nameFlavorController.text.isNotEmpty &&
+                    _imageController.text.isNotEmpty &&
+                    _descController.text.isNotEmpty &&
+                    _dopController.text.isNotEmpty &&
+                    _priceController.text.isNotEmpty) {
+                  Flavor newFlavor = Flavor(
+                    listLength,
+                    _nameFlavorController.text,
+                    _imageController.text,
+                    _descController.text,
+                    _dopController.text,
+                    price,
+                  );
                   Navigator.pop(context, newFlavor);
+                  print("новый вкус создан");
+                } else {
+                  print("не все поля заполнены");
                 }
               },
               child: const Text("Сохранить"),
