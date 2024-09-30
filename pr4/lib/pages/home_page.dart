@@ -25,8 +25,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _removeFlavor(int index) async {
-    bool? confirmed =
-        await _showConfirmedDialog(context, 'Удалить элемент', 'Вы уверены?');
+    bool? confirmed = await _showConfirmedDialog(
+        context, 'Удалить элемент?', info.flavors[index]);
     if (confirmed == true) {
       setState(() {
         info.flavors.removeAt(index);
@@ -35,24 +35,59 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<bool?> _showConfirmedDialog(
-      BuildContext context, String title, String content) {
+      BuildContext context, String title, Flavor flavor) {
     return showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: Text(title),
-        content: Text(content),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text("Отмена"),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text("Удалить"),
-          ),
-        ],
-      ),
-    );
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Center(
+              child: Text(
+                title,
+                style: const TextStyle(fontSize: 18.0),
+              ),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Image.network(
+                  flavor.image,
+                  width: 150,
+                  height: 150,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Text('Ошибка загрузки изображения');
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(flavor.flavorName),
+              ],
+            ),
+            actionsAlignment: MainAxisAlignment.center,
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text(
+                  "Отмена",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Color.fromRGBO(160, 149, 108, 1),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text(
+                  "Удалить",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Color.fromRGBO(118, 103, 49, 1),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
   }
 
   @override
@@ -91,8 +126,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 }),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _navigateToAddFlavorScreen(context),
-          child: Icon(Icons.add),
           tooltip: 'Добавить вкус',
+          child: const Icon(Icons.add),
         ));
   }
 }
