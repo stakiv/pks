@@ -24,10 +24,35 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _removeFlavor(int index) {
-    setState(() {
-      info.flavors.removeAt(index);
-    });
+  void _removeFlavor(int index) async {
+    bool? confirmed =
+        await _showConfirmedDialog(context, 'Удалить элемент', 'Вы уверены?');
+    if (confirmed == true) {
+      setState(() {
+        info.flavors.removeAt(index);
+      });
+    }
+  }
+
+  Future<bool?> _showConfirmedDialog(
+      BuildContext context, String title, String content) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text("Отмена"),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text("Удалить"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -238,8 +263,8 @@ class _AddFlavorScreenState extends State<AddFlavorScreen> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                foregroundColor: Color.fromRGBO(145, 132, 85, 1),
-                backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+                foregroundColor: const Color.fromRGBO(145, 132, 85, 1),
+                backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(
                     vertical: 13.0, horizontal: 30.0),
