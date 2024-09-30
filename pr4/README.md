@@ -11,6 +11,10 @@
 2. Так же на главном экране есть кнопка создания нового вкуса. При нажатии на нее открывается новое окно с формой с полями для ввода названия, ссылки на картинку, описания, дополнительной информации и цены. При заполнении всех полей и сохранении новый вкус появляется на главном экране.
    
 ![image](https://github.com/user-attachments/assets/a695a1e6-9a84-47de-80af-a0154b3dc64e)
+![image](https://github.com/user-attachments/assets/c7dd6a5e-1a95-4baf-aedc-4fee69f490f4)
+![image](https://github.com/user-attachments/assets/3e8612f9-e8b3-49cb-af18-83c9630254b1)
+
+
 
 
 
