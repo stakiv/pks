@@ -1,16 +1,17 @@
-# pr4
+# Практическое задание №4 ПКС
+## ЭФБО-01-22 Степанова Виктория
 
-A new Flutter project.
+Для выполнения задания я добавила к  каталогу мороженого из 3 практики кнопки создания и удаления элементов. 
 
-## Getting Started
+1. На главном экране у каждой карточки есть кнопка удаления вкуса. При нажатии на нее открывается окно с картинкой и названием выбранного для удаления вкуса, где необходимо подтвердить или отменить удаление
 
-This project is a starting point for a Flutter application.
+![image](https://github.com/user-attachments/assets/a55ed37d-7987-4fbe-aac4-1af024a91e45)
+![image](https://github.com/user-attachments/assets/ca289625-970d-4c41-971d-e3021a2586a7)
 
-A few resources to get you started if this is your first Flutter project:
+2. Так же на главном экране есть кнопка создания нового вкуса. При нажатии на нее открывается новое окно с формой с полями для ввода названия, ссылки на картинку, описания, дополнительной информации и цены. При заполнении всех полей и сохранении новый вкус появляется на главном экране.
+   
+![image](https://github.com/user-attachments/assets/a695a1e6-9a84-47de-80af-a0154b3dc64e)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
