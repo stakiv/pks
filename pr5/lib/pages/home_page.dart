@@ -36,9 +36,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _addToFavorites(int index) async {
-    setState(() {
-      info.favouriteFlavors.add(index);
-    });
+    if (info.favouriteFlavors.contains(index)) {
+      setState(() {
+        info.favouriteFlavors.removeWhere((element) => element == index);
+      });
+    } else {
+      setState(() {
+        info.favouriteFlavors.add(index);
+      });
+    }
   }
 
   Future<bool?> _showConfirmedDialog(
