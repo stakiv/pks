@@ -16,7 +16,14 @@ class _MyUserPageState extends State<MyUserPage> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Image.network(
+              info.user.image,
+              width: 200,
+              height: 200,
+              fit: BoxFit.cover,
+            ),
             const SizedBox(
               height: 50,
             ),
@@ -24,9 +31,49 @@ class _MyUserPageState extends State<MyUserPage> {
               info.user.name,
               style: TextStyle(
                   fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: Color.fromARGB(255, 0, 0, 0)),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Text(
+              'Почта',
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Color.fromARGB(255, 77, 70, 0)),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              info.user.email,
+              style: TextStyle(
+                  fontSize: 18,
                   fontWeight: FontWeight.w400,
                   color: Color.fromARGB(255, 0, 0, 0)),
-            )
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Text(
+              'Телефон',
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Color.fromARGB(255, 77, 70, 0)),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              info.user.phoneNumber,
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: Color.fromARGB(255, 0, 0, 0)),
+            ),
           ],
         ),
       ),
