@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ItamPage extends StatelessWidget {
-  const ItamPage(
-      {super.key,
-      required this.flavorName,
-      required this.image,
-      required this.description,
-      required this.price,
-      required this.feature});
+  const ItamPage({
+    super.key,
+    required this.flavorName,
+    required this.image,
+    required this.description,
+    required this.price,
+    required this.feature,
+  });
   final String flavorName;
   final String image;
   final String description;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pr5/models/flavor.dart';
+import 'package:pr5/models/info.dart';
 import 'package:pr5/pages/itam_page.dart';
 
 class ListItem extends StatelessWidget {
@@ -15,6 +16,7 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isFavourite = favouriteFlavors.contains(flavor.id);
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -84,9 +86,13 @@ class ListItem extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    IconButton(
-                        onPressed: () => onAdd(flavor),
-                        icon: const Icon(Icons.favorite_border)),
+                    isFavourite
+                        ? IconButton(
+                            onPressed: () => onAdd(flavor),
+                            icon: const Icon(Icons.favorite))
+                        : IconButton(
+                            onPressed: () => onAdd(flavor),
+                            icon: const Icon(Icons.favorite_border)),
                     IconButton(
                         onPressed: () => onDelete(flavor),
                         icon: const Icon(Icons.delete)),

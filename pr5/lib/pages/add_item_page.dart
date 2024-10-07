@@ -188,13 +188,13 @@ class _AddFlavorScreenState extends State<AddFlavorScreen> {
                     _dopController.text.isNotEmpty &&
                     _priceController.text.isNotEmpty) {
                   Flavor newFlavor = Flavor(
-                    listLength,
-                    _nameFlavorController.text,
-                    _imageController.text,
-                    _descController.text,
-                    _dopController.text,
-                    price,
-                  );
+                      listLength,
+                      _nameFlavorController.text,
+                      _imageController.text,
+                      _descController.text,
+                      _dopController.text,
+                      price,
+                      false);
                   Navigator.pop(context, newFlavor);
                   print("новый вкус создан");
                 } else {

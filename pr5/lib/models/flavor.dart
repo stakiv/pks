@@ -5,7 +5,8 @@ class Flavor {
   final String description;
   final int price;
   final String feature;
+  bool favourite;
 
   Flavor(this.id, this.flavorName, this.image, this.description, this.feature,
-      this.price);
+      this.price, this.favourite);
 }

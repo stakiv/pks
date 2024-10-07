@@ -32,61 +32,90 @@ class _MyUserPageState extends State<MyUserPage> {
               const SizedBox(
                 height: 50.0,
               ),
-              Image.network(
-                info.user.image,
-                width: 200,
-                height: 200,
-                fit: BoxFit.cover,
+              Align(
+                alignment: Alignment.center,
+                child: ClipOval(
+                  child: Image.network(
+                    info.user.image,
+                    width: 150,
+                    height: 150,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Text('Ошибка загрузки изображения');
+                    },
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 50,
               ),
-              Text(
-                info.user.name,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Color.fromARGB(255, 0, 0, 0)),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0)),
+                padding: const EdgeInsets.all(15),
+                width: double.infinity,
+                child: Text(
+                  info.user.name,
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Color.fromARGB(255, 0, 0, 0)),
+                ),
               ),
               const SizedBox(
                 height: 50,
               ),
-              Text(
-                'Почта',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromARGB(255, 77, 70, 0)),
+              const Padding(
+                padding: EdgeInsets.only(top: 0, left: 10, right: 0, bottom: 5),
+                child: Text(
+                  'Почта',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromARGB(255, 77, 70, 0)),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0)),
+                padding: const EdgeInsets.all(15),
+                width: double.infinity,
+                child: Text(
+                  info.user.email,
+                  style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromARGB(255, 0, 0, 0)),
+                ),
               ),
               const SizedBox(
-                height: 5,
+                height: 30,
               ),
-              Text(
-                info.user.email,
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromARGB(255, 0, 0, 0)),
+              const Padding(
+                padding: EdgeInsets.only(top: 0, left: 10, right: 0, bottom: 5),
+                child: Text(
+                  'Телефон',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromARGB(255, 77, 70, 0)),
+                ),
               ),
-              const SizedBox(
-                height: 50,
-              ),
-              Text(
-                'Телефон',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromARGB(255, 77, 70, 0)),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                info.user.phoneNumber,
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: Color.fromARGB(255, 0, 0, 0)),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0)),
+                padding: const EdgeInsets.all(15),
+                width: double.infinity,
+                child: Text(
+                  info.user.phoneNumber,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromARGB(255, 0, 0, 0)),
+                ),
               ),
             ],
           ),
