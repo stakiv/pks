@@ -1,16 +1,29 @@
-# pr5
+# Практическое задание №5 ПКС
+## ЭФБО-01-22 Степанова Виктория
 
-A new Flutter project.
+Для выполнения задания я добавила к  каталогу мороженого из 4 практики навигацию по трем экранам - главному (с общим списком вкусов), избраному (с избранными элементами) и профилю (с данными пользователя).
 
-## Getting Started
+**1. Главная страница и избранное**
+При запуске пользователь попадает на главную страницу. 
 
-This project is a starting point for a Flutter application.
+![image](https://github.com/user-attachments/assets/6968750a-4921-4d9d-98d9-11e758ce7b4c)
 
-A few resources to get you started if this is your first Flutter project:
+При нажатии на средечко вкус добавляется в избранное и отображается на экране "избранное". Удаление из избранного возможно при повторном нажатии на средечко на любом из двух экранов 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![image](https://github.com/user-attachments/assets/8f8bb133-6a8d-46d3-bc74-7b21f110534d)
+![image](https://github.com/user-attachments/assets/7e75cef8-6978-462d-89f0-290610a624e3)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**2. Страница профиля**
+При переходе на экран профиля с помощью навигационной панели пользователь видит свои данные
+
+![image](https://github.com/user-attachments/assets/543e02c9-2dd6-4c24-9530-3387f618ea79)
+
+Для изменения данных необходимо нажать на кнопку редактирования, тогда откроется экран для внесения изменений
+
+![image](https://github.com/user-attachments/assets/52914914-3b29-45c6-a17d-103d6d97837b)
+
+После внесения изменений и при условии что все поля заполнены данные профиля обновятся
+
+![image](https://github.com/user-attachments/assets/f432bde9-2ff8-4cc7-8bf6-7af59a2a707b)
+
+![image](https://github.com/user-attachments/assets/905ffe5a-fe8a-42fd-bd94-4c1ac9ca248a)
