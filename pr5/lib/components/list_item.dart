@@ -89,13 +89,22 @@ class ListItem extends StatelessWidget {
                     isFavourite
                         ? IconButton(
                             onPressed: () => onAdd(flavor),
-                            icon: const Icon(Icons.favorite))
+                            icon: const Icon(
+                              Icons.favorite,
+                              color: Color.fromRGBO(160, 149, 108, 1),
+                            ))
                         : IconButton(
                             onPressed: () => onAdd(flavor),
-                            icon: const Icon(Icons.favorite_border)),
+                            icon: const Icon(
+                              Icons.favorite_border,
+                              color: Color.fromRGBO(160, 149, 108, 1),
+                            )),
                     IconButton(
                         onPressed: () => onDelete(flavor),
-                        icon: const Icon(Icons.delete)),
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Color.fromRGBO(160, 149, 108, 1),
+                        )),
                   ],
                 ),
               ],
