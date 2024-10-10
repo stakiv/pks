@@ -7,12 +7,12 @@
 
 При запуске пользователь попадает на главную страницу. 
 
-![image](https://github.com/user-attachments/assets/6968750a-4921-4d9d-98d9-11e758ce7b4c)
+![image](https://github.com/user-attachments/assets/13261f6d-e8f2-4701-bcf0-e5dcc9382b03)
 
 При нажатии на средечко вкус добавляется в избранное и отображается на экране "избранное". Удаление из избранного возможно при повторном нажатии на средечко на любом из двух экранов 
 
-![image](https://github.com/user-attachments/assets/8f8bb133-6a8d-46d3-bc74-7b21f110534d)
-![image](https://github.com/user-attachments/assets/7e75cef8-6978-462d-89f0-290610a624e3)
+![image](https://github.com/user-attachments/assets/68b828c7-28a7-4872-98d1-ce3bf89c8579)
+![image](https://github.com/user-attachments/assets/37f82b95-46bf-42e9-9afb-1c354197b7d7)
 
 **2. Страница профиля**
 
