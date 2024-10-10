@@ -122,24 +122,26 @@ class _MyHomePageState extends State<MyHomePage> {
             ? const Center(
                 child: Text('Вкусы не добавлены'),
               )
-            : ListView.separated(
-                separatorBuilder: (context, index) => const SizedBox(
-                      height: 15,
-                    ),
+            : GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.55,
+                  //crossAxisSpacing: 10.0,
+                  //mainAxisSpacing: 15.0
+                ),
                 itemCount: info.flavors.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: ListItem(
-                      flavor: info.flavors[index],
-                      onDelete: (flavor) {
-                        _removeFlavor(info.flavors.indexOf(flavor));
-                      },
-                      onAdd: (flavor) {
-                        _addToFavorites(info.flavors.indexOf(flavor));
-                      },
-                    ),
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListItem(
+                        flavor: info.flavors[index],
+                        onDelete: (flavor) =>
+                            {_removeFlavor(info.flavors.indexOf(flavor))},
+                        onAdd: (flavor) =>
+                            {_addToFavorites(info.flavors.indexOf(flavor))}),
                   );
-                }),
+                },
+              ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _navigateToAddFlavorScreen(context),
           tooltip: 'Добавить вкус',

@@ -104,25 +104,26 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
           ? const Center(
               child: Text('Нет избарнных вкусов'),
             )
-          : ListView.separated(
-              separatorBuilder: (context, index) => const SizedBox(
-                    height: 15,
-                  ),
+          : GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.55,
+              ),
               itemCount: info.favouriteFlavors.length,
               itemBuilder: (BuildContext context, int index) {
                 int flavorIndex = info.favouriteFlavors[index];
-                return ListTile(
-                  title: ListItem(
-                    flavor: info.flavors[flavorIndex],
-                    onDelete: (flavor) {
-                      _removeFlavor(info.flavors.indexOf(flavor));
-                    },
-                    onAdd: (flavor) {
-                      _deleteFromFavorites(info.flavors.indexOf(flavor));
-                    },
-                  ),
+
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListItem(
+                      flavor: info.flavors[flavorIndex],
+                      onDelete: (flavor) =>
+                          {_removeFlavor(info.flavors.indexOf(flavor))},
+                      onAdd: (flavor) =>
+                          {_deleteFromFavorites(info.flavors.indexOf(flavor))}),
                 );
-              }),
+              },
+            ),
     );
   }
 }
