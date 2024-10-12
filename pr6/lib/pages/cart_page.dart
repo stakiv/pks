@@ -12,7 +12,7 @@ class MyCartPage extends StatefulWidget {
 }
 
 class _MyCartPageState extends State<MyCartPage> {
-  void _deleteFromCart(int index) async {
+  void _deleteFromCart(int index) {
     setState(() {
       info.cartFlavors.removeAt(index);
     });
@@ -104,51 +104,19 @@ class _MyCartPageState extends State<MyCartPage> {
                     int flavorIndex = info.cartFlavors[index];
                     var flavor = info.flavors[flavorIndex];
 
-                    return /*Slidable(
-                      key: Key(index.toString()),
-                      startActionPane:
-                          ActionPane(motion: const ScrollMotion(), children: [
-                        SlidableAction(
-                          onPressed: (context) async {
-                            final confirmed = await _showConfirmedDialog(
-                                context, flavor.flavorName, flavor.image);
-                            if (confirmed == true) {
-                              _deleteFromCart(index);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(
-                                        '${flavor.flavorName} удален из корзины')),
-                              );
-                            }
-                          },
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          icon: Icons.delete,
-                          label: 'Удалить',
-                        )
-                      ]),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CartItem(flavor: flavor),
-                      ),
-                    );*/
-                        Dismissible(
+                    return Dismissible(
                       key: Key(index.toString()),
                       background: Container(
-                          color: Color.fromRGBO(247, 163, 114, 1),
-                          alignment: Alignment.centerRight,
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text('Удалить из корзины')),
-                      direction: DismissDirection.endToStart,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CartItem(
-                          flavor: flavor,
-                        ),
+                        color: Color.fromRGBO(247, 163, 114, 1),
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: const Icon(Icons.delete),
                       ),
+                      direction: DismissDirection.endToStart,
                       confirmDismiss: (direction) async {
-                        return await _showConfirmedDialog(
+                        final confirmed = await _showConfirmedDialog(
                             context, flavor.flavorName, flavor.image);
+                        return confirmed ?? false;
                       },
                       onDismissed: (direction) {
                         _deleteFromCart(index);
@@ -158,6 +126,12 @@ class _MyCartPageState extends State<MyCartPage> {
                                   '${flavor.flavorName} удален из корзины')),
                         );
                       },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CartItem(
+                          flavor: flavor,
+                        ),
+                      ),
                     );
                   },
                 ),
