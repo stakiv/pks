@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pr6/components/list_item.dart';
 import 'package:pr6/models/flavor.dart';
 import 'package:pr6/models/info.dart' as info;
@@ -23,20 +22,20 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
     }
   }
 
-  void _deleteFromFavorites(int index) async {
+  void _deleteFromFavorites(Flavor flavor) async {
     setState(() {
-      info.favouriteFlavors.removeWhere((element) => element == index);
+      info.favouriteFlavors.removeWhere((element) => element == flavor.id);
     });
   }
 
-  void _addToCart(int index) async {
-    if (info.cartFlavors.contains(index)) {
+  void _addToCart(Flavor flavor) async {
+    if (info.cartFlavors.contains(flavor.id)) {
       setState(() {
-        info.cartFlavors.removeWhere((element) => element == index);
+        info.cartFlavors.remove(flavor.id);
       });
     } else {
       setState(() {
-        info.cartFlavors.add(index);
+        info.cartFlavors.add(flavor.id);
       });
     }
   }
@@ -117,24 +116,25 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
               child: Text('Нет избарнных вкусов'),
             )
           : GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.61,
               ),
               itemCount: info.favouriteFlavors.length,
               itemBuilder: (BuildContext context, int index) {
-                int flavorIndex = info.favouriteFlavors[index];
+                int flavorId = info.favouriteFlavors[index];
+                Flavor flavor =
+                    info.flavors.firstWhere((f) => f.id == flavorId);
 
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListItem(
-                      flavor: info.flavors[flavorIndex],
-                      onDelete: (flavor) =>
-                          {_removeFlavor(info.flavors.indexOf(flavor))},
-                      onAdd: (flavor) =>
-                          {_deleteFromFavorites(info.flavors.indexOf(flavor))},
-                      onAddToCart: (flavor) =>
-                          {_addToCart(info.flavors.indexOf(flavor))}),
+                    flavor: flavor,
+                    /*onDelete: (flavor) =>
+                          {_removeFlavor(info.flavors.indexOf(flavor))},*/
+                    onAddToFavourites: _deleteFromFavorites,
+                    onAddToCart: _addToCart,
+                  ),
                 );
               },
             ),

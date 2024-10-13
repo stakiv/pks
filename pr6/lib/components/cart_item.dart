@@ -40,11 +40,13 @@ class _CartItemState extends State<CartItem> {
         context,
         MaterialPageRoute(
           builder: (context) => ItamPage(
+            flavor: widget.flavor,
+            /*index: widget.flavor.id,
             flavorName: widget.flavor.flavorName,
             image: widget.flavor.image,
             description: widget.flavor.description,
             price: widget.flavor.price,
-            feature: widget.flavor.feature,
+            feature: widget.flavor.feature,*/
           ),
         ),
       ),

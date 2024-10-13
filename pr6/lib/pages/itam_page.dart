@@ -1,19 +1,102 @@
 import 'package:flutter/material.dart';
+import 'package:pr6/models/info.dart' as info;
+import 'package:pr6/models/flavor.dart';
 
-class ItamPage extends StatelessWidget {
+class ItamPage extends StatefulWidget {
   const ItamPage({
     super.key,
-    required this.flavorName,
+    required this.flavor,
+    /*required this.flavorName,
     required this.image,
     required this.description,
     required this.price,
     required this.feature,
+    required this.index,*/
   });
-  final String flavorName;
+  final Flavor flavor;
+  /*final String flavorName;
   final String image;
   final String description;
   final int price;
   final String feature;
+  final int index;*/
+
+  @override
+  State<ItamPage> createState() => _ItamPageState();
+}
+
+class _ItamPageState extends State<ItamPage> {
+  void _removeFlavor() async {
+    bool? confirmed =
+        await _showConfirmedDialog(context, 'Удалить элемент?', widget.flavor);
+    if (confirmed == true) {
+      setState(() {
+        int index = info.flavors.indexOf(widget.flavor);
+        info.flavors.removeWhere((f) => f.id == widget.flavor.id);
+
+        info.favouriteFlavors
+            .removeWhere((element) => element == widget.flavor.id);
+        info.cartFlavors.removeWhere((element) => element == widget.flavor.id);
+      });
+      Navigator.pop(context);
+    }
+  }
+
+  Future<bool?> _showConfirmedDialog(
+      BuildContext context, String title, Flavor flavor) {
+    return showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Center(
+              child: Text(
+                title,
+                style: const TextStyle(fontSize: 18.0),
+              ),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Image.network(
+                  flavor.image,
+                  width: 150,
+                  height: 150,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Text('Ошибка загрузки изображения');
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(flavor.flavorName),
+              ],
+            ),
+            actionsAlignment: MainAxisAlignment.center,
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text(
+                  "Отмена",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Color.fromRGBO(160, 149, 108, 1),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text(
+                  "Удалить",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Color.fromRGBO(118, 103, 49, 1),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +104,7 @@ class ItamPage extends StatelessWidget {
       backgroundColor: Colors.amber[50],
       appBar: AppBar(
         title: Text(
-          flavorName,
+          widget.flavor.flavorName,
           style: const TextStyle(
             color: Colors.black,
             fontSize: 21.0,
@@ -40,7 +123,7 @@ class ItamPage extends StatelessWidget {
           child: Column(
             children: [
               Image.network(
-                image,
+                widget.flavor.image,
                 width: 200,
                 height: 200,
                 fit: BoxFit.cover,
@@ -61,7 +144,7 @@ class ItamPage extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text(
-                      description,
+                      widget.flavor.description,
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -80,7 +163,7 @@ class ItamPage extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text(
-                      feature,
+                      widget.flavor.feature,
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -99,13 +182,14 @@ class ItamPage extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text(
-                      price.toString(),
+                      widget.flavor.price.toString(),
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                           color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                   ),
+                  TextButton(onPressed: _removeFlavor, child: Text('Удалить'))
                 ],
               ),
             ],

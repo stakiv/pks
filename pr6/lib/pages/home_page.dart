@@ -147,9 +147,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: ListItem(
                         flavor: info.flavors[index],
-                        onDelete: (flavor) =>
-                            {_removeFlavor(info.flavors.indexOf(flavor))},
-                        onAdd: (flavor) =>
+                        /*onDelete: (flavor) =>
+                            {_removeFlavor(info.flavors.indexOf(flavor))},*/
+                        onAddToFavourites: (flavor) =>
                             {_addToFavorites(info.flavors.indexOf(flavor))},
                         onAddToCart: (flavor) =>
                             {_addToCart(info.flavors.indexOf(flavor))}),
