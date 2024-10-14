@@ -1,8 +1,9 @@
+import 'package:pr6/models/cartFlavor.dart';
 import 'package:pr6/models/flavor.dart';
 
 final List<int> favouriteFlavors = [];
 
-final List<int> cartFlavors = [];
+final List<CartFlavor> cartFlavors = [];
 
 final List<Flavor> flavors = [
   Flavor(

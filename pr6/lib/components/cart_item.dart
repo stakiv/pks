@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pr6/models/cartFlavor.dart';
 import 'package:pr6/models/flavor.dart';
-import 'package:pr6/pages/itam_page.dart';
 import 'package:pr6/models/info.dart' as info;
 
 class CartItem extends StatefulWidget {
@@ -8,7 +8,8 @@ class CartItem extends StatefulWidget {
       {super.key,
       required this.flavor,
       required this.onDelete,
-      required this.NavToItemPage
+      required this.NavToItemPage,
+      required this.totalSum
       //required this.onDelete,
       //required this.onAddToCart,
       //required this.onDelete,
@@ -16,6 +17,7 @@ class CartItem extends StatefulWidget {
   final Function(Flavor) onDelete;
   final Flavor flavor;
   final Function(int i) NavToItemPage;
+  final int totalSum;
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -27,91 +29,42 @@ class _CartItemState extends State<CartItem> {
     return info.flavors.indexWhere((item) => item.id == id);
   }
 
-  void remItem(int i, BuildContext context) {
-    showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        backgroundColor: const Color.fromARGB(255, 255, 246, 218),
-        title: Container(
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: const Padding(
-            padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 8.0),
-            child: Center(
-              child: Text(
-                'Удалить карточку товара?',
-                style: TextStyle(fontSize: 16.00, color: Colors.black),
-              ),
-            ),
-          ),
-        ),
-        content: const Padding(
-          padding: EdgeInsets.only(right: 8.0, left: 8.0),
-          /*child: Text(
-            'После удаления востановить товар будет невозможно',
-            style: TextStyle(fontSize: 14.00, color: Colors.black),
-            softWrap: true,
-            textAlign: TextAlign.justify,
-            textDirection: TextDirection.ltr,
-          ),*/
-        ),
-        actions: [
-          TextButton(
-            child: const Text('Отмена',
-                style: TextStyle(color: Colors.black, fontSize: 14.0)),
-            onPressed: () {
-              Navigator.pop(context, false);
-            },
-          ),
-          TextButton(
-            //style: ElevatedButton.styleFrom(backgroundColor: Colors.amber[700]),
-            child: const Text('Удалить',
-                style: TextStyle(color: Colors.black, fontSize: 14.0)),
-            onPressed: () {
-              Navigator.pop(context, true);
-            },
-          ),
-        ],
-      ),
-    ).then((bool? isDeleted) {
-      if (isDeleted != null && isDeleted) {
-        setState(() {
-          if (info.cartFlavors.any((el) => el == i)) {
-            info.cartFlavors.removeWhere((el) => el == i);
-          }
-          if (info.favouriteFlavors.any((el) => el == i)) {
-            info.favouriteFlavors.remove(i);
-          }
-          Navigator.pop(context, findIndexById(i));
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Товар успешно удален',
-              style: TextStyle(color: Colors.black, fontSize: 16.0),
-            ),
-            backgroundColor: Colors.amber[700],
-          ),
-        );
-      }
+  @override
+  void initState() {
+    super.initState();
+    _num =
+        info.cartFlavors.firstWhere((fl) => fl.id == widget.flavor.id).number;
+  }
+
+  void _updateCart() {
+    final index =
+        info.cartFlavors.indexWhere((el) => el.id == widget.flavor.id);
+    if (index != -1) {
+      info.cartFlavors[index].number = _num;
+      print(info.cartFlavors[index].number);
+    }
+  }
+
+  void _plusNum() {
+    setState(() {
+      _num++;
+      _updateCart();
+      print('ПРИБАВЛЕНИЕ');
     });
+  }
+
+  void _minusNum() {
+    if (_num > 1) {
+      setState(() {
+        _num--;
+        _updateCart();
+        print('УБАВЛЕНИЕ');
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    void _plusNum() {
-      setState(() {
-        _num++;
-      });
-    }
-
-    void _minusNum() {
-      if (_num > 1) {
-        setState(() {
-          _num--;
-        });
-      }
-    }
-
     return GestureDetector(
       onTap: () => {widget.NavToItemPage(widget.flavor.id)},
       child: Container(

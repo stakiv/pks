@@ -1,36 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:pr6/components/cart_item.dart';
+import 'package:pr6/models/cartFlavor.dart';
 import 'package:pr6/models/info.dart' as info;
 import 'package:pr6/models/flavor.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pr6/pages/itam_page.dart';
 
 class MyCartPage extends StatefulWidget {
-  const MyCartPage({super.key});
-
+  const MyCartPage({
+    super.key,
+    required this.onDelete,
+    required this.navToItemPage,
+    required this.totalSum,
+  });
+  final Function(Flavor) onDelete;
+  final Function(int i) navToItemPage;
+  final int totalSum;
   @override
   State<MyCartPage> createState() => _MyCartPageState();
 }
 
 class _MyCartPageState extends State<MyCartPage> {
-  /*void _deleteFromCart(Flavor flavor) {
-    setState(() {
-      info.cartFlavors.remove(flavor.id);
-    });
-  }*/
-
-  void _addToCart(Flavor flavor) async {
-    setState(() {
-      if (info.cartFlavors.contains(flavor.id)) {
-        info.cartFlavors.remove(flavor.id);
-        print('удален из корзины на корзине ${flavor.flavorName}');
-      } else {
-        info.cartFlavors.add(flavor.id);
-        print('добавлен в корзину на корзине  ${flavor.flavorName}');
-      }
-    });
-  }
-
   void _addToFavorites(Flavor flavor) async {
     setState(() {
       if (info.favouriteFlavors.contains(flavor.id)) {
@@ -38,6 +27,12 @@ class _MyCartPageState extends State<MyCartPage> {
       } else {
         info.favouriteFlavors.add(flavor.id);
       }
+    });
+  }
+
+  void _deleteFromCart(CartFlavor cartFlavor) async {
+    setState(() {
+      info.cartFlavors.removeWhere((el) => el.id == cartFlavor.id);
     });
   }
 
@@ -114,127 +109,10 @@ class _MyCartPageState extends State<MyCartPage> {
     return info.flavors.indexWhere((item) => item.id == id);
   }
 
-  void remItem(int i, BuildContext context) {
-    showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        backgroundColor: const Color.fromARGB(255, 255, 246, 218),
-        title: Container(
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: const Padding(
-            padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 8.0),
-            child: Center(
-              child: Text(
-                'Удалить карточку товара?',
-                style: TextStyle(fontSize: 16.00, color: Colors.black),
-              ),
-            ),
-          ),
-        ),
-        content: const Padding(
-          padding: EdgeInsets.only(right: 8.0, left: 8.0),
-          child: Text(
-            'После удаления востановить товар будет невозможно',
-            style: TextStyle(fontSize: 14.00, color: Colors.black),
-            softWrap: true,
-            textAlign: TextAlign.justify,
-            textDirection: TextDirection.ltr,
-          ),
-        ),
-        actions: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.amber[700]),
-            child: const Text('Ок',
-                style: TextStyle(color: Colors.black, fontSize: 14.0)),
-            onPressed: () {
-              Navigator.pop(context, true);
-            },
-          ),
-          TextButton(
-            child: const Text('Отмена',
-                style: TextStyle(color: Colors.black, fontSize: 14.0)),
-            onPressed: () {
-              Navigator.pop(context, false);
-            },
-          ),
-        ],
-      ),
-    ).then((bool? isDeleted) {
-      if (isDeleted != null && isDeleted) {
-        setState(() {
-          if (info.cartFlavors.any((el) => el == i)) {
-            info.cartFlavors.removeWhere((el) => el == i);
-          }
-          if (info.favouriteFlavors.any((el) => el == i)) {
-            info.favouriteFlavors.remove(i);
-          }
-          Navigator.pop(context, findIndexById(i));
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Товар успешно удален',
-              style: TextStyle(color: Colors.black, fontSize: 16.0),
-            ),
-            backgroundColor: Colors.amber[700],
-          ),
-        );
-      }
-    });
-  }
-
-  void _openItem(id) async {
-    print('Попал 0');
-    int? answer = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ItamPage(
-          flavor: info.flavors
-              .elementAt(info.flavors.indexWhere((el) => el.id == id)),
-          /*onDelete: widget.onDelete: () {
-            widget.onDelete(widget.flavor);
-            Navigator.pop(context);
-          },*/
-        ),
-      ),
-    );
-    setState(() {
-      print('Попал 1');
-      if (answer != null) {
-        print('Попал 2');
-        info.flavors.remove(info.flavors
-            .elementAt(info.flavors.indexWhere((el) => el.id == id)));
-        info.favouriteFlavors.removeWhere((id) =>
-            id ==
-            info.flavors
-                .elementAt(info.flavors.indexWhere((el) => el.id == id))
-                .id);
-        info.cartFlavors.removeWhere((id) =>
-            id ==
-            info.flavors
-                .elementAt(info.flavors.indexWhere((el) => el.id == id))
-                .id);
-        print('Попал 3');
-      }
-      print('Попал 4');
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.amber[50],
-      appBar: AppBar(
-        title: const Text(
-          "Вкусы мороженого",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20.0,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        backgroundColor: const Color.fromRGBO(255, 248, 225, 1),
-      ),
       body: info.cartFlavors.isEmpty
           ? const Center(
               child: Text('В корзине ничего нет'),
@@ -248,16 +126,16 @@ class _MyCartPageState extends State<MyCartPage> {
                   itemCount: info.cartFlavors.length,
                   itemBuilder: (BuildContext context, int index) {
                     int flavorId =
-                        info.cartFlavors[index]; //каждый id из списка cart
+                        info.cartFlavors[index].id; //каждый id из списка cart
                     Flavor flavorM = info.flavors.firstWhere((f) =>
                         f.id == flavorId); //элемент из общего списка по id
 
                     return Dismissible(
                       key: Key(flavorM.id.toString()),
                       background: Container(
-                        color: Color.fromRGBO(247, 163, 114, 1),
+                        color: const Color.fromRGBO(247, 163, 114, 1),
                         alignment: Alignment.centerRight,
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: const Icon(Icons.delete),
                       ),
                       direction: DismissDirection.endToStart,
@@ -267,7 +145,7 @@ class _MyCartPageState extends State<MyCartPage> {
                         return confirmed ?? false;
                       },
                       onDismissed: (direction) {
-                        _addToCart(flavorM);
+                        _deleteFromCart(info.cartFlavors[index]);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                               content: Text(
@@ -278,8 +156,9 @@ class _MyCartPageState extends State<MyCartPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: CartItem(
                           flavor: flavorM,
-                          NavToItemPage: (int i) => {_openItem(i)},
-                          onDelete: (flavor) => remItem(flavor.id, context),
+                          NavToItemPage: (int i) => {widget.navToItemPage(i)},
+                          onDelete: (flavor) => widget.onDelete(flavor),
+                          totalSum: widget.totalSum,
                         ),
                       ),
                     );

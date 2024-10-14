@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pr6/pages/cart_page.dart';
+
 import 'package:pr6/pages/favorites_page.dart';
 import 'package:pr6/pages/home_page.dart';
 import 'package:pr6/pages/profile_page.dart';
+import 'package:pr6/pages/home_cart_page.dart';
 
 class MyNavigationPage extends StatefulWidget {
   const MyNavigationPage({super.key});
@@ -17,7 +18,7 @@ class _MyNavigationPageState extends State<MyNavigationPage> {
   static const List<Widget> _widgetOptions = <Widget>[
     MyHomePage(),
     MyFavouritesPage(),
-    MyCartPage(),
+    MyHomeCartPage(),
     MyUserPage(),
   ];
   void _onItemTapped(int index) {

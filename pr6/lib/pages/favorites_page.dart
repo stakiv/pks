@@ -3,6 +3,7 @@ import 'package:pr6/components/list_item.dart';
 import 'package:pr6/models/flavor.dart';
 import 'package:pr6/models/info.dart' as info;
 import 'package:pr6/pages/itam_page.dart';
+import 'package:pr6/models/cartFlavor.dart';
 
 class MyFavouritesPage extends StatefulWidget {
   const MyFavouritesPage({super.key});
@@ -12,52 +13,39 @@ class MyFavouritesPage extends StatefulWidget {
 }
 
 class _MyFavouritesPageState extends State<MyFavouritesPage> {
-  /*void _removeFlavor(int index) async {
-    bool? confirmed = await _showConfirmedDialog(
-        context, 'Удалить элемент?', info.flavors[index]);
-    if (confirmed == true) {
-      setState(() {
-        info.flavors.removeAt(index);
-        info.favouriteFlavors.removeWhere((element) => element == index);
-      });
-    }
-  }*/
-
-  void _deleteFromFavorites(Flavor flavor) async {
+  void _deleteFromFavorites(int flavorId) async {
     setState(() {
-      info.favouriteFlavors.removeWhere((element) => element == flavor.id);
+      info.favouriteFlavors.removeWhere((element) => element == flavorId);
     });
   }
 
   void _addToCart(Flavor flavor) async {
     setState(() {
-      if (info.favouriteFlavors.contains(flavor.id)) {
-        info.favouriteFlavors.remove(flavor.id);
-        print('удален из корзины на избарнном ${flavor.flavorName}');
+      if (info.cartFlavors.any((flavorId) => flavorId.id == flavor.id)) {
+        info.cartFlavors.removeWhere((flavorId) => flavorId.id == flavor.id);
       } else {
-        info.favouriteFlavors.add(flavor.id);
-        print('добавлен в корзину на избарнном  ${flavor.flavorName}');
+        CartFlavor cartFl = CartFlavor(flavor.id, 1);
+        info.cartFlavors.add(cartFl);
+        //print('добавлен в корзину на избарнном  ${flavor.flavorName}');
       }
     });
   }
-
+/*
   void _addToFavorites(Flavor flavor) async {
     setState(() {
       if (info.favouriteFlavors.contains(flavor.id)) {
         info.favouriteFlavors.remove(flavor.id);
-        print('удален из избранного на главном ${flavor.flavorName}');
       } else {
         info.favouriteFlavors.add(flavor.id);
-        print('добавлен в избранное на главном ${flavor.flavorName}');
       }
     });
-  }
+  }*/
 
   int findIndexById(int id) {
     return info.flavors.indexWhere((item) => item.id == id);
   }
 
-  void remItem(int i, BuildContext context) {
+  void deleteItem(int flavorid, BuildContext context) {
     showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -105,21 +93,22 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
     ).then((bool? isDeleted) {
       if (isDeleted != null && isDeleted) {
         setState(() {
-          if (info.cartFlavors.any((el) => el == i)) {
-            info.cartFlavors.removeWhere((el) => el == i);
+          if (info.cartFlavors.any((el) => el.id == flavorid)) {
+            info.cartFlavors.removeWhere((el) => el.id == flavorid);
           }
-          if (info.favouriteFlavors.any((el) => el == i)) {
-            info.favouriteFlavors.remove(i);
-          }
-          Navigator.pop(context, findIndexById(i));
+
+          info.favouriteFlavors.remove(flavorid);
+
+          Navigator.pop(context, findIndexById(flavorid));
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text(
-              'Товар успешно удален',
-              style: TextStyle(color: Colors.black, fontSize: 16.0),
+            content: Text(
+              '${info.flavors.firstWhere((flavor) => flavor.id == flavorid).flavorName} удален',
+              style: const TextStyle(
+                  color: Color.fromARGB(255, 255, 255, 255), fontSize: 16.0),
             ),
-            backgroundColor: Colors.amber[700],
+            backgroundColor: Color.fromRGBO(60, 60, 60, 1),
           ),
         );
       }
@@ -127,13 +116,15 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
   }
 
   void _openItem(id) async {
-    print('Попал 0');
+    //print('Попал 0');
     int? answer = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ItamPage(
           flavor: info.flavors
               .elementAt(info.flavors.indexWhere((el) => el.id == id)),
+          onAddToFavourites: (flavor) => {_deleteFromFavorites(flavor)},
+          onAddToCart: (flavor) => {_addToCart(flavor)},
           /*onDelete: widget.onDelete: () {
             widget.onDelete(widget.flavor);
             Navigator.pop(context);
@@ -142,9 +133,7 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
       ),
     );
     setState(() {
-      print('Попал 1');
       if (answer != null) {
-        print('Попал 2');
         info.flavors.remove(info.flavors
             .elementAt(info.flavors.indexWhere((el) => el.id == id)));
         info.favouriteFlavors.removeWhere((id) =>
@@ -152,14 +141,12 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
             info.flavors
                 .elementAt(info.flavors.indexWhere((el) => el.id == id))
                 .id);
-        info.cartFlavors.removeWhere((id) =>
-            id ==
+        info.cartFlavors.removeWhere((flId) =>
+            flId.id ==
             info.flavors
                 .elementAt(info.flavors.indexWhere((el) => el.id == id))
                 .id);
-        print('Попал 3');
       }
-      print('Попал 4');
     });
   }
 
@@ -169,7 +156,7 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
       backgroundColor: Colors.amber[50],
       appBar: AppBar(
         title: const Text(
-          "Вкусы мороженого",
+          "Избранные вкусы",
           style: TextStyle(
             color: Colors.black,
             fontSize: 20.0,
@@ -180,7 +167,7 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
       ),
       body: info.favouriteFlavors.isEmpty
           ? const Center(
-              child: Text('Нет избарнных вкусов'),
+              child: Text('В избранном ничего нет'),
             )
           : GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -197,10 +184,11 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListItem(
+                    key: Key(flavorM.id.toString()),
                     flavor: flavorM,
-                    onDelete: (flavor) => remItem(flavor.id, context),
+                    onDelete: (flavor) => deleteItem(flavor.id, context),
                     onAddToFavourites: (flavor) =>
-                        {_deleteFromFavorites(flavor)},
+                        {_deleteFromFavorites(flavor.id)},
                     onAddToCart: (flavor) => {_addToCart(flavor)},
                     NavToItemPage: (int i) => {_openItem(i)},
                   ),

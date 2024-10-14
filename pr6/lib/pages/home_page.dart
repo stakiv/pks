@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pr6/components/list_item.dart';
+import 'package:pr6/models/cartFlavor.dart';
 import 'package:pr6/models/flavor.dart';
 import 'package:pr6/models/info.dart' as info;
 import 'package:pr6/pages/add_item_page.dart';
@@ -28,34 +29,18 @@ class _MyHomePageState extends State<MyHomePage> {
   int findIndexById(int id) {
     return info.flavors.indexWhere((item) => item.id == id);
   }
-  /*
-  void _removeFlavor(Flavor flavor) async {
-    bool? confirmed =
-        await _showConfirmedDialog(context, 'Удалить элемент?', flavor);
-    if (confirmed == true) {
-      setState(() {
-        info.flavors.remove(flavor);
-        print('удалился 111111 ${flavor.flavorName}');
-        info.favouriteFlavors.removeWhere((element) => element == flavor.id);
-        info.cartFlavors.removeWhere((element) => element == flavor.id);
-      });
-      print('удалился 222222 ${flavor.flavorName}');
-    }
-  }*/
 
   void _addToFavorites(Flavor flavor) async {
     setState(() {
       if (info.favouriteFlavors.contains(flavor.id)) {
         info.favouriteFlavors.remove(flavor.id);
-        print('удален из избранного на главном ${flavor.flavorName}');
       } else {
         info.favouriteFlavors.add(flavor.id);
-        print('добавлен в избранное на главном ${flavor.flavorName}');
       }
     });
   }
 
-  void remItem(int i, BuildContext context) {
+  void deleteItem(int i, BuildContext context) {
     showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -103,12 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
     ).then((bool? isDeleted) {
       if (isDeleted != null && isDeleted) {
         setState(() {
-          if (info.cartFlavors.any((el) => el == i)) {
-            info.cartFlavors.removeWhere((el) => el == i);
+          if (info.cartFlavors.any((cartFl) => cartFl.id == i)) {
+            info.cartFlavors.removeWhere((cartFl) => cartFl.id == i);
           }
           if (info.favouriteFlavors.any((el) => el == i)) {
             info.favouriteFlavors.remove(i);
           }
+
           Navigator.pop(context, findIndexById(i));
         });
         ScaffoldMessenger.of(context).showSnackBar(
@@ -126,78 +112,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addToCart(Flavor flavor) async {
     setState(() {
-      if (info.cartFlavors.contains(flavor.id)) {
-        info.cartFlavors.remove(flavor.id);
+      if (info.cartFlavors.any((flavorId) => flavorId.id == flavor.id)) {
+        info.cartFlavors.removeWhere((flavorId) => flavorId.id == flavor.id);
       } else {
-        info.cartFlavors.add(flavor.id);
+        CartFlavor cartFl = CartFlavor(flavor.id, 1);
+        info.cartFlavors.add(cartFl);
       }
     });
   }
 
-  Future<bool?> _showConfirmedDialog(
-      BuildContext context, String title, Flavor flavor) {
-    return showDialog<bool>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Center(
-              child: Text(
-                title,
-                style: const TextStyle(fontSize: 18.0),
-              ),
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Image.network(
-                  flavor.image,
-                  width: 150,
-                  height: 150,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Text('Ошибка загрузки изображения');
-                  },
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(flavor.flavorName),
-              ],
-            ),
-            actionsAlignment: MainAxisAlignment.center,
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text(
-                  "Отмена",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Color.fromRGBO(160, 149, 108, 1),
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: const Text(
-                  "Удалить",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Color.fromRGBO(118, 103, 49, 1),
-                  ),
-                ),
-              ),
-            ],
-          );
-        });
-  }
-
   void _openItem(id) async {
-    print('Попал 0');
+    //print('Попал 0');
     int? answer = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ItamPage(
           flavor: info.flavors
               .elementAt(info.flavors.indexWhere((el) => el.id == id)),
+          onAddToFavourites: (flavor) => {_addToFavorites(flavor)},
+          onAddToCart: (flavor) => {_addToCart(flavor)},
           /*onDelete: widget.onDelete: () {
             widget.onDelete(widget.flavor);
             Navigator.pop(context);
@@ -206,9 +139,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
     setState(() {
-      print('Попал 1');
+      //print('Попал 1');
       if (answer != null) {
-        print('Попал 2');
         info.flavors.remove(info.flavors
             .elementAt(info.flavors.indexWhere((el) => el.id == id)));
         info.favouriteFlavors.removeWhere((id) =>
@@ -216,14 +148,12 @@ class _MyHomePageState extends State<MyHomePage> {
             info.flavors
                 .elementAt(info.flavors.indexWhere((el) => el.id == id))
                 .id);
-        info.cartFlavors.removeWhere((id) =>
-            id ==
+        info.cartFlavors.removeWhere((flId) =>
+            flId.id ==
             info.flavors
                 .elementAt(info.flavors.indexWhere((el) => el.id == id))
                 .id);
-        print('Попал 3');
       }
-      print('Попал 4');
     });
   }
 
@@ -259,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: ListItem(
                       flavor: info.flavors[index],
-                      onDelete: (flavor) => remItem(flavor.id, context),
+                      onDelete: (flavor) => deleteItem(flavor.id, context),
                       onAddToFavourites: (flavor) => {_addToFavorites(flavor)},
                       onAddToCart: (flavor) => {_addToCart(flavor)},
                       NavToItemPage: (int i) => {_openItem(i)},
