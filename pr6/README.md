@@ -48,7 +48,8 @@
 Элемент из корзины можно удалить при помощи свайпа и подтверждения
 
 ![image](https://github.com/user-attachments/assets/5c752655-c236-4f9b-aeab-f06a156eb547)
-![image](https://github.com/user-attachments/assets/4a9f1ed7-d128-426e-90db-daaf40a31625)
+![image](https://github.com/user-attachments/assets/4360e240-8996-476d-bcbd-c976e437f616)
+
 
 
 
