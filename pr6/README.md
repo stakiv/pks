@@ -19,8 +19,21 @@
 Добавление товаров в избранное и в корзину через главный экран
 
 ![image](https://github.com/user-attachments/assets/97e9bacf-d09c-40e5-8d49-00b2a53c39e8)
+
 ![image](https://github.com/user-attachments/assets/9661fc24-2eaa-4e9c-960c-b485871bff51)
 ![image](https://github.com/user-attachments/assets/368d484b-b4ea-4c82-b8e3-eacbc9680766)
+
+**2. Карточка товара**
+
+Добавление товаров в избранное и в корзину через карточку товара
+
+![image](https://github.com/user-attachments/assets/78822ac7-ff18-49c2-a836-d4e152bb0f1b)
+
+![image](https://github.com/user-attachments/assets/dacef1f6-26de-4d1f-afac-ae7379f5ccc5)
+![image](https://github.com/user-attachments/assets/f0fedc14-eb5b-4618-8f9a-069cb26cfb30)
+
+Удаление элемента
+
 
 
 
