@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pr6/models/cartFlavor.dart';
 import 'package:pr6/models/flavor.dart';
 import 'package:pr6/models/info.dart' as info;
 
@@ -9,11 +8,7 @@ class CartItem extends StatefulWidget {
       required this.flavor,
       required this.onDelete,
       required this.NavToItemPage,
-      required this.totalSum
-      //required this.onDelete,
-      //required this.onAddToCart,
-      //required this.onDelete,
-      });
+      required this.totalSum});
   final Function(Flavor) onDelete;
   final Flavor flavor;
   final Function(int i) NavToItemPage;

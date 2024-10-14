@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pr6/components/cart_item.dart';
+
 import 'package:pr6/models/cartFlavor.dart';
 import 'package:pr6/models/info.dart' as info;
 import 'package:pr6/models/flavor.dart';
@@ -14,20 +14,6 @@ class MyHomeCartPage extends StatefulWidget {
 }
 
 class _MyHomeCartPageState extends State<MyHomeCartPage> {
-  /*
-  void _addToCart(Flavor flavor) async {
-    setState(() {
-      if (info.cartFlavors.any((flavorId) => flavorId.id == flavor.id)) {
-        info.cartFlavors.removeWhere((flavorId) => flavorId.id == flavor.id);
-        //print('удален из корзины на корзине ${flavor.flavorName}');
-      } else {
-        Cartflavor cartFl = Cartflavor(flavor.id, 1);
-        info.cartFlavors.add(cartFl);
-        //print('добавлен в корзину на корзине  ${flavor.flavorName}');
-      }
-    });
-  }*/
-
   void _addToFavorites(Flavor flavor) async {
     setState(() {
       if (info.favouriteFlavors.contains(flavor.id)) {
@@ -43,19 +29,6 @@ class _MyHomeCartPageState extends State<MyHomeCartPage> {
       info.cartFlavors.removeWhere((el) => el.id == cartFlavor.id);
     });
   }
-
-  /*
-  void _removeFlavor(Flavor flavor) async {
-    bool? confirmed =
-        await _showConfirmedDialog(context, 'Удалить элемент?', flavor);
-    if (confirmed == true) {
-      setState(() {
-        info.flavors.remove(flavor);
-        info.favouriteFlavors.removeWhere((element) => element == flavor.id);
-        info.cartFlavors.removeWhere((element) => element == flavor.id);
-      });
-    }
-  }*/
 
   Future<bool?> _showConfirmedDialog(
       BuildContext context, String title, Flavor flavor) {
@@ -194,10 +167,6 @@ class _MyHomeCartPageState extends State<MyHomeCartPage> {
               .elementAt(info.flavors.indexWhere((el) => el.id == id)),
           onAddToFavourites: (flavor) => {_addToFavorites(flavor)},
           onAddToCart: (flavor) => {_deleteFromCart(flavor)},
-          /*onDelete: widget.onDelete: () {
-            widget.onDelete(widget.flavor);
-            Navigator.pop(context);
-          },*/
         ),
       ),
     );
@@ -261,12 +230,32 @@ class _MyHomeCartPageState extends State<MyHomeCartPage> {
                     left: 0,
                     right: 0,
                     child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.transparent,
+                      ),
                       padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'Стоимость ${_getTotalPrice().toStringAsFixed(2)}',
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.amber,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0, horizontal: 60.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                            ),
+                            child: Text(
+                              '${_getTotalPrice().toString()} ₽     оплатить',
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ))
               ],

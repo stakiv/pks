@@ -3,7 +3,6 @@ import 'package:pr6/components/cart_item.dart';
 import 'package:pr6/models/cartFlavor.dart';
 import 'package:pr6/models/info.dart' as info;
 import 'package:pr6/models/flavor.dart';
-import 'package:pr6/pages/itam_page.dart';
 
 class MyCartPage extends StatefulWidget {
   const MyCartPage({
@@ -35,19 +34,6 @@ class _MyCartPageState extends State<MyCartPage> {
       info.cartFlavors.removeWhere((el) => el.id == cartFlavor.id);
     });
   }
-
-  /*
-  void _removeFlavor(Flavor flavor) async {
-    bool? confirmed =
-        await _showConfirmedDialog(context, 'Удалить элемент?', flavor);
-    if (confirmed == true) {
-      setState(() {
-        info.flavors.remove(flavor);
-        info.favouriteFlavors.removeWhere((element) => element == flavor.id);
-        info.cartFlavors.removeWhere((element) => element == flavor.id);
-      });
-    }
-  }*/
 
   Future<bool?> _showConfirmedDialog(
       BuildContext context, String title, Flavor flavor) {
