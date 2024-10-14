@@ -28,13 +28,30 @@
 Добавление товаров в избранное и в корзину через карточку товара
 
 ![image](https://github.com/user-attachments/assets/0fea5759-cde2-416c-b24d-8c05326db2a5)
-![image](https://github.com/user-attachments/assets/3f912ddd-70c1-41aa-870f-8b259b726fec)
 
 
 ![image](https://github.com/user-attachments/assets/dacef1f6-26de-4d1f-afac-ae7379f5ccc5)
 ![image](https://github.com/user-attachments/assets/f0fedc14-eb5b-4618-8f9a-069cb26cfb30)
 
 Удаление элемента
+![image](https://github.com/user-attachments/assets/3f912ddd-70c1-41aa-870f-8b259b726fec)
+![image](https://github.com/user-attachments/assets/d78ac494-8d77-4e07-9edf-cb8f00d98c66)
+
+
+**3. Корзина**
+
+Количество элементов можно менять через прибавление и уменьшение у элементов. При изменении количества элементов меняется общая стоимость
+
+![image](https://github.com/user-attachments/assets/bdaca9db-2990-4e2a-a2be-1d7a735a3117)
+![image](https://github.com/user-attachments/assets/df480f64-eb29-41d8-8b1c-45a04770decf)
+
+Элемент из корзины можно удалить при помощи свайпа и подтверждения
+
+![image](https://github.com/user-attachments/assets/5c752655-c236-4f9b-aeab-f06a156eb547)
+![image](https://github.com/user-attachments/assets/4a9f1ed7-d128-426e-90db-daaf40a31625)
+
+
+
 
 
 
