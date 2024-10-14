@@ -205,7 +205,7 @@ class _MyHomeCartPageState extends State<MyHomeCartPage> {
       backgroundColor: Colors.amber[50],
       appBar: AppBar(
         title: const Text(
-          "Вкусы мороженого",
+          "Корзина",
           style: TextStyle(
             color: Colors.black,
             fontSize: 20.0,

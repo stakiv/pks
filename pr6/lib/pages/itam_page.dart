@@ -22,67 +22,79 @@ class _ItamPageState extends State<ItamPage> {
     return info.flavors.indexWhere((item) => item.id == id);
   }
 
-  void deleteItem(int i, BuildContext context) {
+  void deleteItem(int idM, BuildContext context) {
+    int flavIndex = info.flavors.indexWhere((element) => element.id == idM);
     showDialog<bool>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        backgroundColor: const Color.fromARGB(255, 255, 246, 218),
+        backgroundColor: Colors.white,
         title: Container(
           width: MediaQuery.of(context).size.width * 0.9,
-          child: const Padding(
+          child: Padding(
             padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 8.0),
             child: Center(
-              child: Text(
-                'Удалить карточку товара?',
-                style: TextStyle(fontSize: 16.00, color: Colors.black),
+              child: Column(
+                children: [
+                  Text(
+                    'Удалить ${info.flavors[flavIndex].flavorName}?',
+                    style: TextStyle(fontSize: 14.00, color: Colors.black),
+                  ),
+                  const SizedBox(height: 20),
+                  Image.network(
+                    info.flavors[flavIndex].image,
+                    width: 110,
+                    height: 110,
+                    fit: BoxFit.cover,
+                  ),
+                ],
               ),
             ),
           ),
         ),
-        content: const Padding(
-          padding: EdgeInsets.only(right: 8.0, left: 8.0),
-          /*child: Text(
-            'После удаления востановить товар будет невозможно',
-            style: TextStyle(fontSize: 14.00, color: Colors.black),
-            softWrap: true,
-            textAlign: TextAlign.justify,
-            textDirection: TextDirection.ltr,
-          ),*/
-        ),
         actions: [
-          TextButton(
-            child: const Text('Отмена',
-                style: TextStyle(color: Colors.black, fontSize: 14.0)),
-            onPressed: () {
-              Navigator.pop(context, false);
-            },
-          ),
-          TextButton(
-            //style: ElevatedButton.styleFrom(backgroundColor: Colors.amber[700]),
-            child: const Text('Удалить',
-                style: TextStyle(color: Colors.black, fontSize: 14.0)),
-            onPressed: () {
-              Navigator.pop(context, true);
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                child: const Text(
+                  'Отмена',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 75, 75, 75), fontSize: 14.0),
+                ),
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+              ),
+              const SizedBox(width: 20),
+              TextButton(
+                child: const Text(
+                  'Удалить',
+                  style: TextStyle(color: Colors.black, fontSize: 14.0),
+                ),
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+              ),
+            ],
           ),
         ],
       ),
     ).then((bool? isDeleted) {
       if (isDeleted != null && isDeleted) {
         setState(() {
-          if (info.cartFlavors.any((cartFl) => cartFl.id == i)) {
-            info.cartFlavors.removeWhere((cartFl) => cartFl.id == i);
+          if (info.cartFlavors.any((cartFl) => cartFl.id == idM)) {
+            info.cartFlavors.removeWhere((cartFl) => cartFl.id == idM);
           }
-          if (info.favouriteFlavors.any((el) => el == i)) {
-            info.favouriteFlavors.remove(i);
+          if (info.favouriteFlavors.any((el) => el == idM)) {
+            info.favouriteFlavors.remove(idM);
           }
-          Navigator.pop(context, findIndexById(i));
+          Navigator.pop(context, findIndexById(idM));
         });
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              '${info.flavors.firstWhere((flavor) => flavor.id == i).flavorName} удален',
+              '${info.flavors.firstWhere((flavor) => flavor.id == idM).flavorName} удален',
               style: const TextStyle(
                   color: Color.fromARGB(255, 255, 255, 255), fontSize: 16.0),
             ),
@@ -216,11 +228,34 @@ class _ItamPageState extends State<ItamPage> {
                           color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                   ),
-                  TextButton(
-                      onPressed: () {
-                        deleteItem(widget.flavor.id, context);
-                      },
-                      child: Text('Удалить'))
+                  const SizedBox(
+                    height: 35.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          deleteItem(widget.flavor.id, context);
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: Color.fromRGBO(204, 194, 153, 1),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12.0, horizontal: 60.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                        ),
+                        child: Text(
+                          'Удалить',
+                          style: const TextStyle(
+                            fontSize: 14.0,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ],
