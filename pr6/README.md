@@ -1,16 +1,27 @@
-# pr6
+# Практическое задание №6 ПКС
+## ЭФБО-01-22 Степанова Виктория
 
-A new Flutter project.
+В этой практической необходимо было дополнить предыдущую работу следующими элементами: экран корзины, куда можно добавлять элементы с помощью кнопки; удаление элементов из корзины через свайп и подтверждение; возможность добавить элемент в избранное и корзину, а также удалить карточку элемента на экране самого элемента.
 
-## Getting Started
+Реализация работы:
 
-This project is a starting point for a Flutter application.
+**1. Главный экран**
 
-A few resources to get you started if this is your first Flutter project:
+Здесь находится список всех элементов, у каждого элемента есть возможность добавления в корзину и избранное, а также при нажатии на элемент осуществляется переход на страницу карточки. 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![image](https://github.com/user-attachments/assets/7ca4af26-aa06-4fa6-8c03-364b9cc4db8e)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+При запуске приложения в избранном и корзине нет никаких элементов, отображается текстовая заглушка
+
+![image](https://github.com/user-attachments/assets/227bfb96-8ff2-408f-9395-325632106ab4)
+![image](https://github.com/user-attachments/assets/271e731f-826f-4983-aa0c-8aa3b1bbbaab)
+
+Добавление товаров в избранное и в корзину через главный экран
+
+![image](https://github.com/user-attachments/assets/97e9bacf-d09c-40e5-8d49-00b2a53c39e8)
+![image](https://github.com/user-attachments/assets/9661fc24-2eaa-4e9c-960c-b485871bff51)
+![image](https://github.com/user-attachments/assets/368d484b-b4ea-4c82-b8e3-eacbc9680766)
+
+
+
+
