@@ -27,7 +27,9 @@
 
 Добавление товаров в избранное и в корзину через карточку товара
 
-![image](https://github.com/user-attachments/assets/78822ac7-ff18-49c2-a836-d4e152bb0f1b)
+![image](https://github.com/user-attachments/assets/0fea5759-cde2-416c-b24d-8c05326db2a5)
+![image](https://github.com/user-attachments/assets/3f912ddd-70c1-41aa-870f-8b259b726fec)
+
 
 ![image](https://github.com/user-attachments/assets/dacef1f6-26de-4d1f-afac-ae7379f5ccc5)
 ![image](https://github.com/user-attachments/assets/f0fedc14-eb5b-4618-8f9a-069cb26cfb30)
