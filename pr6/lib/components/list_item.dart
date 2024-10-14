@@ -1,46 +1,126 @@
 import 'package:flutter/material.dart';
 import 'package:pr6/models/flavor.dart';
 import 'package:pr6/models/info.dart';
-import 'package:pr6/pages/itam_page.dart';
 
 class ListItem extends StatefulWidget {
-  const ListItem({
-    super.key,
-    required this.flavor,
-    //required this.onDelete,
-    required this.onAddToFavourites,
-    required this.onAddToCart,
-  });
+  const ListItem(
+      {super.key,
+      required this.flavor,
+      required this.onDelete,
+      required this.onAddToFavourites,
+      required this.onAddToCart,
+      required this.NavToItemPage});
   final Flavor flavor;
-  //final Function(Flavor) onDelete;
+  final Function(Flavor) onDelete;
   final Function(Flavor) onAddToFavourites;
   final Function(Flavor) onAddToCart;
+  final Function(int i) NavToItemPage;
 
   @override
   State<ListItem> createState() => _ListItemState();
 }
 
 class _ListItemState extends State<ListItem> {
+  /*
+  void remItem(int i, BuildContext context) {
+    showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        backgroundColor: const Color.fromARGB(255, 255, 246, 218),
+        title: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: const Padding(
+            padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 8.0),
+            child: Center(
+              child: Text(
+                'Удалить карточку товара?',
+                style: TextStyle(fontSize: 16.00, color: Colors.black),
+              ),
+            ),
+          ),
+        ),
+        content: const Padding(
+          padding: EdgeInsets.only(right: 8.0, left: 8.0),
+          child: Text(
+            'После удаления востановить товар будет невозможно',
+            style: TextStyle(fontSize: 14.00, color: Colors.black),
+            softWrap: true,
+            textAlign: TextAlign.justify,
+            textDirection: TextDirection.ltr,
+          ),
+        ),
+        actions: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.amber[700]),
+            child: const Text('Ок',
+                style: TextStyle(color: Colors.black, fontSize: 14.0)),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+          TextButton(
+            child: const Text('Отмена',
+                style: TextStyle(color: Colors.black, fontSize: 14.0)),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+        ],
+      ),
+    ).then((bool? isDeleted) {
+      if (isDeleted != null && isDeleted) {
+        setState(() {
+          if (cartFlavors.any((el) => el == i)) {
+            cartFlavors.removeWhere((el) => el == i);
+          }
+          if (favouriteFlavors.any((el) => el == i)) {
+            favouriteFlavors.remove(i);
+          }
+          Navigator.pop(context, findIndexById(i));
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              'Товар успешно удален',
+              style: TextStyle(color: Colors.black, fontSize: 16.0),
+            ),
+            backgroundColor: Colors.amber[700],
+          ),
+        );
+      }
+    });
+  }
+*/
+/*
+  void _openItem(id) async {
+    int? answer = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ItamPage(
+          flavor: widget.flavor,
+          /*onDelete: widget.onDelete: () {
+            widget.onDelete(widget.flavor);
+            Navigator.pop(context);
+          },*/
+        ),
+      ),
+    );
+    setState(() {
+      if (answer != null) {
+        flavors.remove(widget.flavor);
+        favouriteFlavors.removeWhere((id) => id == widget.flavor.id);
+        cartFlavors.removeWhere((id) => id == widget.flavor.id);
+      }
+    });
+  }
+*/
   @override
   Widget build(BuildContext context) {
     bool isFavourite = favouriteFlavors.contains(widget.flavor.id);
     bool isInCart = cartFlavors.contains(widget.flavor.id);
 
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ItamPage(
-            flavor: widget.flavor,
-            /*index: widget.flavor.id,
-            flavorName: widget.flavor.flavorName,
-            image: widget.flavor.image,
-            description: widget.flavor.description,
-            price: widget.flavor.price,
-            feature: widget.flavor.feature*/
-          ),
-        ),
-      ),
+      onTap: () => {widget.NavToItemPage(widget.flavor.id)},
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
@@ -99,13 +179,7 @@ class _ListItemState extends State<ListItem> {
               children: [
                 IconButton(
                   onPressed: () {
-                    setState(() {
-                      if (isFavourite) {
-                        favouriteFlavors.remove(widget.flavor.id);
-                      } else {
-                        favouriteFlavors.add(widget.flavor.id);
-                      }
-                    });
+                    widget.onAddToFavourites(widget.flavor);
                   },
                   icon: isFavourite
                       ? const Icon(Icons.favorite,
@@ -116,13 +190,7 @@ class _ListItemState extends State<ListItem> {
                 const SizedBox(width: 20.0),
                 IconButton(
                   onPressed: () {
-                    setState(() {
-                      if (isInCart) {
-                        cartFlavors.remove(widget.flavor.id);
-                      } else {
-                        cartFlavors.add(widget.flavor.id);
-                      }
-                    });
+                    widget.onAddToCart(widget.flavor);
                   },
                   icon: isInCart
                       ? const Icon(Icons.shopping_cart,

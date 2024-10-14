@@ -6,42 +6,115 @@ class ItamPage extends StatefulWidget {
   const ItamPage({
     super.key,
     required this.flavor,
-    /*required this.flavorName,
-    required this.image,
-    required this.description,
-    required this.price,
-    required this.feature,
-    required this.index,*/
+    /*required this.onDelete*/
   });
   final Flavor flavor;
-  /*final String flavorName;
-  final String image;
-  final String description;
-  final int price;
-  final String feature;
-  final int index;*/
+  //final Function onDelete;
 
   @override
   State<ItamPage> createState() => _ItamPageState();
 }
 
 class _ItamPageState extends State<ItamPage> {
+  /*
   void _removeFlavor() async {
     bool? confirmed =
         await _showConfirmedDialog(context, 'Удалить элемент?', widget.flavor);
     if (confirmed == true) {
+      int id = widget.flavor.id;
       setState(() {
-        int index = info.flavors.indexOf(widget.flavor);
         info.flavors.removeWhere((f) => f.id == widget.flavor.id);
 
         info.favouriteFlavors
             .removeWhere((element) => element == widget.flavor.id);
         info.cartFlavors.removeWhere((element) => element == widget.flavor.id);
       });
-      Navigator.pop(context);
+      //widget.onDelete();
+      if (!(info.cartFlavors.contains(widget.flavor.id) &&
+          info.favouriteFlavors.contains(widget.flavor.id) &&
+          info.flavors.contains(widget.flavor))) {
+        print('удалился 111111 ${widget.flavor.flavorName}');
+      } else {
+        print('неаааа');
+      }
+
+      Navigator.pop(context, widget.flavor);
     }
+  }*/
+
+  int findIndexById(int id) {
+    return info.flavors.indexWhere((item) => item.id == id);
   }
 
+  void remItem(int i, BuildContext context) {
+    showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        backgroundColor: const Color.fromARGB(255, 255, 246, 218),
+        title: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: const Padding(
+            padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 8.0),
+            child: Center(
+              child: Text(
+                'Удалить карточку товара?',
+                style: TextStyle(fontSize: 16.00, color: Colors.black),
+              ),
+            ),
+          ),
+        ),
+        content: const Padding(
+          padding: EdgeInsets.only(right: 8.0, left: 8.0),
+          /*child: Text(
+            'После удаления востановить товар будет невозможно',
+            style: TextStyle(fontSize: 14.00, color: Colors.black),
+            softWrap: true,
+            textAlign: TextAlign.justify,
+            textDirection: TextDirection.ltr,
+          ),*/
+        ),
+        actions: [
+          TextButton(
+            child: const Text('Отмена',
+                style: TextStyle(color: Colors.black, fontSize: 14.0)),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+          TextButton(
+            //style: ElevatedButton.styleFrom(backgroundColor: Colors.amber[700]),
+            child: const Text('Удалить',
+                style: TextStyle(color: Colors.black, fontSize: 14.0)),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+        ],
+      ),
+    ).then((bool? isDeleted) {
+      if (isDeleted != null && isDeleted) {
+        setState(() {
+          if (info.cartFlavors.any((el) => el == i)) {
+            info.cartFlavors.removeWhere((el) => el == i);
+          }
+          if (info.favouriteFlavors.any((el) => el == i)) {
+            info.favouriteFlavors.remove(i);
+          }
+          Navigator.pop(context, findIndexById(i));
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              'Товар успешно удален',
+              style: TextStyle(color: Colors.black, fontSize: 16.0),
+            ),
+            backgroundColor: Colors.amber[700],
+          ),
+        );
+      }
+    });
+  }
+  /*
   Future<bool?> _showConfirmedDialog(
       BuildContext context, String title, Flavor flavor) {
     return showDialog<bool>(
@@ -96,7 +169,7 @@ class _ItamPageState extends State<ItamPage> {
             ],
           );
         });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +262,11 @@ class _ItamPageState extends State<ItamPage> {
                           color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                   ),
-                  TextButton(onPressed: _removeFlavor, child: Text('Удалить'))
+                  TextButton(
+                      onPressed: () {
+                        remItem(widget.flavor.id, context);
+                      },
+                      child: Text('Удалить'))
                 ],
               ),
             ],
