@@ -1,6 +1,6 @@
-class profileItem {
+class ProfileItem {
   final String name;
   final String icon;
 
-  profileItem(this.name, this.icon);
+  ProfileItem(this.name, this.icon);
 }

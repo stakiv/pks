@@ -8,16 +8,18 @@ class CartItemListPage extends StatefulWidget {
   const CartItemListPage({
     super.key,
     required this.item,
+    required this.people,
   });
 
   final Item item;
+  final int people;
 
   @override
   State<CartItemListPage> createState() => _CartItemListPage();
 }
 
 class _CartItemListPage extends State<CartItemListPage> {
-  void AddTOCart(int i) {
+  void addTOCart(int i) {
     setState(() {
       if (!cartItems.any((item) => item.id == i)) {
         cartItems.add(CartItem(i, 1));
@@ -29,16 +31,34 @@ class _CartItemListPage extends State<CartItemListPage> {
 
   @override
   Widget build(BuildContext context) {
-    String days;
-    if (widget.item.numDays % 10 == 1) {
-      days = 'день';
+    String people;
+    if (widget.people % 10 == 1) {
+      people = 'пациент';
     } else if (widget.item.numDays % 10 == 2 ||
         widget.item.numDays % 10 == 3 ||
         widget.item.numDays % 10 == 4) {
-      days = 'дня';
+      people = 'пациента';
     } else {
-      days = 'дней';
+      people = 'дней';
     }
+    void plusPeople(int i) {
+      setState(() {
+        cartItems
+            .elementAt(cartItems.indexWhere((el) => el.id == i))
+            .numPeople += 1;
+      });
+    }
+
+    void minusPeople(int i) {
+      if (cartItems.firstWhere((el) => el.id == i).numPeople > 1) {
+        setState(() {
+          cartItems
+              .elementAt(cartItems.indexWhere((el) => el.id == i))
+              .numPeople -= 1;
+        });
+      }
+    }
+
     return Container(
       decoration: BoxDecoration(
         //color: const Color.fromARGB(255, 32, 134, 27),
@@ -72,16 +92,6 @@ class _CartItemListPage extends State<CartItemListPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${widget.item.numDays.toString()} $days',
-                    style: GoogleFonts.montserrat(
-                        textStyle: const TextStyle(
-                            fontSize: 14,
-                            color: Color.fromRGBO(147, 147, 150, 1.0))),
-                  ),
-                  const SizedBox(
-                    height: 4.0,
-                  ),
-                  Text(
                     '${widget.item.cost.toString()} ₽',
                     style: GoogleFonts.montserrat(
                         textStyle: const TextStyle(
@@ -89,26 +99,76 @@ class _CartItemListPage extends State<CartItemListPage> {
                   )
                 ],
               ),
-              TextButton(
-                onPressed: () {
-                  AddTOCart(widget.item.id);
-                },
-                style: TextButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  foregroundColor: const Color.fromRGBO(255, 255, 255, 1.0),
-                  backgroundColor: const Color.fromRGBO(26, 111, 238, 1.0),
-                ),
-                child: Text(
-                  'Добавить',
-                  style: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                      fontSize: 14,
-                      color: Color.fromRGBO(255, 255, 255, 1.0),
+              Row(
+                children: [
+                  Text(
+                    '${widget.people} $people',
+                    style: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                        fontSize: 15,
+                        color: Color.fromRGBO(0, 0, 0, 1.0),
+                      ),
                     ),
                   ),
-                ),
+                  const SizedBox(
+                    width: 16.0,
+                  ),
+                  Container(
+                    width: 31.0,
+                    height: 32.0,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        minusPeople(widget.item.id);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor:
+                            const Color.fromRGBO(245, 245, 249, 1.0),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              bottomLeft: Radius.circular(8)),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/cart/minus.png')),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 32.0,
+                    color: const Color.fromRGBO(245, 245, 249, 1.0),
+                    child: Image.asset('assets/cart/Divider.png'),
+                  ),
+                  Container(
+                    width: 31.0,
+                    height: 32.0,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        plusPeople(widget.item.id);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor:
+                            const Color.fromRGBO(245, 245, 249, 1.0),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(8),
+                              bottomRight: Radius.circular(8)),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/cart/plus.png')),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               )
             ],
           )

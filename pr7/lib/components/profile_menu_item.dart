@@ -11,7 +11,7 @@ class ProfileMenuItemPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(top: 18, bottom: 19),
+        padding: const EdgeInsets.only(top: 18, bottom: 19),
         /*decoration: BoxDecoration(
           color: const Color.fromARGB(255, 101, 121, 137),
           border: Border.all(

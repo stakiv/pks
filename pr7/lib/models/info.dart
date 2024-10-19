@@ -8,11 +8,11 @@ final List<String> profileInfo = [
   'email@gmail.com'
 ];
 
-final List<profileItem> profileItems = [
-  profileItem('Мои заказы', 'assets/profile/order.png'),
-  profileItem('Медицинские карты', 'assets/profile/cards.png'),
-  profileItem('Мои адреса', 'assets/profile/adress.png'),
-  profileItem('Настройки', 'assets/profile/settings.png'),
+final List<ProfileItem> profileItems = [
+  ProfileItem('Мои заказы', 'assets/profile/order.png'),
+  ProfileItem('Медицинские карты', 'assets/profile/cards.png'),
+  ProfileItem('Мои адреса', 'assets/profile/adress.png'),
+  ProfileItem('Настройки', 'assets/profile/settings.png'),
 ];
 
 final List<String> footerMenu = [

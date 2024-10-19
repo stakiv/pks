@@ -21,7 +21,7 @@ class HomeItemListPage extends StatefulWidget {
 }
 
 class _HomeItemListPage extends State<HomeItemListPage> {
-  void AddTOCart(int i) {
+  void addTOCart(int i) {
     setState(() {
       if (!cartItems.any((item) => item.id == i)) {
         cartItems.add(CartItem(i, 1));
@@ -95,7 +95,7 @@ class _HomeItemListPage extends State<HomeItemListPage> {
               ),
               TextButton(
                 onPressed: () {
-                  AddTOCart(widget.id);
+                  addTOCart(widget.id);
                 },
                 style: TextButton.styleFrom(
                   shape: RoundedRectangleBorder(

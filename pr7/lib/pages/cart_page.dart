@@ -61,6 +61,7 @@ class _MyCartPageState extends State<MyCartPage> {
                               padding: const EdgeInsets.only(bottom: 16.0),
                               child: CartItemListPage(
                                 item: itemM,
+                                people: info.cartItems[index].numPeople,
                               ),
                             );
                           },
