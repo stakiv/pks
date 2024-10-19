@@ -188,6 +188,13 @@ class _MyHomeCartPageState extends State<MyHomeCartPage> {
     });
   }
 
+  int _totalSum = 0;
+  void updSum() {
+    setState(() {
+      _totalSum = _getTotalPrice();
+    });
+  }
+
   int _getTotalPrice() {
     int totalSum = 0;
     for (var cartFlavor in info.cartFlavors) {
@@ -196,6 +203,9 @@ class _MyHomeCartPageState extends State<MyHomeCartPage> {
       totalSum += flavor.price * cartFlavor.number;
       print(totalSum);
     }
+
+    print('итоговая сумма ${totalSum}');
+
     return totalSum;
   }
 
@@ -223,41 +233,9 @@ class _MyHomeCartPageState extends State<MyHomeCartPage> {
                 MyCartPage(
                   onDelete: (flavor) => deleteItem(flavor.id, context),
                   navToItemPage: (int i) => _openItem(i),
-                  totalSum: _getTotalPrice(),
+                  updtotalSum: updSum,
+                  price: _getTotalPrice(),
                 ),
-                Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.transparent,
-                      ),
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.amber,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12.0, horizontal: 60.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                            ),
-                            child: Text(
-                              '${_getTotalPrice().toString()} ₽     оплатить',
-                              style: const TextStyle(
-                                fontSize: 18.0,
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ))
               ],
             ),
     );

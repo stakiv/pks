@@ -8,11 +8,13 @@ class CartItem extends StatefulWidget {
       required this.flavor,
       required this.onDelete,
       required this.NavToItemPage,
-      required this.totalSum});
+      required this.updtotalSum,
+      required this.price});
   final Function(Flavor) onDelete;
   final Flavor flavor;
   final Function(int i) NavToItemPage;
-  final int totalSum;
+  final Function() updtotalSum;
+  final int price;
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -36,7 +38,9 @@ class _CartItemState extends State<CartItem> {
         info.cartFlavors.indexWhere((el) => el.id == widget.flavor.id);
     if (index != -1) {
       info.cartFlavors[index].number = _num;
+      widget.updtotalSum();
       print(info.cartFlavors[index].number);
+      print('widget.totalSum ${widget.updtotalSum()}');
     }
   }
 
@@ -44,6 +48,8 @@ class _CartItemState extends State<CartItem> {
     setState(() {
       _num++;
       _updateCart();
+      widget.updtotalSum();
+      print('сумма ${widget.price}');
       print('ПРИБАВЛЕНИЕ');
     });
   }
@@ -53,10 +59,27 @@ class _CartItemState extends State<CartItem> {
       setState(() {
         _num--;
         _updateCart();
+        widget.updtotalSum();
+        print('сумма ${widget.updtotalSum()}');
         print('УБАВЛЕНИЕ');
       });
     }
   }
+/*
+  int _getTotalPrice() {
+    int totalSum = 0;
+    for (var cartFlavor in info.cartFlavors) {
+      Flavor flavor = info.flavors.firstWhere((fl) => fl.id == cartFlavor.id);
+
+      totalSum += flavor.price * cartFlavor.number;
+      print(totalSum);
+    }
+    setState(() {
+      totalSum;
+      print('итоговая сумма ${totalSum}');
+    });
+    return totalSum;
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -125,9 +148,12 @@ class _CartItemState extends State<CartItem> {
                   width: 20,
                 ),
                 IconButton(
-                    onPressed: _minusNum, icon: const Icon(Icons.remove)),
+                    onPressed: () => {_minusNum(), widget.updtotalSum()},
+                    icon: const Icon(Icons.remove)),
                 Text(_num.toString()),
-                IconButton(onPressed: _plusNum, icon: const Icon(Icons.add)),
+                IconButton(
+                    onPressed: () => {_plusNum(), widget.updtotalSum()},
+                    icon: const Icon(Icons.add)),
               ],
             )
           ],

@@ -9,11 +9,13 @@ class MyCartPage extends StatefulWidget {
     super.key,
     required this.onDelete,
     required this.navToItemPage,
-    required this.totalSum,
+    required this.updtotalSum,
+    required this.price,
   });
   final Function(Flavor) onDelete;
   final Function(int i) navToItemPage;
-  final int totalSum;
+  final Function() updtotalSum;
+  final int price;
   @override
   State<MyCartPage> createState() => _MyCartPageState();
 }
@@ -144,12 +146,48 @@ class _MyCartPageState extends State<MyCartPage> {
                           flavor: flavorM,
                           NavToItemPage: (int i) => {widget.navToItemPage(i)},
                           onDelete: (flavor) => widget.onDelete(flavor),
-                          totalSum: widget.totalSum,
+                          updtotalSum: () {
+                            widget.updtotalSum;
+                          },
+                          price: widget.price,
                         ),
                       ),
                     );
                   },
                 ),
+                Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.transparent,
+                      ),
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.amber,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0, horizontal: 60.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                            ),
+                            child: Text(
+                              '${widget.price.toString()} ₽     оплатить',
+                              style: const TextStyle(
+                                fontSize: 18.0,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ))
               ],
             ),
     );
