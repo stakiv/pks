@@ -58,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 16.0),
                               child: HomeItemListPage(
+                                id: info.items[index].id,
                                 name: info.items[index].name,
                                 numDays: info.items[index].numDays,
                                 cost: info.items[index].cost,
