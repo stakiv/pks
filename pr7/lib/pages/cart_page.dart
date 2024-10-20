@@ -13,11 +13,28 @@ class MyCartPage extends StatefulWidget {
 }
 
 class _MyCartPageState extends State<MyCartPage> {
+  List<Item> cartItemsList = info.items
+      .where((el) => info.cartItems.any((i) => i.id == el.id))
+      .toList();
+
+  int totalSum = info.cartItems.fold(
+      0,
+      (sum, el) =>
+          sum +
+          el.numPeople * info.items.firstWhere((i) => i.id == el.id).cost);
   void plusPeople(int i) {
     setState(() {
       info.cartItems
           .elementAt(info.cartItems.indexWhere((el) => el.id == i))
           .numPeople += 1;
+      totalSum = info.cartItems.fold(
+          0,
+          (sum, el) =>
+              sum +
+              el.numPeople *
+                  info.items
+                      .elementAt(info.items.indexWhere((i) => i.id == el.id))
+                      .cost);
     });
   }
 
@@ -27,8 +44,36 @@ class _MyCartPageState extends State<MyCartPage> {
         info.cartItems
             .elementAt(info.cartItems.indexWhere((el) => el.id == i))
             .numPeople -= 1;
+        totalSum = info.cartItems.fold(
+            0,
+            (sum, el) =>
+                sum +
+                el.numPeople *
+                    info.items
+                        .elementAt(info.items.indexWhere((i) => i.id == el.id))
+                        .cost);
       });
     }
+  }
+
+  void addToCartList(int id) {
+    setState(() {
+      if (info.cartItems.any((el) => el.id == id)) {
+        info.cartItems.removeAt(info.cartItems.indexWhere((i) => i.id == id));
+        cartItemsList = info.items
+            .where((item) => info.cartItems.any((j) => j.id == item.id))
+            .toList();
+        totalSum = info.cartItems.fold(
+            0,
+            (sum, element) =>
+                sum +
+                element.numPeople *
+                    info.items
+                        .elementAt(
+                            info.items.indexWhere((el) => el.id == element.id))
+                        .cost);
+      }
+    });
   }
 
   @override
@@ -70,7 +115,7 @@ class _MyCartPageState extends State<MyCartPage> {
                             width: 1.0, // Ширина границы
                           ),
                         ),*/
-                        height: (138.0 + 16.0) * info.items.length + 16,
+                        height: (138.0 + 16.0) * info.cartItems.length + 16,
                         child: ListView.builder(
                           itemCount: info.cartItems.length,
                           itemBuilder: (BuildContext context, int index) {
@@ -82,11 +127,40 @@ class _MyCartPageState extends State<MyCartPage> {
                                 item: itemM,
                                 plusPeople: (int num) => plusPeople(num),
                                 minusPeople: (int num) => minusPeople(num),
+                                deleteFromCart: (int i) => addToCartList(i),
                                 //people: info.cartItems[index].numPeople,
                               ),
                             );
                           },
                         )),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 40.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Сумма',
+                            style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromRGBO(0, 0, 0, 1.0),
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Text(
+                            '${totalSum} ₽',
+                            style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromRGBO(0, 0, 0, 1.0),
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),

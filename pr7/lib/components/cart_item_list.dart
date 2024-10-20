@@ -10,10 +10,12 @@ class CartItemListPage extends StatefulWidget {
     required this.item,
     required this.plusPeople,
     required this.minusPeople,
+    required this.deleteFromCart,
     //required this.people,
   });
   final Function(int num) plusPeople;
   final Function(int num) minusPeople;
+  final Function(int num) deleteFromCart;
   final Item item;
   //final int people;
 
@@ -70,14 +72,42 @@ class _CartItemListPage extends State<CartItemListPage> {
       //height: 138,
       child: Column(
         children: [
-          Text(
-            widget.item.name,
-            style: GoogleFonts.montserrat(
-              textStyle: const TextStyle(
-                fontSize: 16,
-                color: Color.fromRGBO(0, 0, 0, 1.0),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 285,
+                child: Text(
+                  textAlign: TextAlign.left,
+                  softWrap: true,
+                  widget.item.name,
+                  style: GoogleFonts.montserrat(
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      color: Color.fromRGBO(0, 0, 0, 1.0),
+                    ),
+                  ),
+                ),
               ),
-            ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                      onTap: () {
+                        widget.minusPeople(widget.item.id);
+                      },
+                      child: Container(
+                        color: const Color.fromRGBO(255, 0, 0, 0),
+                        height: 20.0,
+                        width: 20.0,
+                        child: const ImageIcon(
+                            AssetImage('assets/cart/Delete.png'),
+                            color: Color.fromARGB(255, 126, 126, 154)),
+                      )),
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 16,
@@ -89,7 +119,7 @@ class _CartItemListPage extends State<CartItemListPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${widget.item.cost.toString()} ₽',
+                    '${(widget.item.cost * cartItems.firstWhere((el) => el.id == widget.item.id).numPeople).toString()} ₽',
                     style: GoogleFonts.montserrat(
                         textStyle: const TextStyle(
                             fontSize: 17, color: Color.fromRGBO(0, 0, 0, 1.0))),
@@ -113,12 +143,23 @@ class _CartItemListPage extends State<CartItemListPage> {
                   Container(
                     width: 31.0,
                     height: 32.0,
-                    child: ElevatedButton(
-                      onPressed: () {
+                    decoration: const BoxDecoration(
+                      color: Color.fromRGBO(245, 245, 249, 1.0),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          bottomLeft: Radius.circular(8)),
+                    ),
+                    /*shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          bottomLeft: Radius.circular(8)),
+                    ),*/
+                    child: GestureDetector(
+                      onTap: () {
                         widget.minusPeople(widget.item.id);
                         print('minus');
                       },
-                      style: ElevatedButton.styleFrom(
+                      /*style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor:
                             const Color.fromRGBO(245, 245, 249, 1.0),
@@ -127,16 +168,19 @@ class _CartItemListPage extends State<CartItemListPage> {
                               topLeft: Radius.circular(8),
                               bottomLeft: Radius.circular(8)),
                         ),
-                      ),
+                      ),*/
                       child: Container(
                         width: 20.0,
                         height: 20.0,
-                        decoration: const BoxDecoration(
+                        child: const ImageIcon(
+                          AssetImage('assets/cart/minus.png'),
+                        ),
+                        /*decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('assets/cart/minus.png'),
                             fit: BoxFit.contain,
                           ),
-                        ),
+                        ),*/
                       ),
                     ),
                   ),
@@ -148,28 +192,39 @@ class _CartItemListPage extends State<CartItemListPage> {
                   Container(
                     width: 31.0,
                     height: 32.0,
-                    child: ElevatedButton(
-                      onPressed: () {
+                    decoration: const BoxDecoration(
+                      color: Color.fromRGBO(245, 245, 249, 1.0),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(8),
+                          bottomRight: Radius.circular(8)),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
                         widget.plusPeople(widget.item.id);
                         print('plus');
                       },
-                      style: ElevatedButton.styleFrom(
+                      /*style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor:
                             const Color.fromRGBO(245, 245, 249, 1.0),
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(8),
-                              bottomRight: Radius.circular(8)),
+                              topLeft: Radius.circular(8),
+                              bottomLeft: Radius.circular(8)),
                         ),
-                      ),
+                      ),*/
                       child: Container(
-                        decoration: const BoxDecoration(
+                        width: 20.0,
+                        height: 20.0,
+                        child: const ImageIcon(
+                          AssetImage('assets/cart/plus.png'),
+                        ),
+                        /*decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/cart/plus.png'),
+                            image: AssetImage('assets/cart/minus.png'),
                             fit: BoxFit.contain,
                           ),
-                        ),
+                        ),*/
                       ),
                     ),
                   ),
