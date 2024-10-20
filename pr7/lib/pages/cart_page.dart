@@ -3,6 +3,7 @@ import 'package:pr7/components/cart_item_list.dart';
 import 'package:pr7/models/info.dart' as info;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pr7/models/items.dart';
+import 'package:pr7/models/cart.dart';
 
 class MyCartPage extends StatefulWidget {
   const MyCartPage({super.key});
@@ -12,6 +13,24 @@ class MyCartPage extends StatefulWidget {
 }
 
 class _MyCartPageState extends State<MyCartPage> {
+  void plusPeople(int i) {
+    setState(() {
+      info.cartItems
+          .elementAt(info.cartItems.indexWhere((el) => el.id == i))
+          .numPeople += 1;
+    });
+  }
+
+  void minusPeople(int i) {
+    if (info.cartItems.firstWhere((el) => el.id == i).numPeople > 1) {
+      setState(() {
+        info.cartItems
+            .elementAt(info.cartItems.indexWhere((el) => el.id == i))
+            .numPeople -= 1;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +80,9 @@ class _MyCartPageState extends State<MyCartPage> {
                               padding: const EdgeInsets.only(bottom: 16.0),
                               child: CartItemListPage(
                                 item: itemM,
-                                people: info.cartItems[index].numPeople,
+                                plusPeople: (int num) => plusPeople(num),
+                                minusPeople: (int num) => minusPeople(num),
+                                //people: info.cartItems[index].numPeople,
                               ),
                             );
                           },

@@ -8,11 +8,14 @@ class CartItemListPage extends StatefulWidget {
   const CartItemListPage({
     super.key,
     required this.item,
-    required this.people,
+    required this.plusPeople,
+    required this.minusPeople,
+    //required this.people,
   });
-
+  final Function(int num) plusPeople;
+  final Function(int num) minusPeople;
   final Item item;
-  final int people;
+  //final int people;
 
   @override
   State<CartItemListPage> createState() => _CartItemListPage();
@@ -32,31 +35,25 @@ class _CartItemListPage extends State<CartItemListPage> {
   @override
   Widget build(BuildContext context) {
     String people;
-    if (widget.people % 10 == 1) {
+    if (cartItems.firstWhere((el) => el.id == widget.item.id).numPeople % 100 >
+            10 &&
+        cartItems.firstWhere((el) => el.id == widget.item.id).numPeople % 100 <
+            15) {
+      people = 'пациентов';
+    } else if (cartItems.firstWhere((el) => el.id == widget.item.id).numPeople %
+            10 ==
+        1) {
       people = 'пациент';
-    } else if (widget.item.numDays % 10 == 2 ||
-        widget.item.numDays % 10 == 3 ||
-        widget.item.numDays % 10 == 4) {
+    } else if (cartItems.firstWhere((el) => el.id == widget.item.id).numPeople %
+                10 ==
+            2 ||
+        cartItems.firstWhere((el) => el.id == widget.item.id).numPeople % 10 ==
+            3 ||
+        cartItems.firstWhere((el) => el.id == widget.item.id).numPeople % 10 ==
+            4) {
       people = 'пациента';
     } else {
-      people = 'дней';
-    }
-    void plusPeople(int i) {
-      setState(() {
-        cartItems
-            .elementAt(cartItems.indexWhere((el) => el.id == i))
-            .numPeople += 1;
-      });
-    }
-
-    void minusPeople(int i) {
-      if (cartItems.firstWhere((el) => el.id == i).numPeople > 1) {
-        setState(() {
-          cartItems
-              .elementAt(cartItems.indexWhere((el) => el.id == i))
-              .numPeople -= 1;
-        });
-      }
+      people = 'пациентов';
     }
 
     return Container(
@@ -102,7 +99,7 @@ class _CartItemListPage extends State<CartItemListPage> {
               Row(
                 children: [
                   Text(
-                    '${widget.people} $people',
+                    '${cartItems.firstWhere((el) => el.id == widget.item.id).numPeople} $people',
                     style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(
                         fontSize: 15,
@@ -118,7 +115,8 @@ class _CartItemListPage extends State<CartItemListPage> {
                     height: 32.0,
                     child: ElevatedButton(
                       onPressed: () {
-                        minusPeople(widget.item.id);
+                        widget.minusPeople(widget.item.id);
+                        print('minus');
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
@@ -131,9 +129,13 @@ class _CartItemListPage extends State<CartItemListPage> {
                         ),
                       ),
                       child: Container(
+                        width: 20.0,
+                        height: 20.0,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage('assets/cart/minus.png')),
+                            image: AssetImage('assets/cart/minus.png'),
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                     ),
@@ -148,7 +150,8 @@ class _CartItemListPage extends State<CartItemListPage> {
                     height: 32.0,
                     child: ElevatedButton(
                       onPressed: () {
-                        plusPeople(widget.item.id);
+                        widget.plusPeople(widget.item.id);
+                        print('plus');
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
@@ -163,7 +166,9 @@ class _CartItemListPage extends State<CartItemListPage> {
                       child: Container(
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage('assets/cart/plus.png')),
+                            image: AssetImage('assets/cart/plus.png'),
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                     ),
