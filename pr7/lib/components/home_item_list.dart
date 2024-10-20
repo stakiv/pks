@@ -63,9 +63,9 @@ class _HomeItemListPage extends State<HomeItemListPage> {
             widget.name,
             style: GoogleFonts.montserrat(
               textStyle: const TextStyle(
-                fontSize: 16,
-                color: Color.fromRGBO(0, 0, 0, 1.0),
-              ),
+                  fontSize: 16,
+                  color: Color.fromRGBO(0, 0, 0, 1.0),
+                  fontWeight: FontWeight.w400),
             ),
           ),
           const SizedBox(
@@ -82,7 +82,8 @@ class _HomeItemListPage extends State<HomeItemListPage> {
                     style: GoogleFonts.montserrat(
                         textStyle: const TextStyle(
                             fontSize: 14,
-                            color: Color.fromRGBO(147, 147, 150, 1.0))),
+                            color: Color.fromRGBO(147, 147, 150, 1.0),
+                            fontWeight: FontWeight.w400)),
                   ),
                   const SizedBox(
                     height: 4.0,
@@ -91,7 +92,9 @@ class _HomeItemListPage extends State<HomeItemListPage> {
                     '${widget.cost.toString()} ₽',
                     style: GoogleFonts.montserrat(
                         textStyle: const TextStyle(
-                            fontSize: 17, color: Color.fromRGBO(0, 0, 0, 1.0))),
+                            fontSize: 17,
+                            color: Color.fromRGBO(0, 0, 0, 1.0),
+                            fontWeight: FontWeight.w400)),
                   )
                 ],
               ),
@@ -116,9 +119,9 @@ class _HomeItemListPage extends State<HomeItemListPage> {
                       : 'Добавить',
                   style: GoogleFonts.montserrat(
                     textStyle: const TextStyle(
-                      fontSize: 14,
-                      //color: Color.fromRGBO(255, 255, 255, 1.0),
-                    ),
+                        fontSize: 14, fontWeight: FontWeight.w500
+                        //color: Color.fromRGBO(255, 255, 255, 1.0),
+                        ),
                   ),
                 ),
               )

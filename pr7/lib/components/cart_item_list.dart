@@ -110,7 +110,7 @@ class _CartItemListPage extends State<CartItemListPage> {
             ],
           ),
           const SizedBox(
-            height: 16,
+            height: 38,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,7 +122,9 @@ class _CartItemListPage extends State<CartItemListPage> {
                     '${(widget.item.cost * cartItems.firstWhere((el) => el.id == widget.item.id).numPeople).toString()} ₽',
                     style: GoogleFonts.montserrat(
                         textStyle: const TextStyle(
-                            fontSize: 17, color: Color.fromRGBO(0, 0, 0, 1.0))),
+                            fontSize: 17,
+                            color: Color.fromRGBO(0, 0, 0, 1.0),
+                            fontWeight: FontWeight.w400)),
                   )
                 ],
               ),
@@ -132,9 +134,9 @@ class _CartItemListPage extends State<CartItemListPage> {
                     '${cartItems.firstWhere((el) => el.id == widget.item.id).numPeople} $people',
                     style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(
-                        fontSize: 15,
-                        color: Color.fromRGBO(0, 0, 0, 1.0),
-                      ),
+                          fontSize: 15,
+                          color: Color.fromRGBO(0, 0, 0, 1.0),
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                   const SizedBox(
