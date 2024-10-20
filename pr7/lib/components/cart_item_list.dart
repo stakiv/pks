@@ -95,7 +95,7 @@ class _CartItemListPage extends State<CartItemListPage> {
                   alignment: Alignment.topRight,
                   child: GestureDetector(
                       onTap: () {
-                        widget.minusPeople(widget.item.id);
+                        widget.deleteFromCart(widget.item.id);
                       },
                       child: Container(
                         color: const Color.fromRGBO(255, 0, 0, 0),

@@ -34,7 +34,9 @@ class _HomeItemListPage extends State<HomeItemListPage> {
   @override
   Widget build(BuildContext context) {
     String days;
-    if (widget.numDays % 10 == 1) {
+    if (widget.numDays % 100 > 10 && widget.numDays % 100 < 15) {
+      days = 'дней';
+    } else if (widget.numDays % 10 == 1) {
       days = 'день';
     } else if (widget.numDays % 10 == 2 ||
         widget.numDays % 10 == 3 ||
@@ -101,15 +103,21 @@ class _HomeItemListPage extends State<HomeItemListPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  foregroundColor: const Color.fromRGBO(255, 255, 255, 1.0),
-                  backgroundColor: const Color.fromRGBO(26, 111, 238, 1.0),
+                  foregroundColor: cartItems.any((el) => el.id == widget.id)
+                      ? const Color.fromRGBO(147, 147, 150, 1.0)
+                      : const Color.fromRGBO(255, 255, 255, 1.0),
+                  backgroundColor: cartItems.any((el) => el.id == widget.id)
+                      ? const Color.fromRGBO(245, 245, 249, 1.0)
+                      : const Color.fromRGBO(26, 111, 238, 1.0),
                 ),
                 child: Text(
-                  'Добавить',
+                  cartItems.any((el) => el.id == widget.id)
+                      ? 'Удалить'
+                      : 'Добавить',
                   style: GoogleFonts.montserrat(
                     textStyle: const TextStyle(
                       fontSize: 14,
-                      color: Color.fromRGBO(255, 255, 255, 1.0),
+                      //color: Color.fromRGBO(255, 255, 255, 1.0),
                     ),
                   ),
                 ),
