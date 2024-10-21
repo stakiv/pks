@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pr7/models/info.dart';
+import 'package:pr7/components/edit_profile_info.dart';
 
-class ProfileInfoPage extends StatelessWidget {
-  const ProfileInfoPage(
-      {super.key,
-      required this.name,
-      required this.phone,
-      required this.email});
+class ProfileInfoPage extends StatefulWidget {
+  const ProfileInfoPage({
+    super.key,
+    /*required this.user,
+    required this.phone,
+      required this.email*/
+  });
 
-  final String name;
+  /*final String user;
   final String phone;
-  final String email;
+  final String email;*/
+
+  @override
+  State<ProfileInfoPage> createState() => _ProfileInfoPageState();
+}
+
+class _ProfileInfoPageState extends State<ProfileInfoPage> {
+  void _navigateToEditUserInfoScreen(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MyEditProfileInfoPage()),
+    );
+    if (result != null) {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +39,24 @@ class ProfileInfoPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(name,
-                  style: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                        fontSize: 24,
-                        color: Color.fromRGBO(0, 0, 0, 1.0),
-                        fontWeight: FontWeight.w500),
-                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(userInfo.name,
+                      style: GoogleFonts.montserrat(
+                        textStyle: const TextStyle(
+                            fontSize: 24,
+                            color: Color.fromRGBO(0, 0, 0, 1.0),
+                            fontWeight: FontWeight.w500),
+                      )),
+                  GestureDetector(
+                    child: Icon(Icons.edit),
+                    onTap: () => _navigateToEditUserInfoScreen(context),
+                  )
+                ],
+              ),
               const SizedBox(height: 22),
-              Text(phone,
+              Text(userInfo.phone,
                   style: GoogleFonts.montserrat(
                     textStyle: const TextStyle(
                         fontSize: 15,
@@ -37,7 +64,7 @@ class ProfileInfoPage extends StatelessWidget {
                         fontWeight: FontWeight.w500),
                   )),
               const SizedBox(height: 16),
-              Text(email,
+              Text(userInfo.email,
                   style: GoogleFonts.montserrat(
                     textStyle: const TextStyle(
                         fontSize: 15,

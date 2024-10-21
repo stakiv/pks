@@ -24,9 +24,10 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 height: 92,
               ),
               ProfileInfoPage(
-                  name: info.profileInfo[0],
-                  phone: info.profileInfo[1],
-                  email: info.profileInfo[2]),
+                  /*user: info.userInfo,
+                phone: info.profileInfo[1],
+                  email: info.profileInfo[2]*/
+                  ),
               const SizedBox(
                 height: 48,
               ),

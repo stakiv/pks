@@ -55,18 +55,25 @@ class _HomeItemListPage extends State<HomeItemListPage> {
         borderRadius: BorderRadius.circular(12),
       ),
       padding: const EdgeInsets.all(16.0),
-      width: 335,
+      width: double.infinity,
       //height: 138,
       child: Column(
         children: [
-          Text(
-            widget.name,
-            style: GoogleFonts.montserrat(
-              textStyle: const TextStyle(
-                  fontSize: 16,
-                  color: Color.fromRGBO(0, 0, 0, 1.0),
-                  fontWeight: FontWeight.w400),
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Flexible(
+                child: Text(
+                  widget.name,
+                  style: GoogleFonts.montserrat(
+                    textStyle: const TextStyle(
+                        fontSize: 16,
+                        color: Color.fromRGBO(0, 0, 0, 1.0),
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 16,

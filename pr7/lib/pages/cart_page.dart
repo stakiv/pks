@@ -21,6 +21,7 @@ class _MyCartPageState extends State<MyCartPage> {
       (sum, el) =>
           sum +
           el.numPeople * info.items.firstWhere((i) => i.id == el.id).cost);
+
   void plusPeople(int i) {
     setState(() {
       info.cartItems
@@ -37,11 +38,11 @@ class _MyCartPageState extends State<MyCartPage> {
     });
   }
 
-  void minusPeople(int i) {
-    if (info.cartItems.firstWhere((el) => el.id == i).numPeople > 1) {
+  void minusPeople(int id) {
+    if (info.cartItems.firstWhere((el) => el.id == id).numPeople > 1) {
       setState(() {
         info.cartItems
-            .elementAt(info.cartItems.indexWhere((el) => el.id == i))
+            .elementAt(info.cartItems.indexWhere((el) => el.id == id))
             .numPeople -= 1;
         totalSum = info.cartItems.fold(
             0,
@@ -79,160 +80,107 @@ class _MyCartPageState extends State<MyCartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              const SizedBox(
-                height: 92,
-              ),
-              MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 27.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Корзина',
-                            style: GoogleFonts.montserrat(
-                              textStyle: const TextStyle(
-                                  fontSize: 24,
-                                  color: Color.fromRGBO(0, 0, 0, 1),
-                                  fontWeight: FontWeight.w500),
-                            )),
-                        const SizedBox(
-                          height: 38,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 27.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 92),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text('Корзина',
+                  style: GoogleFonts.montserrat(
+                    textStyle: const TextStyle(
+                        fontSize: 24,
+                        color: Color.fromRGBO(0, 0, 0, 1),
+                        fontWeight: FontWeight.w500),
+                  )),
+            ),
+            const SizedBox(height: 14),
+            Expanded(
+              child: info.cartItems.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: info.cartItems.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        Item itemM = info.items.firstWhere(
+                            (el) => el.id == info.cartItems[index].id);
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: CartItemListPage(
+                            item: itemM,
+                            plusPeople: (int num) => plusPeople(num),
+                            minusPeople: (int num) => minusPeople(num),
+                            deleteFromCart: (int id) => addToCartList(id),
+                          ),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text(
+                        'В корзине ничего нет',
+                        style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                              fontSize: 18,
+                              color: Color.fromRGBO(147, 147, 150, 1.0),
+                              fontWeight: FontWeight.w400),
                         ),
-                        info.cartItems.isNotEmpty
-                            ? Container(
-                                /*decoration: BoxDecoration(
-                              color: const Color.fromARGB(
-                                  255, 27, 86, 134), // Цвет фона
-                              border: Border.all(
-                                // Настройка границ
-                                color: Colors.black, // Цвет границы
-                                width: 1.0, // Ширина границы
-                              ),
-                            ),*/
-                                height:
-                                    (138.0 + 16.0) * info.cartItems.length + 16,
-                                child: ListView.builder(
-                                  itemCount: info.cartItems.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    Item itemM = info.items.firstWhere((el) =>
-                                        el.id == info.cartItems[index].id);
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 16.0),
-                                      child: CartItemListPage(
-                                        item: itemM,
-                                        plusPeople: (int num) =>
-                                            plusPeople(num),
-                                        minusPeople: (int num) =>
-                                            minusPeople(num),
-                                        deleteFromCart: (int id) =>
-                                            addToCartList(id),
-                                      ),
-                                    );
-                                  },
-                                ))
-                            : Center(
-                                child: Text(
-                                  'В корзине ничего нет',
-                                  style: GoogleFonts.montserrat(
-                                    textStyle: const TextStyle(
-                                        fontSize: 18,
-                                        color:
-                                            Color.fromRGBO(147, 147, 150, 1.0),
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ),
-                              ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 40.0,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Сумма',
-                                style: GoogleFonts.montserrat(
-                                  textStyle: const TextStyle(
-                                      fontSize: 20,
-                                      color: Color.fromRGBO(0, 0, 0, 1.0),
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                              Text(
-                                '$totalSum ₽',
-                                style: GoogleFonts.montserrat(
-                                  textStyle: const TextStyle(
-                                      fontSize: 20,
-                                      color: Color.fromRGBO(0, 0, 0, 1.0),
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                      ),
+                    ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 40.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Сумма',
+                    style: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                          fontSize: 20,
+                          color: Color.fromRGBO(0, 0, 0, 1.0),
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
-                ),
+                  Text(
+                    '$totalSum ₽',
+                    style: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                          fontSize: 20,
+                          color: Color.fromRGBO(0, 0, 0, 1.0),
+                          fontWeight: FontWeight.w500),
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
-          info.cartItems.isNotEmpty
-              ? Positioned(
-                  top: 670,
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                    child: Container(
-                      width: 335.0,
-                      //height: 56.0,
-                      decoration: const BoxDecoration(
-                        color: Colors.transparent,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromRGBO(26, 111, 238, 1.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 18),
-                              child: Text(
-                                'Перейти к оформлению заказа',
-                                style: GoogleFonts.montserrat(
-                                  textStyle: const TextStyle(
-                                      fontSize: 17.0,
-                                      color: Color.fromRGBO(255, 255, 255, 1.0),
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
+            ),
+            if (info.cartItems.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0, bottom: 30.0),
+                child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(26, 111, 238, 1.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                  ))
-              : Container()
-        ],
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Text(
+                          'Перейти к оформлению заказа',
+                          style: GoogleFonts.montserrat(
+                            textStyle: const TextStyle(
+                              fontSize: 17.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )),
+              )
+          ],
+        ),
       ),
     );
   }
