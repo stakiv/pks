@@ -33,4 +33,5 @@
 
 
 **Демонстрация работы приложения**
+
 ![pr7](https://github.com/user-attachments/assets/ad27bf0b-344e-456e-8114-a05e604235c8)
