@@ -1,16 +1,36 @@
-# pr7
+# Практическое задание №7 ПКС
+## ЭФБО-01-22 Степанова Виктория
 
-A new Flutter project.
+В этой практической необходимо было создать проект по готовому макету. В проекте 3 основных экрана: главный (с каталогом услуг), корзина и профиль.
 
-## Getting Started
+Реализация работы:
 
-This project is a starting point for a Flutter application.
+**1. Главный экран**
 
-A few resources to get you started if this is your first Flutter project:
+Здесь находится список всех услуг, у каждого элемента есть возможность добавления в корзину. При запуске приложения в корзине нет никаких элементов, отображается текстовая заглушка
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![image](https://github.com/user-attachments/assets/29c30cdd-6302-46d3-84ad-6e0edfa8b575)
+![image](https://github.com/user-attachments/assets/bfc0ff0b-9b57-4f07-8fd4-9fc732885cf2)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Добавление услуг в корзину происходит через нажатие на кнопку "добавить" на элементе. Элемент появляется на экране корзины, также внизу подсчитывается суммарная стоимость элементов в корзине и появляется кнопка перехода к оформлению заказа.
+
+![image](https://github.com/user-attachments/assets/44573706-6cee-44dc-9792-da9af1bf9469)
+![image](https://github.com/user-attachments/assets/c505690d-661d-4df6-867a-38b6e244aecf)
+
+**2. Корзина**
+
+Количество элементов можно менять через прибавление и уменьшение у элементов. При изменении количества элементов меняется общая стоимость и стоимость отдельной услуги
+
+![image](https://github.com/user-attachments/assets/25574444-cfdd-4c1a-abf3-6c14c7fd536e)
+
+Удалить товар из корзины можно 2 способами: через нажатие на крестик у элемента в корзине и через нажатие на кнопку удалить на главном экране.
+
+**3. Профиль**
+
+На странице профиля находятся данные пользователя, а также остальные функции приложения
+
+![image](https://github.com/user-attachments/assets/9977e9e5-3f1b-4a8f-bb41-bb2052d63284)
+
+
+**Демонстрация работы приложения**
+![pr7](https://github.com/user-attachments/assets/ad27bf0b-344e-456e-8114-a05e604235c8)
