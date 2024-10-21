@@ -126,32 +126,33 @@ class _MyCartPageState extends State<MyCartPage> {
                       ),
                     ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 40.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Сумма',
-                    style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          fontSize: 20,
-                          color: Color.fromRGBO(0, 0, 0, 1.0),
-                          fontWeight: FontWeight.w500),
+            if (info.cartItems.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Сумма',
+                      style: GoogleFonts.montserrat(
+                        textStyle: const TextStyle(
+                            fontSize: 20,
+                            color: Color.fromRGBO(0, 0, 0, 1.0),
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
-                  ),
-                  Text(
-                    '$totalSum ₽',
-                    style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                          fontSize: 20,
-                          color: Color.fromRGBO(0, 0, 0, 1.0),
-                          fontWeight: FontWeight.w500),
-                    ),
-                  )
-                ],
+                    Text(
+                      '$totalSum ₽',
+                      style: GoogleFonts.montserrat(
+                        textStyle: const TextStyle(
+                            fontSize: 20,
+                            color: Color.fromRGBO(0, 0, 0, 1.0),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
             if (info.cartItems.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 40.0, bottom: 30.0),

@@ -20,7 +20,7 @@ class ProfileInfoPage extends StatefulWidget {
 }
 
 class _ProfileInfoPageState extends State<ProfileInfoPage> {
-  void _navigateToEditUserInfoScreen(BuildContext context) async {
+  /*void _navigateToEditUserInfoScreen(BuildContext context) async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => MyEditProfileInfoPage()),
@@ -28,7 +28,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     if (result != null) {
       setState(() {});
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +49,11 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                             color: Color.fromRGBO(0, 0, 0, 1.0),
                             fontWeight: FontWeight.w500),
                       )),
+                  /*
                   GestureDetector(
                     child: Icon(Icons.edit),
                     onTap: () => _navigateToEditUserInfoScreen(context),
-                  )
+                  )*/
                 ],
               ),
               const SizedBox(height: 22),

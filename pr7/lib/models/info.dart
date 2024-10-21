@@ -5,7 +5,7 @@ import 'package:pr7/models/user.dart';
 
 User userInfo = User(
   id: 0,
-  name: 'Эдуард',
+  name: 'Степанова Виктория',
   phone: '+7 900 800-55-33',
   email: 'email@gmail.com',
 );
