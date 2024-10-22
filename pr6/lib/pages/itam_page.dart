@@ -31,13 +31,14 @@ class _ItamPageState extends State<ItamPage> {
         title: Container(
           width: MediaQuery.of(context).size.width * 0.9,
           child: Padding(
-            padding: EdgeInsets.only(right: 8.0, left: 8.0, top: 8.0),
+            padding: const EdgeInsets.only(right: 8.0, left: 8.0, top: 8.0),
             child: Center(
               child: Column(
                 children: [
                   Text(
                     'Удалить ${info.flavors[flavIndex].flavorName}?',
-                    style: TextStyle(fontSize: 14.00, color: Colors.black),
+                    style:
+                        const TextStyle(fontSize: 14.00, color: Colors.black),
                   ),
                   const SizedBox(height: 20),
                   Image.network(
@@ -137,7 +138,8 @@ class _ItamPageState extends State<ItamPage> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      widget.onAddToFavourites(widget.flavor);
+                      widget.onAddToFavourites(widget.flavor.id);
+                      setState(() {});
                     },
                     icon: isFavourite
                         ? const Icon(Icons.favorite,
@@ -148,7 +150,8 @@ class _ItamPageState extends State<ItamPage> {
                   const SizedBox(width: 30.0),
                   IconButton(
                     onPressed: () {
-                      widget.onAddToCart(widget.flavor);
+                      widget.onAddToCart(widget.flavor.id);
+                      setState(() {});
                     },
                     icon: isInCart
                         ? const Icon(Icons.shopping_cart,
@@ -239,16 +242,17 @@ class _ItamPageState extends State<ItamPage> {
                           deleteItem(widget.flavor.id, context);
                         },
                         style: TextButton.styleFrom(
-                          backgroundColor: Color.fromRGBO(204, 194, 153, 1),
+                          backgroundColor:
+                              const Color.fromRGBO(204, 194, 153, 1),
                           padding: const EdgeInsets.symmetric(
                               vertical: 12.0, horizontal: 60.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Удалить',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14.0,
                             color: Color.fromARGB(255, 0, 0, 0),
                           ),

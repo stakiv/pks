@@ -21,12 +21,73 @@ class MyCartPage extends StatefulWidget {
 }
 
 class _MyCartPageState extends State<MyCartPage> {
-  void _addToFavorites(Flavor flavor) async {
+  List<Flavor> cartItemsList = info.flavors
+      .where((el) => info.cartFlavors.any((i) => i.id == el.id))
+      .toList();
+
+  // сумма корзины
+  int totalSum = info.cartFlavors.fold(
+      0,
+      (sum, el) =>
+          sum +
+          el.number * info.flavors.firstWhere((i) => i.id == el.id).price);
+
+  // увеличение кол ва пациентов
+  void plusPeople(int id) {
     setState(() {
-      if (info.favouriteFlavors.contains(flavor.id)) {
-        info.favouriteFlavors.remove(flavor.id);
+      final cartItemIndex = info.cartFlavors.indexWhere((el) => el.id == id);
+      if (cartItemIndex != -1) {
+        info.cartFlavors[cartItemIndex].number += 1;
+
+        totalSum = info.cartFlavors.fold(
+          0,
+          (sum, el) =>
+              sum +
+              el.number *
+                  info.flavors.firstWhere((item) => item.id == el.id).price,
+        );
+      }
+    });
+  }
+
+  // уменьшение кол ва пациентов
+  void minusPeople(int id) {
+    setState(() {
+      final cartItemIndex = info.cartFlavors.indexWhere((el) => el.id == id);
+
+      if (cartItemIndex != -1 && info.cartFlavors[cartItemIndex].number > 1) {
+        info.cartFlavors[cartItemIndex].number -= 1;
+        totalSum = info.cartFlavors.fold(
+          0,
+          (sum, el) =>
+              sum +
+              el.number *
+                  info.flavors.firstWhere((item) => item.id == el.id).price,
+        );
+      }
+    });
+  }
+
+  void wasDismissed(int id) {
+    setState(() {
+      final cartItemIndex = info.cartFlavors.indexWhere((el) => el.id == id);
+
+      totalSum = info.cartFlavors.fold(
+        0,
+        (sum, el) =>
+            sum +
+            el.number *
+                info.flavors.firstWhere((item) => item.id == el.id).price,
+      );
+    });
+  }
+
+  void _addToFavorites(int i) {
+    setState(() {
+      if (info.favouriteFlavors.contains(i)) {
+        info.favouriteFlavors.remove(i);
       } else {
-        info.favouriteFlavors.add(flavor.id);
+        info.favouriteFlavors.add(i);
       }
     });
   }
@@ -134,6 +195,7 @@ class _MyCartPageState extends State<MyCartPage> {
                       },
                       onDismissed: (direction) {
                         _deleteFromCart(info.cartFlavors[index]);
+                        wasDismissed(flavorId);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                               content: Text(
@@ -146,10 +208,10 @@ class _MyCartPageState extends State<MyCartPage> {
                           flavor: flavorM,
                           NavToItemPage: (int i) => {widget.navToItemPage(i)},
                           onDelete: (flavor) => widget.onDelete(flavor),
-                          updtotalSum: () {
-                            widget.updtotalSum;
-                          },
-                          price: widget.price,
+                          minusPeople: (int num) => minusPeople(num),
+
+                          plusPeople: (int num) => plusPeople(num),
+                          //price: widget.price,
                         ),
                       ),
                     );
@@ -178,7 +240,7 @@ class _MyCartPageState extends State<MyCartPage> {
                               ),
                             ),
                             child: Text(
-                              '${widget.price.toString()} ₽     оплатить',
+                              '${totalSum} ₽     оплатить',
                               style: const TextStyle(
                                 fontSize: 18.0,
                                 color: Color.fromARGB(255, 0, 0, 0),

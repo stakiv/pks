@@ -3,18 +3,19 @@ import 'package:pr6/models/flavor.dart';
 import 'package:pr6/models/info.dart' as info;
 
 class CartItem extends StatefulWidget {
-  const CartItem(
-      {super.key,
-      required this.flavor,
-      required this.onDelete,
-      required this.NavToItemPage,
-      required this.updtotalSum,
-      required this.price});
+  const CartItem({
+    super.key,
+    required this.flavor,
+    required this.onDelete,
+    required this.NavToItemPage,
+    required this.plusPeople,
+    required this.minusPeople,
+  });
   final Function(Flavor) onDelete;
   final Flavor flavor;
   final Function(int i) NavToItemPage;
-  final Function() updtotalSum;
-  final int price;
+  final Function(int num) plusPeople;
+  final Function(int num) minusPeople;
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -33,6 +34,7 @@ class _CartItemState extends State<CartItem> {
         info.cartFlavors.firstWhere((fl) => fl.id == widget.flavor.id).number;
   }
 
+/*
   void _updateCart() {
     final index =
         info.cartFlavors.indexWhere((el) => el.id == widget.flavor.id);
@@ -64,7 +66,7 @@ class _CartItemState extends State<CartItem> {
         print('УБАВЛЕНИЕ');
       });
     }
-  }
+  }*/
 /*
   int _getTotalPrice() {
     int totalSum = 0;
@@ -138,7 +140,7 @@ class _CartItemState extends State<CartItem> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Цена: ${(widget.flavor.price * _num).toString()}",
+                  "Цена: ${(widget.flavor.price * info.cartFlavors.firstWhere((el) => el.id == widget.flavor.id).number).toString()} ₽",
                   style: const TextStyle(
                       fontSize: 14,
                       color: Color.fromARGB(255, 65, 65, 65),
@@ -148,11 +150,12 @@ class _CartItemState extends State<CartItem> {
                   width: 20,
                 ),
                 IconButton(
-                    onPressed: () => {_minusNum(), widget.updtotalSum()},
+                    onPressed: () => {widget.minusPeople(widget.flavor.id)},
                     icon: const Icon(Icons.remove)),
-                Text(_num.toString()),
+                Text(
+                    '${info.cartFlavors.firstWhere((el) => el.id == widget.flavor.id).number}'),
                 IconButton(
-                    onPressed: () => {_plusNum(), widget.updtotalSum()},
+                    onPressed: () => {widget.plusPeople(widget.flavor.id)},
                     icon: const Icon(Icons.add)),
               ],
             )

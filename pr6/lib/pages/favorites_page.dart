@@ -186,7 +186,7 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
                   child: ListItem(
                     key: Key(flavorM.id.toString()),
                     flavor: flavorM,
-                    onDelete: (flavor) => deleteItem(flavor.id, context),
+                    //onDelete: (flavor) => deleteItem(flavor.id, context),
                     onAddToFavourites: (flavor) =>
                         {_deleteFromFavorites(flavor.id)},
                     onAddToCart: (flavor) => {_addToCart(flavor)},

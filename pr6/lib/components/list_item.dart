@@ -6,12 +6,12 @@ class ListItem extends StatefulWidget {
   const ListItem(
       {super.key,
       required this.flavor,
-      required this.onDelete,
+      //required this.onDelete,
       required this.onAddToFavourites,
       required this.onAddToCart,
       required this.NavToItemPage});
   final Flavor flavor;
-  final Function(Flavor) onDelete;
+  //final Function(Flavor) onDelete;
   final Function(Flavor) onAddToFavourites;
   final Function(Flavor) onAddToCart;
   final Function(int i) NavToItemPage;
