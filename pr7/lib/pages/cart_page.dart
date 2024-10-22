@@ -22,56 +22,58 @@ class _MyCartPageState extends State<MyCartPage> {
           sum +
           el.numPeople * info.items.firstWhere((i) => i.id == el.id).cost);
 
-  void plusPeople(int i) {
+  void plusPeople(int id) {
     setState(() {
-      info.cartItems
-          .elementAt(info.cartItems.indexWhere((el) => el.id == i))
-          .numPeople += 1;
-      totalSum = info.cartItems.fold(
+      final cartItemIndex = info.cartItems.indexWhere((el) => el.id == id);
+      if (cartItemIndex != -1) {
+        info.cartItems[cartItemIndex].numPeople += 1;
+
+        totalSum = info.cartItems.fold(
           0,
           (sum, el) =>
               sum +
               el.numPeople *
-                  info.items
-                      .elementAt(info.items.indexWhere((i) => i.id == el.id))
-                      .cost);
+                  info.items.firstWhere((item) => item.id == el.id).cost,
+        );
+      }
     });
   }
 
   void minusPeople(int id) {
-    if (info.cartItems.firstWhere((el) => el.id == id).numPeople > 1) {
-      setState(() {
-        info.cartItems
-            .elementAt(info.cartItems.indexWhere((el) => el.id == id))
-            .numPeople -= 1;
+    setState(() {
+      final cartItemIndex = info.cartItems.indexWhere((el) => el.id == id);
+
+      if (cartItemIndex != -1 && info.cartItems[cartItemIndex].numPeople > 1) {
+        info.cartItems[cartItemIndex].numPeople -= 1;
         totalSum = info.cartItems.fold(
-            0,
-            (sum, el) =>
-                sum +
-                el.numPeople *
-                    info.items
-                        .elementAt(info.items.indexWhere((i) => i.id == el.id))
-                        .cost);
-      });
-    }
+          0,
+          (sum, el) =>
+              sum +
+              el.numPeople *
+                  info.items.firstWhere((item) => item.id == el.id).cost,
+        );
+      }
+    });
   }
 
   void addToCartList(int id) {
     setState(() {
-      if (info.cartItems.any((el) => el.id == id)) {
-        info.cartItems.removeAt(info.cartItems.indexWhere((i) => i.id == id));
+      final cartItemIndex = info.cartItems.indexWhere((el) => el.id == id);
+
+      if (cartItemIndex != -1) {
+        info.cartItems.removeAt(cartItemIndex); // Удаляем элемент
+
         cartItemsList = info.items
             .where((item) => info.cartItems.any((j) => j.id == item.id))
             .toList();
+
         totalSum = info.cartItems.fold(
-            0,
-            (sum, element) =>
-                sum +
-                element.numPeople *
-                    info.items
-                        .elementAt(
-                            info.items.indexWhere((el) => el.id == element.id))
-                        .cost);
+          0,
+          (sum, element) =>
+              sum +
+              element.numPeople *
+                  info.items.firstWhere((item) => item.id == element.id).cost,
+        );
       }
     });
   }
