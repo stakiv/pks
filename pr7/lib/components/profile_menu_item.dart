@@ -12,13 +12,6 @@ class ProfileMenuItemPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.only(top: 18, bottom: 19),
-        /*decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 101, 121, 137),
-          border: Border.all(
-            color: const Color.fromARGB(255, 20, 165, 15),
-            width: 1.0,
-          ),
-        ),*/
         width: 335,
         //height: 65,
         child: Row(

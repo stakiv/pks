@@ -19,6 +19,8 @@ class _MyNavigationPageState extends State<MyNavigationPage> {
     MyCartPage(),
     MyProfilePage()
   ];
+
+  // обработка нажатия
   void _onItemTapped(int index) {
     setState(() {
       _selectedPage = index;

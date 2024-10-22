@@ -9,10 +9,6 @@ User userInfo = User(
   phone: '+7 900 800-55-33',
   email: 'email@gmail.com',
 );
-/*
-final List<User> userInfo = [
-  User(0, 'Эдуард', '+7 900 800-55-33', 'email@gmail.com'),
-];*/
 
 final List<ProfileItem> profileItems = [
   ProfileItem('Мои заказы', 'assets/profile/order.png'),

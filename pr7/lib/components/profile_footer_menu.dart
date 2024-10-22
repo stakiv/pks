@@ -18,14 +18,6 @@ class ProfileFooterMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        /*decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 27, 86, 134), // Цвет фона
-          border: Border.all(
-            // Настройка границ
-            color: Colors.black, // Цвет границы
-            width: 1.0, // Ширина границы
-          ),
-        ),*/
         padding: const EdgeInsets.symmetric(horizontal: 27.0),
         child: Center(
           child: Column(

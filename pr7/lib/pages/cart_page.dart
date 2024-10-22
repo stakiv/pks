@@ -16,12 +16,14 @@ class _MyCartPageState extends State<MyCartPage> {
       .where((el) => info.cartItems.any((i) => i.id == el.id))
       .toList();
 
+  // сумма корзины
   int totalSum = info.cartItems.fold(
       0,
       (sum, el) =>
           sum +
           el.numPeople * info.items.firstWhere((i) => i.id == el.id).cost);
 
+  // увеличение кол ва пациентов
   void plusPeople(int id) {
     setState(() {
       final cartItemIndex = info.cartItems.indexWhere((el) => el.id == id);
@@ -39,6 +41,7 @@ class _MyCartPageState extends State<MyCartPage> {
     });
   }
 
+  // уменьшение кол ва пациентов
   void minusPeople(int id) {
     setState(() {
       final cartItemIndex = info.cartItems.indexWhere((el) => el.id == id);
@@ -56,12 +59,13 @@ class _MyCartPageState extends State<MyCartPage> {
     });
   }
 
+  // добавление к ркорзину
   void addToCartList(int id) {
     setState(() {
       final cartItemIndex = info.cartItems.indexWhere((el) => el.id == id);
 
       if (cartItemIndex != -1) {
-        info.cartItems.removeAt(cartItemIndex); // Удаляем элемент
+        info.cartItems.removeAt(cartItemIndex);
 
         cartItemsList = info.items
             .where((item) => info.cartItems.any((j) => j.id == item.id))

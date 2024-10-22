@@ -23,7 +23,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
               const SizedBox(
                 height: 92,
               ),
-              ProfileInfoPage(
+              const ProfileInfoPage(
                   /*user: info.userInfo,
                 phone: info.profileInfo[1],
                   email: info.profileInfo[2]*/
@@ -35,14 +35,6 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 context: context,
                 removeTop: true,
                 child: Container(
-                  /*decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 27, 86, 134), // Цвет фона
-                    border: Border.all(
-                      // Настройка границ
-                      color: Colors.black, // Цвет границы
-                      width: 1.0, // Ширина границы
-                    ),
-                  ),*/
                   height: 285,
                   child: ListView.builder(
                       itemCount: info.profileItems.length,

@@ -12,7 +12,6 @@ class MyEditProfileInfoPage extends StatefulWidget {
 
 class _MyEditProfileInfoPageState extends State<MyEditProfileInfoPage> {
   final TextEditingController _userNameController = TextEditingController();
-  final TextEditingController _profilePicController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
 
@@ -126,7 +125,8 @@ class _MyEditProfileInfoPageState extends State<MyEditProfileInfoPage> {
                 height: 10,
               ),
               Padding(
-                padding: EdgeInsets.only(top: 10, left: 0, right: 0, bottom: 5),
+                padding: const EdgeInsets.only(
+                    top: 10, left: 0, right: 0, bottom: 5),
                 child: Text(
                   'Телефон',
                   style: GoogleFonts.montserrat(

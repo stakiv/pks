@@ -6,14 +6,7 @@ import 'package:pr7/components/edit_profile_info.dart';
 class ProfileInfoPage extends StatefulWidget {
   const ProfileInfoPage({
     super.key,
-    /*required this.user,
-    required this.phone,
-      required this.email*/
   });
-
-  /*final String user;
-  final String phone;
-  final String email;*/
 
   @override
   State<ProfileInfoPage> createState() => _ProfileInfoPageState();
