@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pr8/components/cart_item.dart';
+//import 'package:pr8/components/cart_item.dart';
 import 'package:pr8/models/api_service.dart';
 import 'package:pr8/models/product_model.dart';
 import 'package:pr8/pages/itam_page.dart';
@@ -28,7 +28,7 @@ class _MyCartPageState extends State<MyCartPage> {
         );
   }
 
-  void _refreshData() {
+  void _setUpd() {
     setState(() {
       _cartProducts = ApiService().getCart();
       ApiService().getCart().then(
@@ -47,7 +47,7 @@ class _MyCartPageState extends State<MyCartPage> {
         ),
       ),
     );
-    _refreshData();
+    _setUpd();
   }
 
   void plus(Product item) {
@@ -69,7 +69,7 @@ class _MyCartPageState extends State<MyCartPage> {
     });
   }
 
-  void decrement(Product item) {
+  void minus(Product item) {
     final count = item.quantity;
     Product el;
     if (count > 1) {
@@ -233,7 +233,7 @@ class _MyCartPageState extends State<MyCartPage> {
                                     _cartProductsUpd.indexWhere((i) =>
                                         i.id == cartItems.elementAt(index).id));
                               });
-                              _refreshData();
+                              _setUpd();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                     content: Text(
@@ -322,10 +322,8 @@ class _MyCartPageState extends State<MyCartPage> {
                                               ),
                                               IconButton(
                                                   onPressed: () => {
-                                                        decrement(
-                                                            _cartProductsUpd
-                                                                .elementAt(
-                                                                    index))
+                                                        minus(_cartProductsUpd
+                                                            .elementAt(index))
                                                       },
                                                   icon:
                                                       const Icon(Icons.remove)),

@@ -63,7 +63,7 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
     });
   }
 
-  void _refreshData() {
+  void _setUpd() {
     setState(() {
       _favProducts = ApiService().getFavorites();
       ApiService().getFavorites().then(
@@ -84,7 +84,7 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
         ),
       ),
     );
-    _refreshData();
+    _setUpd();
   }
 
   @override

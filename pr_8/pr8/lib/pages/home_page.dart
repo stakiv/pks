@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
         );
   }
 
-  void _refreshData() {
+  void _setUpd() {
     setState(() {
       _products = ApiService().getCart();
       ApiService().getCart().then(
@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
       context,
       MaterialPageRoute(builder: (context) => AddFlavorScreen()),
     );
-    _refreshData();
+    _setUpd();
   }
 
   void _addToFavorites(Product i) {
@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
-    _refreshData();
+    _setUpd();
   }
 
   void plus(Product item) {
@@ -118,6 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void minus(Product item) {
     final count = item.quantity;
     Product el;
+    // проверка что количество больше 1
     if (count > 1) {
       el = Product(
           id: item.id,
