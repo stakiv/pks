@@ -7,7 +7,6 @@ import (
 	"strconv"
 )
 
-// Product представляет продукт
 type Product struct {
 	ID          int
 	ImageURL    string
@@ -373,7 +372,7 @@ func updateUserHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	// Ищем продукт для обновления
+	// Ищем пользователя для обновления
 	for i, user := range users {
 		if user.ID == id {
 			users[i].Name = updatedUser.Name
