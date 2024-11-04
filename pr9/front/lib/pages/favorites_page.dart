@@ -81,8 +81,6 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
       MaterialPageRoute(
         builder: (context) => ItamPage(
           flavor: product,
-          //onAddToFavourites: (flavor) => {_deleteFromFavorites(flavor)},
-          //onAddToCart: (flavor) => {_addToCart(flavor)},
         ),
       ),
     );
