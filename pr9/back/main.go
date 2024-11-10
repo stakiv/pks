@@ -19,22 +19,6 @@ type Product struct {
 	Quantity    int
 }
 
-/*
-type CartItem struct {
-	ProductID int
-	Quantity  int
-	//Options   map[string]string // Для хранения дополнительных опций продукта
-}
-
-type Cart struct {
-	//UserID  int
-	Items []CartItem
-}
-
-type Favourites struct {
-	ProductID int
-}*/
-
 type User struct {
 	ID    int
 	Image string
