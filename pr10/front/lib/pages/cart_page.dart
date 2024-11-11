@@ -47,6 +47,20 @@ class _MyCartPageState extends State<MyCartPage> {
         ),
       ),
     );
+    //_setUpd();
+  }
+
+  void addTOCart(Cart i) async {
+    await ApiService().removeFromCart(1, i.id);
+    setState(() {
+      /*
+      _productsUpd
+          .elementAt(_productsUpd.indexWhere((j) => j.id == i.id))
+          .isInCart = true;
+      _productsUpd
+          .elementAt(_productsUpd.indexWhere((j) => j.id == i.id))
+          .quantity = 1;*/
+    });
     _setUpd();
   }
 
@@ -197,7 +211,7 @@ class _MyCartPageState extends State<MyCartPage> {
                             },
                             onDismissed: (direction) {
                               _setUpd();
-
+                              addTOCart(flavor);
                               setState(() {
                                 _cartProductsUpd.removeAt(
                                     _cartProductsUpd.indexWhere((i) =>

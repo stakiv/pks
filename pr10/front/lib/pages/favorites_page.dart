@@ -4,6 +4,7 @@ import 'package:front/pages/itam_page.dart';
 import 'package:front/models/api_service.dart';
 import 'package:front/models/product_model.dart';
 import 'package:front/models/favourites_model.dart';
+import 'package:front/models/cart_model.dart';
 
 class MyFavouritesPage extends StatefulWidget {
   const MyFavouritesPage({super.key});
@@ -15,6 +16,7 @@ class MyFavouritesPage extends StatefulWidget {
 class _MyFavouritesPageState extends State<MyFavouritesPage> {
   late Future<List<Favourites>> _favProducts;
   late List<Favourites> _favProductsUpd;
+  late List<Cart> cartItems = [];
 
   @override
   void initState() {
@@ -32,8 +34,18 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
     });
   }
 
-  void _addToFavorites(Product i) async {
-    await ApiService().addToFavorites(1, i.id);
+  void _fetchCart() async {
+    try {
+      cartItems = await ApiService().getCart(1);
+      setState(() {});
+    } catch (e) {
+      print('Error fetching cart: $e');
+    }
+  }
+
+  void _addToFavorites(int i) async {
+    await ApiService().addToFavorites(1, i);
+    //_fetchFavorites();
     setState(() {
       /*
       _productsUpd
@@ -43,9 +55,34 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
     _setUpd();
   }
 
-  void addTOCart(Product i) async {
+  void _deleteFromFavourites(int i) async {
+    await ApiService().removeFromFavorites(1, i);
+    //_fetchFavorites();
+    setState(() {
+      /*
+      _productsUpd
+          .elementAt(_productsUpd.indexWhere((j) => j.id == i.id))
+          .isFavourite = !i.isFavourite;*/
+    });
+    _setUpd();
+  }
+
+  void _deleteFromCart(int i) async {
+    await ApiService().removeFromCart(1, i);
+    _fetchCart();
+    setState(() {
+      /*
+      _productsUpd
+          .elementAt(_productsUpd.indexWhere((j) => j.id == i.id))
+          .isFavourite = !i.isFavourite;*/
+    });
+    _setUpd();
+  }
+
+  void addTOCart(int i) async {
     int quantity = 1;
-    await ApiService().addToCart(1, i.id, quantity);
+    await ApiService().addToCart(1, i, quantity);
+    _fetchCart();
     setState(() {
       /*
       _productsUpd
@@ -102,6 +139,10 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
               }
 
               final items = snapshot.data!;
+              /*
+              for (int i = 0; i < items.length; i++) {
+                print(items);
+              }*/
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -110,15 +151,21 @@ class _MyFavouritesPageState extends State<MyFavouritesPage> {
                 itemCount: items.length,
                 itemBuilder: (BuildContext context, int index) {
                   final flavor = items[index];
+                  final flId = items[index].productid;
+                  print('flavor ${flavor.id}   flId ${flId}   ${flavor.name}');
 
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListItem(
-                      key: Key(flavor.id.toString()),
+                      key: Key(flavor.productid.toString()),
                       flavor: flavor,
-                      //onDelete: (flavor) => deleteItem(flavor.id, context),
-                      onAddToFavourites: (flavor) => {_addToFavorites(flavor)},
-                      onAddToCart: (flavor) => {addTOCart(flavor)},
+                      onAddToFavourites: (int flavor) =>
+                          {_addToFavorites(flavor)},
+                      onDeleteFromFavourites: (int flavor) =>
+                          {_deleteFromFavourites(flavor)},
+                      onAddToCart: (int flavor) => {addTOCart(flavor)},
+                      onDeleteFromCart: (int flavor) =>
+                          {_deleteFromCart(flavor)},
                       NavToItemPage: (int i) => {_openItem(i)},
                     ),
                   );

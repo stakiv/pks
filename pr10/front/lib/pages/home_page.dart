@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:front/models/cart_model.dart';
 import 'package:front/pages/add_item_page.dart';
 import 'package:front/pages/itam_page.dart';
 import 'package:front/models/api_service.dart';
 import 'package:front/models/product_model.dart';
+import 'package:front/models/cart_model.dart';
+import 'package:front/models/favourites_model.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -14,19 +17,44 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late Future<List<Product>> _products;
   late List<Product> _productsUpd;
+  late List<Cart> cartItems = [];
+  late List<Favourites> favoriteItems = [];
 
   @override
   void initState() {
     super.initState();
     _products = ApiService().getProducts();
+    //cartItems = ApiService().getCart(1);
+    _fetchFavorites();
+    _fetchCart();
     ApiService().getProducts().then(
           (el) => {_productsUpd = el},
         );
   }
 
+  void _fetchFavorites() async {
+    try {
+      favoriteItems = await ApiService().getFavorites(1);
+      setState(() {});
+    } catch (e) {
+      print('Error fetching favorites: $e');
+    }
+  }
+
+  void _fetchCart() async {
+    try {
+      cartItems = await ApiService().getCart(1);
+      setState(() {});
+    } catch (e) {
+      print('Error fetching cart: $e');
+    }
+  }
+
   void _setUpd() {
     setState(() {
       _products = ApiService().getProducts();
+      _fetchFavorites();
+      _fetchCart();
       ApiService().getProducts().then(
             (el) => {_productsUpd = el},
           );
@@ -43,6 +71,31 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addToFavorites(Product i) async {
     await ApiService().addToFavorites(1, i.id);
+    _fetchFavorites();
+    setState(() {
+      /*
+      _productsUpd
+          .elementAt(_productsUpd.indexWhere((j) => j.id == i.id))
+          .isFavourite = !i.isFavourite;*/
+    });
+    _setUpd();
+  }
+
+  void _deleteFromFavourites(Product i) async {
+    await ApiService().removeFromFavorites(1, i.id);
+    _fetchFavorites();
+    setState(() {
+      /*
+      _productsUpd
+          .elementAt(_productsUpd.indexWhere((j) => j.id == i.id))
+          .isFavourite = !i.isFavourite;*/
+    });
+    _setUpd();
+  }
+
+  void _deleteFromCart(Product i) async {
+    await ApiService().removeFromCart(1, i.id);
+    _fetchCart();
     setState(() {
       /*
       _productsUpd
@@ -55,6 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void addTOCart(Product i) async {
     int quantity = 1;
     await ApiService().addToCart(1, i.id, quantity);
+    _fetchCart();
     setState(() {
       /*
       _productsUpd
@@ -117,6 +171,8 @@ class _MyHomePageState extends State<MyHomePage> {
             itemCount: items.length,
             itemBuilder: (BuildContext context, int index) {
               final flavor = items[index];
+              bool isFavorite =
+                  favoriteItems.any((product) => product.id == flavor.id);
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
@@ -184,23 +240,28 @@ class _MyHomePageState extends State<MyHomePage> {
                               onPressed: () {
                                 _addToFavorites(flavor);
                               },
-                              icon: /*flavor.isFavourite
+                              icon: favoriteItems
+                                      .any((product) => product.id == flavor.id)
                                   ? const Icon(Icons.favorite,
                                       color: Color.fromRGBO(160, 149, 108, 1))
-                                  : */
-                                  const Icon(Icons.favorite_border,
+                                  : const Icon(Icons.favorite_border,
                                       color: Color.fromRGBO(160, 149, 108, 1)),
                             ),
                             const SizedBox(width: 20.0),
                             IconButton(
                               onPressed: () {
-                                addTOCart(flavor);
+                                if (cartItems.any(
+                                    (product) => product.id == flavor.id)) {
+                                  _deleteFromCart;
+                                } else {
+                                  addTOCart(flavor);
+                                }
                               },
-                              icon: /*flavor.isInCart
+                              icon: cartItems
+                                      .any((product) => product.id == flavor.id)
                                   ? const Icon(Icons.shopping_cart,
                                       color: Color.fromRGBO(160, 149, 108, 1))
-                                  : */
-                                  const Icon(Icons.add_shopping_cart,
+                                  : const Icon(Icons.add_shopping_cart,
                                       color: Color.fromRGBO(160, 149, 108, 1)),
                             ),
                           ],
