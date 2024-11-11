@@ -124,15 +124,15 @@ class _ListItemState extends State<ListItem> {
                 const SizedBox(width: 20.0),
                 IconButton(
                   onPressed: () {
-                    if (cartItems.any(
-                        (product) => product.id == widget.flavor.productid)) {
+                    if (cartItems.any((product) =>
+                        product.productid == widget.flavor.productid)) {
                       widget.onDeleteFromCart(widget.flavor.productid);
                     } else {
                       widget.onAddToCart(widget.flavor.productid);
                     }
                   },
-                  icon: cartItems.any(
-                          (product) => product.id == widget.flavor.productid)
+                  icon: cartItems.any((product) =>
+                          product.productid == widget.flavor.productid)
                       ? const Icon(Icons.shopping_cart,
                           color: Color.fromRGBO(160, 149, 108, 1))
                       : const Icon(Icons.add_shopping_cart,

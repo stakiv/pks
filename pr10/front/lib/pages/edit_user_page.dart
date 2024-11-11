@@ -219,14 +219,6 @@ class _MyEditUserInfoPageState extends State<MyEditUserInfoPage> {
                         _profilePicController.text.isNotEmpty &&
                         _emailController.text.isNotEmpty &&
                         _phoneController.text.isNotEmpty) {
-                      /*
-                      User editInfo = User(
-                        id: 1,
-                        image: _profilePicController.text,
-                        name: _userNameController.text,
-                        email: _emailController.text,
-                        phoneNumber: _phoneController.text,
-                      );*/
                       await ApiService().updateUser(User(
                           id: 1,
                           image: _profilePicController.text,

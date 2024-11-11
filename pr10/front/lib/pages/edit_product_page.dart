@@ -261,7 +261,7 @@ class _EditProductPageState extends State<EditProductPage> {
                         _descController.text.isNotEmpty &&
                         _dopController.text.isNotEmpty &&
                         _priceController.text.isNotEmpty) {
-                      await ApiService().changeProductStatus(Product(
+                      await ApiService().updateProduct(Product(
                           id: widget.flavor.id,
                           name: _nameFlavorController.text,
                           imageUrl: _imageController.text,

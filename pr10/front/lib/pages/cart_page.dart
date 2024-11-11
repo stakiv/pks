@@ -3,6 +3,7 @@ import 'package:front/models/api_service.dart';
 import 'package:front/models/product_model.dart';
 import 'package:front/pages/itam_page.dart';
 import 'package:front/models/cart_model.dart';
+import 'package:front/models/favourites_model.dart';
 
 class MyCartPage extends StatefulWidget {
   const MyCartPage({
@@ -16,12 +17,11 @@ class MyCartPage extends StatefulWidget {
 class _MyCartPageState extends State<MyCartPage> {
   late Future<List<Cart>> _cartProducts;
   late List<Cart> _cartProductsUpd;
+  late List<Favourites> _favProducts;
 
   @override
   void initState() {
     super.initState();
-    //_loadCart();
-    //_loadProducts();
     _cartProducts = ApiService().getCart(1);
     ApiService().getCart(1).then(
           (i) => {_cartProductsUpd = i},
@@ -37,6 +37,15 @@ class _MyCartPageState extends State<MyCartPage> {
     });
   }
 
+  void _fetchFavourites() async {
+    try {
+      _favProducts = await ApiService().getFavorites(1);
+      setState(() {});
+    } catch (e) {
+      print('Error fetching cart: $e');
+    }
+  }
+
   void _openItem(int id) async {
     final product = await ApiService().getProductById(id);
     int? answer = await Navigator.push(
@@ -50,8 +59,8 @@ class _MyCartPageState extends State<MyCartPage> {
     //_setUpd();
   }
 
-  void addTOCart(Cart i) async {
-    await ApiService().removeFromCart(1, i.id);
+  void _deleteFromCart(int i) async {
+    await ApiService().removeFromCart(1, i);
     setState(() {
       /*
       _productsUpd
@@ -64,19 +73,44 @@ class _MyCartPageState extends State<MyCartPage> {
     _setUpd();
   }
 
+  void _addToFavorites(int i) async {
+    await ApiService().addToFavorites(1, i);
+    //_fetchFavorites();
+    setState(() {
+      /*
+      _productsUpd
+          .elementAt(_productsUpd.indexWhere((j) => j.id == i.id))
+          .isFavourite = !i.isFavourite;*/
+    });
+    _setUpd();
+  }
+
+  void _deleteFromFavourites(int i) async {
+    await ApiService().removeFromFavorites(1, i);
+    //_fetchFavorites();
+    setState(() {
+      /*
+      _productsUpd
+          .elementAt(_productsUpd.indexWhere((j) => j.id == i.id))
+          .isFavourite = !i.isFavourite;*/
+    });
+    _setUpd();
+  }
+
   void plus(Cart item) async {
     int newQuantity = item.quantity + 1;
-
-    // Обновляем товар в корзине через API
-    await ApiService().addToCart(1, item.id, newQuantity);
-
+    if (newQuantity <= item.stock) {
+      await ApiService().removeFromCart(1, item.productid);
+      await ApiService().addToCart(1, item.productid, newQuantity);
+    }
+    /*
     setState(() {
       // Обновляем локальное состояние для отображения нового количества
       _cartProductsUpd
           .elementAt(_cartProductsUpd.indexWhere((i) => i.id == item.id))
           .quantity = newQuantity;
     });
-
+*/
     _setUpd();
   }
 
@@ -85,16 +119,16 @@ class _MyCartPageState extends State<MyCartPage> {
 
     if (count > 1) {
       int newQuantity = count - 1;
+      await ApiService().removeFromCart(1, item.productid);
+      await ApiService().addToCart(1, item.productid, newQuantity);
 
-      // Обновляем товар в корзине через API
-      await ApiService().addToCart(1, item.id, newQuantity);
-
+      /*
       setState(() {
         // Обновляем локальное состояние для отображения нового количества
         _cartProductsUpd
             .elementAt(_cartProductsUpd.indexWhere((i) => i.id == item.id))
             .quantity = newQuantity;
-      });
+      });*/
     }
 
     _setUpd();
@@ -211,23 +245,24 @@ class _MyCartPageState extends State<MyCartPage> {
                             },
                             onDismissed: (direction) {
                               _setUpd();
-                              addTOCart(flavor);
+                              _deleteFromCart(flavor.productid);
+                              /*
                               setState(() {
                                 _cartProductsUpd.removeAt(
                                     _cartProductsUpd.indexWhere((i) =>
                                         i.id == cartItems.elementAt(index).id));
-                              });
+                              });*/
                               _setUpd();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                    content:
-                                        Text('${flavor} удален из корзины')),
+                                    content: Text(
+                                        '${flavor.name} удален из корзины')),
                               );
                             },
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
-                                    onTap: () => {_openItem(flavor.id)},
+                                    onTap: () => {_openItem(flavor.productid)},
                                     child: Container(
                                       decoration: BoxDecoration(
                                           color: Colors.white,
@@ -342,19 +377,36 @@ class _MyCartPageState extends State<MyCartPage> {
                             TextButton(
                               onPressed: () {},
                               style: TextButton.styleFrom(
-                                backgroundColor: Colors.amber,
+                                backgroundColor:
+                                    const Color.fromARGB(255, 203, 152, 0),
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 60.0),
+                                    vertical: 12.0, horizontal: 40.0),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                               ),
-                              child: Text(
-                                '${cartItems.fold(0.0, (sum, item) => sum + item.quantity)} ₽     оплатить',
-                                style: const TextStyle(
-                                  fontSize: 18.0,
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '${cartItems.fold(0.0, (sum, item) => sum + item.quantity * item.price)} ₽',
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 80.0,
+                                  ),
+                                  const Text(
+                                    'оплатить',
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                    ),
+                                  ),
+                                ],
                               ),
                             )
                           ],

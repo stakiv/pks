@@ -13,7 +13,7 @@ class ApiService {
 //получение списка продуктов
   Future<List<Product>> getProducts() async {
     try {
-      final response = await _dio.get('http://10.192.229.69:8080/products');
+      final response = await _dio.get('http://192.168.2.159:8080/products');
       if (response.statusCode == 200) {
         List<Product> products = (response.data as List)
             .map((product) => Product.fromJson(product))
@@ -30,7 +30,7 @@ class ApiService {
 //получение данных продукта по id
   Future<Product> getProductById(int id) async {
     try {
-      final response = await _dio.get('http://10.192.229.69:8080/products/$id');
+      final response = await _dio.get('http://192.168.2.159:8080/products/$id');
       if (response.statusCode == 200) {
         return Product.fromJson(response.data);
       } else {
@@ -45,15 +45,15 @@ class ApiService {
   Future<void> createProduct(Product product) async {
     try {
       final response =
-          await _dio.post('http://10.192.229.69:8080/products/create', data: {
-        'name': product.name,
+          await _dio.post('http://192.168.2.159:8080/products', data: {
         'image_url': product.imageUrl,
-        'price': product.price,
+        'name': product.name,
         'description': product.description,
         'features': product.feature,
+        'price': product.price,
         'stock': product.stock,
       });
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return;
       } else {
         throw Exception('Failed to create product');
@@ -63,12 +63,34 @@ class ApiService {
     }
   }
 
+  // Обновление прлдукта
+  Future<void> updateProduct(Product product) async {
+    try {
+      final response = await _dio.put(
+        'http://192.168.2.159:8080/products/${product.id}',
+        data: {
+          'image_url': product.imageUrl,
+          'name': product.name,
+          'description': product.description,
+          'features': product.feature,
+          'price': product.price,
+          'stock': product.stock,
+        },
+      );
+      if (response.statusCode != 200) {
+        throw Exception('Failed to update product');
+      }
+    } catch (e) {
+      throw Exception('Error updating product: $e');
+    }
+  }
+
 //удаление продукта по id
   Future<void> deleteProduct(int id) async {
     print("deleteProduct function called");
     try {
       final response =
-          await _dio.delete('http://10.192.229.69:8080/products/$id');
+          await _dio.delete('http://192.168.2.159:8080/products/$id');
       if (response.statusCode == 200) {
         return;
       } else {
@@ -84,7 +106,7 @@ class ApiService {
     print("changeProductStatus function called");
     try {
       final response = await _dio.put(
-          'http://10.192.229.69:8080/products/update/${product.id}',
+          'http://192.168.2.159:8080/products/update/${product.id}',
           data: {
             'image_url': product.imageUrl,
             'name': product.name,
@@ -109,7 +131,7 @@ class ApiService {
   Future<List<Cart>> getCart(int userId) async {
     print("getCart function called");
     try {
-      final response = await _dio.get('http://10.192.229.69:8080/cart/$userId');
+      final response = await _dio.get('http://192.168.2.159:8080/cart/$userId');
       print("Response status code: ${response.statusCode}");
       if (response.statusCode == 200) {
         if (response.data != null) {
@@ -132,10 +154,10 @@ class ApiService {
 
   // Добавление товара в корзину
   Future<void> addToCart(int userId, int productId, int quantity) async {
-    print("addToCart function called id=${productId}");
+    print("addToCart function called id=$productId");
     try {
       final response =
-          await _dio.post('http://10.192.229.69:8080/cart/$userId', data: {
+          await _dio.post('http://192.168.2.159:8080/cart/$userId', data: {
         'product_id': productId,
         'quantity': quantity,
       });
@@ -149,7 +171,7 @@ class ApiService {
 
   // Удаление товара из корзины
   Future<void> removeFromCart(int userId, int productId) async {
-    print("removeFromCart function called id=${productId}");
+    print("removeFromCart function called id=$productId");
     try {
       final response = await _dio
           .delete('http://192.168.2.159:8080/cart/$userId/$productId');
@@ -160,10 +182,10 @@ class ApiService {
       throw Exception('Error removing from cart: $e');
     }
   }
-
+/*
   Future<int> getCountShopCartProducts(int userId) async {
     try {
-      final response = await _dio.get('http://10.192.229.69:8080/cart/$userId');
+      final response = await _dio.get('http://192.168.2.159:8080/cart/$userId');
       if (response.statusCode == 200) {
         int count = (response.data as List).toList().length;
 
@@ -174,7 +196,7 @@ class ApiService {
     } catch (e) {
       throw Exception('Error fetching products: $e');
     }
-  }
+  }*/
 
 // ИЗБРАННОЕ
 //список избранного
@@ -182,7 +204,7 @@ class ApiService {
     print("getFavorites function called ");
     try {
       final response =
-          await _dio.get('http://10.192.229.69:8080/favourites/$userId');
+          await _dio.get('http://192.168.2.159:8080/favourites/$userId');
       if (response.statusCode == 200) {
         if (response.data != null) {
           List<Favourites> products = (response.data as List)
@@ -203,10 +225,10 @@ class ApiService {
 
   // Добавление продукта в избранное
   Future<void> addToFavorites(int userId, int productId) async {
-    print("addToFavorites function called id=${productId}");
+    print("addToFavorites function called id=$productId");
     try {
       final response = await _dio
-          .post('http://10.192.229.69:8080/favourites/$userId', data: {
+          .post('http://192.168.2.159:8080/favourites/$userId', data: {
         'product_id': productId,
       });
       if (response.statusCode != 200) {
@@ -219,10 +241,10 @@ class ApiService {
 
   // Удаление продукта из избранного
   Future<void> removeFromFavorites(int userId, int productId) async {
-    print("removeFromFavorites function called id=${productId}");
+    print("removeFromFavorites function called id=$productId");
     try {
       final response = await _dio
-          .delete('http://10.192.229.69:8080/favourites/$userId/$productId');
+          .delete('http://192.168.2.159:8080/favourites/$userId/$productId');
       if (response.statusCode != 200) {
         throw Exception('Failed to remove from favorites');
       }
@@ -234,9 +256,9 @@ class ApiService {
 // ПОЛЬЗОВАТЕЛЬ
 //найти пользователя по id
   Future<User> getUserById(int id) async {
+    print("getUserById function called id=$id");
     try {
-      final response =
-          await _dio.get('http://10.192.229.69:8080/users/${id.toString()}');
+      final response = await _dio.get('http://192.168.2.159:8080/users/$id');
       if (response.statusCode == 200) {
         User data = User.fromJson(response.data);
         print(data);
@@ -252,12 +274,12 @@ class ApiService {
 //обновить данные пользователя по id
   Future<void> updateUser(User user) async {
     try {
-      final response = await _dio
-          .put('http://10.192.229.69:8080/users/update/${user.id}', data: {
-        'name': user.name,
-        'image': user.image,
+      final response =
+          await _dio.put('http://192.168.2.159:8080/users/${user.id}', data: {
+        'username': user.name,
+        'image_url': user.image,
         'phone': user.phoneNumber,
-        'mail': user.email,
+        'email': user.email,
       });
       if (response.statusCode == 200) {
         return;

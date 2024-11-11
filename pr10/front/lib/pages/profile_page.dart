@@ -46,7 +46,7 @@ class _MyUserPageState extends State<MyUserPage> {
               } else if (snapshot.hasError) {
                 return Center(child: Text('Ошибка: ${snapshot.error}'));
               } else if (!snapshot.hasData) {
-                return const Center(child: Text('Вкусы не добавлены'));
+                return const Center(child: Text('данных профиля нет'));
               }
 
               final userData = snapshot.data!;
@@ -152,7 +152,7 @@ class _MyUserPageState extends State<MyUserPage> {
             }),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _navigateToEditUserInfoScreen(context),
-          tooltip: 'Добавить вкус',
+          tooltip: 'Изменить данные профиля',
           child: const Icon(Icons.edit),
         ));
   }

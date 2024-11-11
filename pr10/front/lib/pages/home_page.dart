@@ -238,10 +238,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: [
                             IconButton(
                               onPressed: () {
-                                _addToFavorites(flavor);
+                                if (favoriteItems.any((product) =>
+                                    product.productid == flavor.id)) {
+                                  _deleteFromFavourites(flavor);
+                                } else {
+                                  _addToFavorites(flavor);
+                                }
                               },
-                              icon: favoriteItems
-                                      .any((product) => product.id == flavor.id)
+                              icon: favoriteItems.any((product) =>
+                                      product.productid == flavor.id)
                                   ? const Icon(Icons.favorite,
                                       color: Color.fromRGBO(160, 149, 108, 1))
                                   : const Icon(Icons.favorite_border,
@@ -250,15 +255,15 @@ class _MyHomePageState extends State<MyHomePage> {
                             const SizedBox(width: 20.0),
                             IconButton(
                               onPressed: () {
-                                if (cartItems.any(
-                                    (product) => product.id == flavor.id)) {
-                                  _deleteFromCart;
+                                if (cartItems.any((product) =>
+                                    product.productid == flavor.id)) {
+                                  _deleteFromCart(flavor);
                                 } else {
                                   addTOCart(flavor);
                                 }
                               },
-                              icon: cartItems
-                                      .any((product) => product.id == flavor.id)
+                              icon: cartItems.any((product) =>
+                                      product.productid == flavor.id)
                                   ? const Icon(Icons.shopping_cart,
                                       color: Color.fromRGBO(160, 149, 108, 1))
                                   : const Icon(Icons.add_shopping_cart,

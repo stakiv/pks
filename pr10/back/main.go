@@ -34,6 +34,12 @@ func main() {
 	router.POST("/favourites/:userId", handlers.AddToFavorites(db))
 	router.DELETE("/favourites/:userId/:productId", handlers.RemoveFromFavorites(db))
 
+	// роуты для пользователя
+	router.GET("/users/:id", handlers.GetUser(db))
+	//router.POST("/products", handlers.CreateProduct(db))
+	router.PUT("/users/:id", handlers.UpdateUser(db))
+	//router.DELETE("/products/:id", handlers.DeleteProduct(db))
+
 	// Запуск сервера
 	router.Run(":8080")
 }

@@ -180,9 +180,7 @@ class _AddFlavorScreenState extends State<AddFlavorScreen> {
                         width: 2, color: Color.fromRGBO(145, 132, 85, 1))),
               ),
               onPressed: () async {
-                //listLength += 1;
                 double price = double.parse(_priceController.text);
-                int newId = await ApiService().getCountShopCartProducts(1);
 
                 if (_nameFlavorController.text.isNotEmpty &&
                     _imageController.text.isNotEmpty &&
@@ -190,12 +188,12 @@ class _AddFlavorScreenState extends State<AddFlavorScreen> {
                     _dopController.text.isNotEmpty &&
                     _priceController.text.isNotEmpty) {
                   await ApiService().createProduct(Product(
-                    id: newId,
+                    id: 100,
+                    imageUrl: _imageController.text,
                     name: _nameFlavorController.text,
                     description: _descController.text,
-                    price: price,
-                    imageUrl: _imageController.text,
                     feature: _dopController.text,
+                    price: price,
                     stock: 0,
                   ));
                   Navigator.pop(context);
