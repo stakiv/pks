@@ -49,8 +49,7 @@ func UpdateUser(db *sqlx.DB) gin.HandlerFunc {
 		}
 
 		user.UserID = id
-		query := `UPDATE Users SET username = :UserName, email = :Email, phoneNumber = :phoneNumber, password = :Password, 
-                  image_url = :ImageURL WHERE user_id = :UserID`
+		query := `UPDATE Users SET username = :username, email = :email, phone_number = :phone, image_url = :image_url WHERE user_id = :user_id`
 
 		_, err = db.NamedExec(query, &user)
 		if err != nil {

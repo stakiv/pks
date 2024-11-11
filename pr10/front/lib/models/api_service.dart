@@ -273,6 +273,7 @@ class ApiService {
 
 //обновить данные пользователя по id
   Future<void> updateUser(User user) async {
+    print("updateUser function called id=${user.name}");
     try {
       final response =
           await _dio.put('http://192.168.2.159:8080/users/${user.id}', data: {
@@ -280,10 +281,9 @@ class ApiService {
         'image_url': user.image,
         'phone': user.phoneNumber,
         'email': user.email,
+        'password': user.password,
       });
-      if (response.statusCode == 200) {
-        return;
-      } else {
+      if (response.statusCode != 200) {
         throw Exception('Failed to update User');
       }
     } catch (e) {

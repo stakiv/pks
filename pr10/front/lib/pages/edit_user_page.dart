@@ -3,7 +3,8 @@ import 'package:front/models/api_service.dart';
 import 'package:front/models/user_model.dart';
 
 class MyEditUserInfoPage extends StatefulWidget {
-  const MyEditUserInfoPage({super.key});
+  const MyEditUserInfoPage({super.key, required this.uinfo});
+  final User uinfo;
 
   @override
   State<MyEditUserInfoPage> createState() => _MyEditUserInfoPageState();
@@ -18,7 +19,7 @@ class _MyEditUserInfoPageState extends State<MyEditUserInfoPage> {
 
   void initState() {
     super.initState();
-    ApiService().getUserById(1).then((i) => {
+    ApiService().getUserById(widget.uinfo.id).then((i) => {
           _userNameController.text = i.name,
           _profilePicController.text = i.image,
           _emailController.text = i.email,
@@ -220,11 +221,12 @@ class _MyEditUserInfoPageState extends State<MyEditUserInfoPage> {
                         _emailController.text.isNotEmpty &&
                         _phoneController.text.isNotEmpty) {
                       await ApiService().updateUser(User(
-                          id: 1,
+                          id: widget.uinfo.id,
                           image: _profilePicController.text,
                           name: _userNameController.text,
                           email: _emailController.text,
-                          phoneNumber: _phoneController.text));
+                          phoneNumber: _phoneController.text,
+                          password: widget.uinfo.password));
                       Navigator.pop(context);
                       print("Информация профиля обновлена");
                     } else {

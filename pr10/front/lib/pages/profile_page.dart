@@ -12,11 +12,14 @@ class MyUserPage extends StatefulWidget {
 
 class _MyUserPageState extends State<MyUserPage> {
   late Future<User> user;
+
   void _navigateToEditUserInfoScreen(BuildContext context) async {
+    final User uinfo = await ApiService().getUserById(1);
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MyEditUserInfoPage()),
+      MaterialPageRoute(builder: (context) => MyEditUserInfoPage(uinfo: uinfo)),
     );
+    _refreshData();
     if (result != null) {
       _refreshData();
     }
@@ -151,7 +154,10 @@ class _MyUserPageState extends State<MyUserPage> {
               );
             }),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _navigateToEditUserInfoScreen(context),
+          onPressed: () {
+            _navigateToEditUserInfoScreen(context);
+            _refreshData();
+          },
           tooltip: 'Изменить данные профиля',
           child: const Icon(Icons.edit),
         ));
