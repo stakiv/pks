@@ -107,8 +107,8 @@ func CreateUser(db *sqlx.DB) gin.HandlerFunc {
 		}
 
 		// Вставляем нового пользователя в базу данных
-		query := `INSERT INTO users (username, email, phone_number, image_url) 
-		          VALUES (:username, :email, :phone, :image_url) RETURNING user_id`
+		query := `INSERT INTO users (username, email, phone_number, password, image_url) 
+		          VALUES (:username, :email, :phone, :password, :image_url) RETURNING user_id`
 
 		// Выполняем запрос и получаем сгенерированный ID
 		err := db.Get(&user.UserID, query, user)

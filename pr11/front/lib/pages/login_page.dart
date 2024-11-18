@@ -32,22 +32,26 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Вход в аккаунт',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 21.0,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
           children: [
+            const SizedBox(
+              height: 40,
+            ),
+            const Center(
+              child: Text(
+                'Вход в аккаунт',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 21.0,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
             const Padding(
-              padding: EdgeInsets.only(top: 20, left: 10, right: 0, bottom: 5),
+              padding: EdgeInsets.only(top: 50, left: 10, right: 0, bottom: 5),
               child: Text(
                 'Почта',
                 style: TextStyle(
@@ -60,7 +64,8 @@ class _LoginPageState extends State<LoginPage> {
               controller: _emailController,
               decoration: InputDecoration(
                   fillColor: const Color.fromARGB(255, 255, 255, 255),
-                  hintText: 'Почта',
+                  filled: true,
+                  hintText: 'example@gmail.com',
                   hintStyle: const TextStyle(
                     color: Color.fromRGBO(160, 149, 108, 1),
                     fontSize: 16.0,
@@ -95,7 +100,8 @@ class _LoginPageState extends State<LoginPage> {
               controller: _passwordController,
               decoration: InputDecoration(
                   fillColor: const Color.fromARGB(255, 255, 255, 255),
-                  hintText: 'Пароль',
+                  filled: true,
+                  //hintText: 'Qwerty1',
                   hintStyle: const TextStyle(
                     color: Color.fromRGBO(160, 149, 108, 1),
                     fontSize: 16.0,
@@ -114,11 +120,31 @@ class _LoginPageState extends State<LoginPage> {
                   )),
             ),
             const SizedBox(
-              height: 30,
+              height: 60,
             ),
-            ElevatedButton(onPressed: login, child: const Text('Войти')),
+            ElevatedButton(
+                onPressed: login,
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: const Color.fromRGBO(145, 132, 85, 1),
+                  backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 13.0, horizontal: 30.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      side: const BorderSide(
+                          width: 2, color: Color.fromRGBO(145, 132, 85, 1))),
+                ),
+                child: const Text(
+                  'Войти',
+                  style: TextStyle(
+                    //color: Colors.black,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w700,
+                  ),
+                )),
             const SizedBox(
-              height: 20,
+              height: 25,
             ),
             GestureDetector(
               onTap: () => Navigator.push(
