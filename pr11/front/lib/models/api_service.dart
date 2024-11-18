@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:dio/dio.dart';
 import 'package:front/models/cart_model.dart';
 import 'package:front/models/favourites_model.dart';
@@ -8,8 +7,9 @@ import 'product_model.dart';
 
 class ApiService {
   final Dio _dio = Dio();
-  final ip = '10.192.229.69';
+  //final ip = '10.192.229.69';
   //http://192.168.2.159:8080
+
 //получение списка продуктов
   Future<List<Product>> getProducts() async {
     try {
@@ -182,21 +182,6 @@ class ApiService {
       throw Exception('Error removing from cart: $e');
     }
   }
-/*
-  Future<int> getCountShopCartProducts(int userId) async {
-    try {
-      final response = await _dio.get('http://192.168.2.159:8080/cart/$userId');
-      if (response.statusCode == 200) {
-        int count = (response.data as List).toList().length;
-
-        return count;
-      } else {
-        throw Exception('Failed to load products');
-      }
-    } catch (e) {
-      throw Exception('Error fetching products: $e');
-    }
-  }*/
 
 // ИЗБРАННОЕ
 //список избранного
@@ -254,11 +239,53 @@ class ApiService {
   }
 
 // ПОЛЬЗОВАТЕЛЬ
+// создание пользователя
+  Future<void> createUser(User user) async {
+    print("createUser function called");
+    String img =
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAd5avdba8EiOZH8lmV3XshrXx7dKRZvhx-A&s';
+    try {
+      final response =
+          await _dio.post('http://192.168.2.159:8080/users', data: {
+        'image_url': img,
+        'name': user.name,
+        'email': user.email,
+        'phone': user.phoneNumber,
+        'password': user.password,
+      });
+      if (response.statusCode == 201) {
+        return;
+      } else {
+        throw Exception('Failed to create user');
+      }
+    } catch (e) {
+      throw Exception('Error creating user: $e');
+    }
+  }
+
 //найти пользователя по id
   Future<User> getUserById(int id) async {
     print("getUserById function called id=$id");
     try {
       final response = await _dio.get('http://192.168.2.159:8080/users/$id');
+      if (response.statusCode == 200) {
+        User data = User.fromJson(response.data);
+        print(data);
+        return data;
+      } else {
+        throw Exception('Failed to load user data');
+      }
+    } catch (e) {
+      throw Exception('Error fetching user data: $e');
+    }
+  }
+
+  //найти пользователя по email
+  Future<User> getUserByEmail(String? email) async {
+    print("getUserById function called email=$email");
+    try {
+      final response =
+          await _dio.get('http://192.168.2.159:8080/users/${email.toString()}');
       if (response.statusCode == 200) {
         User data = User.fromJson(response.data);
         print(data);

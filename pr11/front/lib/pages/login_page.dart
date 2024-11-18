@@ -32,25 +32,113 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          TextField(
-            controller: _emailController,
+      appBar: AppBar(
+        title: const Text(
+          'Вход в аккаунт',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 21.0,
+            fontWeight: FontWeight.w700,
           ),
-          TextField(
-            controller: _passwordController,
-          ),
-          ElevatedButton(onPressed: login, child: const Text('Войти')),
-          GestureDetector(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SignupPage(),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: ListView(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 20, left: 10, right: 0, bottom: 5),
+              child: Text(
+                'Почта',
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromARGB(255, 77, 70, 0)),
               ),
             ),
-            child: Text('Нет аккаунта? Зарегистрируйтесь'),
-          )
-        ],
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                  fillColor: const Color.fromARGB(255, 255, 255, 255),
+                  hintText: 'Почта',
+                  hintStyle: const TextStyle(
+                    color: Color.fromRGBO(160, 149, 108, 1),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 13.0, horizontal: 13.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(color: Colors.transparent),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(
+                        color: Color.fromRGBO(108, 98, 63, 1), width: 1),
+                  )),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 0, left: 10, right: 0, bottom: 5),
+              child: Text(
+                'Пароль',
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromARGB(255, 77, 70, 0)),
+              ),
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+                  fillColor: const Color.fromARGB(255, 255, 255, 255),
+                  hintText: 'Пароль',
+                  hintStyle: const TextStyle(
+                    color: Color.fromRGBO(160, 149, 108, 1),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 13.0, horizontal: 13.0),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(color: Colors.transparent),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                    borderSide: const BorderSide(
+                        color: Color.fromRGBO(108, 98, 63, 1), width: 1),
+                  )),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            ElevatedButton(onPressed: login, child: const Text('Войти')),
+            const SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SignupPage(),
+                ),
+              ),
+              child: const Center(
+                child: Text(
+                  'Нет аккаунта? Зарегистрируйтесь',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromARGB(255, 77, 70, 0)),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

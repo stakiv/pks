@@ -13,7 +13,8 @@ class MyUserPage extends StatefulWidget {
 
 class _MyUserPageState extends State<MyUserPage> {
   late Future<User> user;
-
+  final authService = AuthService();
+/*
   void _navigateToEditUserInfoScreen(BuildContext context) async {
     final User uinfo = await ApiService().getUserById(1);
     final result = await Navigator.push(
@@ -24,21 +25,28 @@ class _MyUserPageState extends State<MyUserPage> {
     if (result != null) {
       _refreshData();
     }
-  }
+  }*/
 
   @override
   void initState() {
     super.initState();
-    user = ApiService().getUserById(1);
+    //user = ApiService().getUserById(1);
+    final currentEmail = authService.getCurrentUserEmail();
+    user = ApiService().getUserByEmail(currentEmail);
   }
 
   void _refreshData() {
+    final currentEmail = authService.getCurrentUserEmail();
+    setState(() {
+      user = ApiService().getUserByEmail(currentEmail);
+    });
+    /*
     setState(() {
       user = ApiService().getUserById(1);
-    });
+    });*/
   }
 
-  final authService = AuthService();
+  //final authService = AuthService();
   void logout() async {
     try {
       await authService.signOut();
@@ -51,9 +59,21 @@ class _MyUserPageState extends State<MyUserPage> {
     }
   }
 
+  void getUserByE(email) async {
+    try {
+      await ApiService().getUserByEmail(email);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('error: $e')));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final currentEmail = authService.getCurrentUserEmail();
+    //final currentEmail = authService.getCurrentUserEmail();
+
     return Scaffold(
         backgroundColor: Colors.amber[50],
         body: FutureBuilder<User>(
@@ -136,7 +156,7 @@ class _MyUserPageState extends State<MyUserPage> {
                       padding: const EdgeInsets.all(15),
                       width: double.infinity,
                       child: Text(
-                        currentEmail.toString(),
+                        authService.getCurrentUserEmail().toString(),
                         style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
@@ -177,8 +197,8 @@ class _MyUserPageState extends State<MyUserPage> {
             }),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            _navigateToEditUserInfoScreen(context);
-            _refreshData();
+            /*_navigateToEditUserInfoScreen(context);
+            _refreshData();*/
           },
           tooltip: 'Изменить данные профиля',
           child: const Icon(Icons.edit),
