@@ -25,7 +25,8 @@ class _MyHomePageState extends State<MyHomePage> {
     "без сои",
     "без орехов",
     "без молочных продуктов",
-    "без глютена"
+    "без глютена",
+    "без яиц"
   ];
   List<String> selectedFilters = [];
   List<String> sortOptions = [
@@ -183,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   print(selectedFilters[i]);
                 }
               },
-              child: Text('Ок'),
+              child: Text('Применить'),
             ),
           ],
         );
