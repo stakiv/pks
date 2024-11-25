@@ -20,6 +20,7 @@
 - дороже
 - по алфавиту
 - по умолчанию (в порядке записей в бд)
+
 При нажатии на иконку сортировки в левом верхнем углу под строкой поиска открывается диалоговое окно, где изначально выбран вариант "по умолчанию". Сортировка возможна только по одному критерию одновременно
 
 ![image](https://github.com/user-attachments/assets/4c67e381-9608-40f3-a29b-b61d3aaeac02)
@@ -33,3 +34,26 @@
 
 ![image](https://github.com/user-attachments/assets/66c5d2e2-5cc2-453c-8385-89c4d241271a)
 ![image](https://github.com/user-attachments/assets/6ac7ca2f-c9c4-4f36-a3cc-8b31bf309fa7)
+
+**3. Фильтрация**
+
+Фильтрация продуктов возможна по следующим параметрам:
+- без сои
+- без орехов
+- без молочных продуктов
+- без глютена
+- без яиц
+
+При нажатии на иконку фильтра в правом верхнем углу под строкой поиска открывается диалоговое окно, где изначально не выбран ни один вариант. Фильтрация возможна по нескольким параметрам одновременно (в этом случае выводятся продукты которые соответствуют всем параметрам)
+
+![image](https://github.com/user-attachments/assets/52c98fd9-b2a8-4b71-a5d6-a04bba4c2d1b)
+
+Применение фильтра "без сои"
+
+![image](https://github.com/user-attachments/assets/58af8a7f-7e74-4bf5-9bdc-acd2990ef183)
+![image](https://github.com/user-attachments/assets/124c427b-3e29-4a31-8e60-8e27c81600c0)
+
+Применение фильтров "без сои", "без глютена", "без орехов" и "без яиц"
+
+![image](https://github.com/user-attachments/assets/759a68a1-fdaf-4209-afbe-0fa7bb05ccd8)
+![image](https://github.com/user-attachments/assets/a910b9f8-fdce-4d8c-afd7-ea6c45d5caad)
