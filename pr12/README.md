@@ -12,3 +12,24 @@
 
 ![image](https://github.com/user-attachments/assets/c0b681cb-8907-4920-b471-d8880a671054)
 ![image](https://github.com/user-attachments/assets/4d53403b-9b78-4235-80d9-b8ddd06095b8)
+
+**2. Сортировка**
+
+Сортировка продуктов возможна по следующим параметрам:
+- дешевле
+- дороже
+- по алфавиту
+- по умолчанию (в порядке записей в бд)
+При нажатии на иконку сортировки в левом верхнем углу под строкой поиска открывается диалоговое окно, где изначально выбран вариант "по умолчанию". Сортировка возможна только по одному критерию одновременно
+
+![image](https://github.com/user-attachments/assets/4c67e381-9608-40f3-a29b-b61d3aaeac02)
+
+Применение сортировки "дешевле"
+
+![image](https://github.com/user-attachments/assets/e248a886-b2a6-4b66-8691-fb2bbe87ff9d)
+![image](https://github.com/user-attachments/assets/66249ad7-d8ef-4649-8dcc-cf5e5be3ab4d)
+
+Применение сортировки "по алфавиту"
+
+![image](https://github.com/user-attachments/assets/66c5d2e2-5cc2-453c-8385-89c4d241271a)
+![image](https://github.com/user-attachments/assets/6ac7ca2f-c9c4-4f36-a3cc-8b31bf309fa7)
