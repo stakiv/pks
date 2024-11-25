@@ -28,6 +28,13 @@ class _MyHomePageState extends State<MyHomePage> {
     "без глютена"
   ];
   List<String> selectedFilters = [];
+  List<String> sortOptions = [
+    "по умолчанию",
+    "дешевле",
+    "дороже",
+    "по алфавиту"
+  ];
+  String selectedSort = 'по умолчанию';
 
   @override
   void initState() {
@@ -122,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _setUpd();
   }
 
-  void _openMenu() {
+  void _openFilters() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -141,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     return CheckboxListTile(
                       title: Text(
                         category,
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14),
                       ),
                       value: selectedFilters.contains(category),
                       onChanged: (bool? value) {
@@ -184,6 +191,66 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _openSort() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Center(
+            child: Text(
+              "Сортировка",
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return SingleChildScrollView(
+                child: ListBody(
+                  children: sortOptions.map((sort) {
+                    return RadioListTile<String>(
+                      title: Text(
+                        sort,
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      value: sort,
+                      groupValue: selectedSort.isNotEmpty ? selectedSort : null,
+                      onChanged: (String? value) {
+                        setState(() {
+                          if (value != null) {
+                            selectedSort = value;
+                          }
+
+                          print(selectedFilters);
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+              );
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Закрыть'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _sortProducts(selectedSort);
+
+                print(selectedSort);
+              },
+              child: Text('Применить'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _filterProducts(String query) {
     setState(() {
       if (query.isEmpty) {
@@ -217,6 +284,32 @@ class _MyHomePageState extends State<MyHomePage> {
         }).toList();
       }
       print('длина филтрованного списка: ${_filteredProducts.length}');
+    });
+  }
+
+  void _sortProducts(String sortOpt) {
+    setState(() {
+      switch (sortOpt) {
+        case "дешевле":
+          _filteredProducts.sort((a, b) => a.price.compareTo(b.price));
+          break;
+        case "дороже":
+          _filteredProducts.sort((a, b) => b.price.compareTo(a.price));
+          break;
+        case "по алфавиту":
+          _filteredProducts.sort((a, b) => a.name.compareTo(b.name));
+          break;
+        case "по умолчанию":
+          ApiService().getProducts().then((el) {
+            setState(() {
+              _productsUpd = el;
+              _filteredProducts = el;
+            });
+          });
+          break;
+        default:
+          break;
+      }
     });
   }
 
@@ -273,12 +366,22 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
+              ],
+            ),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 0, bottom: 0, left: 8, right: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.sort),
+                  onPressed: _openSort,
                 ),
                 IconButton(
                   icon: const Icon(Icons.filter_list),
-                  onPressed: _openMenu,
+                  onPressed: _openFilters,
                 ),
               ],
             ),
