@@ -213,7 +213,7 @@ class _MyCartPageState extends State<MyCartPage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return Center(
+      return const Center(
         child: CircularProgressIndicator(),
       );
     }
@@ -231,7 +231,7 @@ class _MyCartPageState extends State<MyCartPage> {
         ),
         backgroundColor: Colors.amber[50],
         body: _cartProducts == null
-            ? Center(
+            ? const Center(
                 child: Text('В корзине ничего нет'),
               )
             : FutureBuilder<List<Cart>>(
