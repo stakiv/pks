@@ -283,7 +283,7 @@ class ApiService {
 
   //найти пользователя по email
   Future<User> getUserByEmail(String? email) async {
-    print("getUserById function called email=$email");
+    print("getUserByEmail function called email=$email");
     try {
       final response =
           await _dio.get('http://192.168.2.159:8080/users/${email.toString()}');

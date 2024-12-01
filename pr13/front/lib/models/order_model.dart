@@ -1,3 +1,4 @@
+import 'package:front/models/cart_model.dart';
 import 'package:front/models/product_model.dart';
 
 class Order {

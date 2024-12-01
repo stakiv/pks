@@ -103,8 +103,8 @@ func CreateOrder(db *sqlx.DB) gin.HandlerFunc {
 
 		// Вставляем заказ в таблицу orders
 		queryOrder := `
-			INSERT INTO orders (user_id, total, status, created_at)
-			VALUES (:user_id, :total, :status, :created_at)
+			INSERT INTO orders (user_id, total)
+			VALUES (:user_id, :total)
 			RETURNING order_id
 		`
 		rows, err := tx.NamedQuery(queryOrder, &order)

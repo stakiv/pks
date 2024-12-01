@@ -5,6 +5,8 @@ import 'package:front/pages/itam_page.dart';
 import 'package:front/models/api_service.dart';
 import 'package:front/models/product_model.dart';
 import 'package:front/models/favourites_model.dart';
+import 'package:front/models/user_model.dart';
+import 'package:front/auth/auth_service.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -19,6 +21,8 @@ class _MyHomePageState extends State<MyHomePage> {
   late List<Cart> cartItems = [];
   late List<Favourites> favoriteItems = [];
   late List<Product> _filteredProducts = [];
+  late Future<User> user;
+  late int userId;
 
   String searchQuery = '';
   List<String> filterOptions = [
@@ -41,19 +45,24 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _products = ApiService().getProducts();
-    _fetchFavorites();
-    _fetchCart();
+
+    user = ApiService().getUserByEmail(AuthService().getCurrentUserEmail());
+    user.then((currUser) {
+      userId = currUser.id;
+    });
     ApiService().getProducts().then((el) {
       setState(() {
         _productsUpd = el;
         _filteredProducts = el;
       });
     });
+    _fetchFavorites();
+    _fetchCart();
   }
 
   void _fetchFavorites() async {
     try {
-      favoriteItems = await ApiService().getFavorites(1);
+      favoriteItems = await ApiService().getFavorites(userId);
       setState(() {});
     } catch (e) {
       print('Error fetching favorites: $e');
@@ -62,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _fetchCart() async {
     try {
-      cartItems = await ApiService().getCart(1);
+      cartItems = await ApiService().getCart(userId);
       setState(() {});
     } catch (e) {
       print('Error fetching cart: $e');
@@ -89,21 +98,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _addToFavorites(Product i) async {
-    await ApiService().addToFavorites(1, i.id);
+    await ApiService().addToFavorites(userId, i.id);
     _fetchFavorites();
     //setState(() {});
     _setUpd();
   }
 
   void _deleteFromFavourites(Product i) async {
-    await ApiService().removeFromFavorites(1, i.id);
+    await ApiService().removeFromFavorites(userId, i.id);
     _fetchFavorites();
     //setState(() {});
     _setUpd();
   }
 
   void _deleteFromCart(Product i) async {
-    await ApiService().removeFromCart(1, i.id);
+    await ApiService().removeFromCart(userId, i.id);
     _fetchCart();
     //setState(() {});
     _setUpd();
@@ -111,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void addTOCart(Product i) async {
     int quantity = 1;
-    await ApiService().addToCart(1, i.id, quantity);
+    await ApiService().addToCart(userId, i.id, quantity);
     _fetchCart();
     //setState(() {});
     _setUpd();
