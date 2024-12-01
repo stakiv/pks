@@ -2,14 +2,14 @@ import 'package:front/models/cart_model.dart';
 import 'package:front/models/product_model.dart';
 
 class Order {
-  final int id;
+  final int orderId;
   final int userId;
   final double total;
   final String status;
   final List<Product> products;
 
   Order({
-    required this.id,
+    required this.orderId,
     required this.userId,
     required this.total,
     required this.status,
@@ -22,11 +22,21 @@ class Order {
         productList.map((i) => Product.fromJson(i)).toList();
 
     return Order(
-      id: json['order_id'],
+      orderId: json['order_id'],
       userId: json['user_id'],
       total: (json['total'] as num).toDouble(), // Преобразование здесь
       status: json['status'],
       products: productsList,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'order_id': orderId,
+      'user_id': userId,
+      'total': total,
+      'status': status,
+      'products': products.map((pr) => pr.toJson()).toList(),
+    };
   }
 }

@@ -77,7 +77,7 @@ class _MyOrdersState extends State<MyOrders> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Заказ №${ord.id}',
+                            'Заказ №${ord.orderId}',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 16.0,

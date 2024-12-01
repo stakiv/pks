@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 	"shopApi/models"
 
@@ -88,60 +89,85 @@ func CreateOrder(db *sqlx.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var order models.Order
 
+		// Логируем начало запроса
+		log.Println("CreateOrder: Start processing order creation")
+		log.Printf("recieved order: %+v", order)
+
 		// Привязываем данные из тела запроса
 		if err := c.ShouldBindJSON(&order); err != nil {
+			log.Printf("CreateOrder: JSON binding error: %v", err)
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Некорректные данные"})
 			return
 		}
+		log.Printf("CreateOrder: Received order: %+v", order)
 
 		// Начинаем транзакцию
 		tx, err := db.Beginx()
 		if err != nil {
+			log.Printf("CreateOrder: Transaction initialization error: %v", err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка инициализации транзакции"})
 			return
 		}
+		log.Println("CreateOrder: Transaction started")
 
 		// Вставляем заказ в таблицу orders
-		queryOrder := `
-			INSERT INTO orders (user_id, total)
-			VALUES (:user_id, :total)
-			RETURNING order_id
-		`
+		queryOrder :=
+			`INSERT INTO orders (user_id, total)
+		VALUES (:user_id, :total)
+		RETURNING order_id`
+
 		rows, err := tx.NamedQuery(queryOrder, &order)
 		if err != nil {
+			log.Printf("CreateOrder: Error inserting order into 'orders': %v", err)
 			tx.Rollback()
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка добавления заказа"})
 			return
 		}
+		log.Println("CreateOrder: Order inserted successfully into 'orders'")
+
 		if rows.Next() {
-			rows.Scan(&order.OrderID) // Получаем ID нового заказа
+			if err := rows.Scan(&order.OrderID); err != nil {
+				log.Printf("CreateOrder: Error scanning order ID: %v", err)
+				tx.Rollback()
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка получения ID заказа"})
+				return
+			}
+			log.Printf("CreateOrder: Retrieved order ID: %d", order.OrderID)
 		}
 		rows.Close()
 
 		// Вставляем товары в таблицу order_products
 		queryProducts := `
-			INSERT INTO order_products (order_id, product_id, quantity)
-			VALUES (:order_id, :product_id, :quantity)
-		`
+		INSERT INTO order_products (order_id, product_id, quantity)
+		VALUES (:order_id, :product_id, :stock)
+	  `
+
 		for _, product := range order.Products {
 			productData := map[string]interface{}{
 				"order_id":   order.OrderID,
 				"product_id": product.ProductID,
-				"quantity":   product.Stock, // Здесь quantity (например, 1, 2 и т.д.) нужно передать из тела запроса
+				"stock":      product.Stock,
 			}
+			log.Printf("inserting product into order_products: order_id=%d, product_id=%d, stock=%d", order.OrderID, product.ProductID, product.Stock)
+			log.Printf("CreateOrder: Adding product to order_products: %+v", productData)
+
 			_, err := tx.NamedExec(queryProducts, productData)
 			if err != nil {
+				log.Printf("CreateOrder: Error inserting product into 'order_products': %v", err)
 				tx.Rollback()
 				c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка добавления товаров к заказу"})
 				return
 			}
 		}
+		log.Println("CreateOrder: All products added successfully to 'order_products'")
 
 		// Завершаем транзакцию
 		if err := tx.Commit(); err != nil {
+			log.Printf("CreateOrder: Transaction commit error: %v", err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка сохранения заказа"})
 			return
 		}
+		log.Println("CreateOrder: Transaction committed successfully")
 
 		// Отправляем ответ
 		c.JSON(http.StatusCreated, order)

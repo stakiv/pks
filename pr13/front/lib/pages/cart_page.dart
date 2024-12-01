@@ -416,8 +416,13 @@ class _MyCartPageState extends State<MyCartPage> {
                                   onPressed: () async {
                                     List<Product> items = [];
                                     for (Cart item in cartItems) {
+                                      print('данные о продуктах');
+                                      print(item.id);
+                                      print(item.name);
+                                      print(item.price);
+                                      print(item.quantity);
                                       items.add(Product(
-                                          id: item.id,
+                                          id: item.productid,
                                           name: item.name,
                                           description: item.description,
                                           price: item.price,
@@ -425,8 +430,9 @@ class _MyCartPageState extends State<MyCartPage> {
                                           feature: item.feature,
                                           stock: item.quantity));
                                     }
+
                                     await ApiService().createOrder(Order(
-                                        id: 0,
+                                        orderId: 0,
                                         userId: userId,
                                         total: cartItems.fold(
                                             0.0,
@@ -435,6 +441,8 @@ class _MyCartPageState extends State<MyCartPage> {
                                                 item.quantity * item.price),
                                         status: '',
                                         products: items));
+                                    print('userId $userId');
+                                    print('items.length ${items.length}');
                                   },
                                   style: TextButton.styleFrom(
                                     backgroundColor:

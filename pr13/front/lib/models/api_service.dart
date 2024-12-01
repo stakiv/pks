@@ -340,15 +340,15 @@ class ApiService {
 
   //создание заказа
   Future<void> createOrder(Order order) async {
-    print("getOrders function called id=${order.total}");
+    print("createOrder function called total=${order.total}");
+    print(
+        "createOrder function called order.products[0].id=${order.products[0].id}");
     try {
-      final response = await _dio
-          .post('http://192.168.2.159:8080/orders/${order.userId}', data: {
-        'user_id': order.userId,
-        'total': order.total,
-        'status': order.status,
-        'products': order.products,
-      });
+      final response = await _dio.post(
+        'http://192.168.2.159:8080/orders/${order.userId}',
+        data: order.toJson(),
+      );
+      print(order.toJson());
       if (response.statusCode == 201) {
         return;
       } else {

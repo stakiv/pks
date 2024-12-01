@@ -7,6 +7,6 @@ type Order struct {
 	UserID    int       `db:"user_id" json:"user_id"`
 	Total     float64   `db:"total" json:"total"`
 	Status    string    `db:"status" json:"status"`
-	CreatedAt time.Time `db:"created_at" json:"created_at"`
+	CreatedAt time.Time `db:"created_at" json:"-"`
 	Products  []Product `json:"products"` // Список товаров в заказе
 }
