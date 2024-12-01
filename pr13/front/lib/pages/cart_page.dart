@@ -443,6 +443,12 @@ class _MyCartPageState extends State<MyCartPage> {
                                         products: items));
                                     print('userId $userId');
                                     print('items.length ${items.length}');
+                                    for (Cart item in cartItems) {
+                                      await ApiService().removeFromCart(
+                                          userId, item.productid);
+                                      _setUpd();
+                                    }
+                                    _setUpd();
                                   },
                                   style: TextButton.styleFrom(
                                     backgroundColor:
