@@ -18,3 +18,14 @@
 
 ![image](https://github.com/user-attachments/assets/02a2776f-ae9c-4a92-b4f5-670f93b03a0d)
 ![image](https://github.com/user-attachments/assets/890d584f-e7e5-430c-8238-c8a8bab1df25)
+
+**3. Клиентская часть**
+
+Для корректоного подключения необходимо было изменить файл `api_service`. Также необходимо было создать структуру данных для заказов - `order_model.dart` и страницу, где будут отображаться данные заказов.
+
+![image](https://github.com/user-attachments/assets/f3194ebc-1c7f-4a66-bd90-846dfff87cd1)
+![image](https://github.com/user-attachments/assets/e66db17f-548a-4014-a340-5b7108703d5a)
+
+**Примеры работы приложения**
+
+
