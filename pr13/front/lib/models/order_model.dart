@@ -1,4 +1,3 @@
-import 'package:front/models/cart_model.dart';
 import 'package:front/models/product_model.dart';
 
 class Order {
@@ -24,7 +23,7 @@ class Order {
     return Order(
       orderId: json['order_id'],
       userId: json['user_id'],
-      total: (json['total'] as num).toDouble(), // Преобразование здесь
+      total: (json['total'] as num).toDouble(),
       status: json['status'],
       products: productsList,
     );
