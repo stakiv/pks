@@ -63,7 +63,7 @@ class _MyOrdersState extends State<MyOrders> {
                 final ord = items[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 5.0, horizontal: 0.0),
+                      vertical: 8.0, horizontal: 0.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -72,7 +72,8 @@ class _MyOrdersState extends State<MyOrders> {
                       //border: Border.all(color: Colors.black, width: 2.0),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 15.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -85,7 +86,9 @@ class _MyOrdersState extends State<MyOrders> {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            'Статус: ${ord.status}',
+                            ord.status == 'Pending'
+                                ? 'Статус: в процессе'
+                                : 'Статус: ${ord.status}',
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 16.0,

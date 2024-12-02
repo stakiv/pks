@@ -140,77 +140,104 @@ class _MyUserPageState extends State<MyUserPage> {
                         borderRadius: BorderRadius.circular(20.0)),
                     padding: const EdgeInsets.all(15),
                     width: double.infinity,
-                    child: Text(
-                      userData.name,
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: Color.fromARGB(255, 0, 0, 0)),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.person,
+                              color: Color.fromRGBO(109, 109, 109, 1),
+                              size: 25.0,
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              userData.name,
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.phone,
+                              color: Color.fromRGBO(109, 109, 109, 1),
+                              size: 25.0,
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              userData.phoneNumber,
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.mail,
+                              color: Color.fromRGBO(109, 109, 109, 1),
+                              size: 25.0,
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              authService.getCurrentUserEmail().toString(),
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromARGB(255, 0, 0, 0)),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(
-                    height: 50,
-                  ),
-                  const Padding(
-                    padding:
-                        EdgeInsets.only(top: 0, left: 10, right: 0, bottom: 5),
-                    child: Text(
-                      'Почта',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromARGB(255, 77, 70, 0)),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20.0)),
-                    padding: const EdgeInsets.all(15),
-                    width: double.infinity,
-                    child: Text(
-                      authService.getCurrentUserEmail().toString(),
-                      style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromARGB(255, 0, 0, 0)),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Padding(
-                    padding:
-                        EdgeInsets.only(top: 0, left: 10, right: 0, bottom: 5),
-                    child: Text(
-                      'Телефон',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromARGB(255, 77, 70, 0)),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20.0)),
-                    padding: const EdgeInsets.all(15),
-                    width: double.infinity,
-                    child: Text(
-                      userData.phoneNumber,
-                      style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromARGB(255, 0, 0, 0)),
-                    ),
-                  ),
-                  SizedBox(
                     height: 50,
                   ),
                   GestureDetector(
                     onTap: () =>
                         {_navigateToOrdersScreen(context, userData.id)},
-                    child: Text('Мои заказы'),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        //color: Colors.white,
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Color.fromRGBO(109, 109, 109, 1),
+                            width: 1.5,
+                          ),
+                        ),
+                        //borderRadius: BorderRadius.circular(20.0))
+                      ),
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                        child: Text(
+                          'Мои заказы',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),

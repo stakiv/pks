@@ -33,7 +33,7 @@ class _MyCartPageState extends State<MyCartPage> {
       userId = currentUser.id;
       _cartProducts = ApiService().getCart(userId);
       _cartProducts?.then((cartItems) {
-        _cartProductsUpd = cartItems; // Инициализируем _cartProductsUpd
+        _cartProductsUpd = cartItems;
         setState(() {
           isLoading = false;
         });
@@ -52,7 +52,7 @@ class _MyCartPageState extends State<MyCartPage> {
         userId = currentUser.id;
         _cartProducts = ApiService().getCart(userId);
         _cartProducts?.then((cartItems) {
-          _cartProductsUpd = cartItems; // Инициализируем _cartProductsUpd
+          _cartProductsUpd = cartItems;
         });
       });
     });
