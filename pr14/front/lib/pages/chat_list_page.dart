@@ -33,41 +33,78 @@ class _ChatListPageState extends State<ChatListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<User>>(
-        future: users,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Ошибка загрузки чатов');
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          }
-          final us = snapshot.data!;
-          return ListView.builder(
-            itemCount: us.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding:
-                    const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
-                child: GestureDetector(
-                  onTap: () => _navigateToChatScreen(context, us[index].email),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 255, 246, 218),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Row(
-                        children: [
-                          Text(us[index].email),
-                        ],
+    return Scaffold(
+      backgroundColor: Colors.amber[50],
+      appBar: AppBar(
+        title: const Text(
+          'Чаты с покупателями',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        backgroundColor: Colors.amber[50],
+      ),
+      body: FutureBuilder<List<User>>(
+          future: users,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Text('Ошибка загрузки чатов');
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            }
+            final us = snapshot.data!;
+            return ListView.builder(
+              itemCount: us.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.only(top: 6.0, left: 10.0, right: 10.0),
+                  child: GestureDetector(
+                    onTap: () =>
+                        _navigateToChatScreen(context, us[index].email),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 252, 252, 252),
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.10,
+                              height: MediaQuery.of(context).size.width * 0.10,
+                              decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: NetworkImage(us[index].image),
+                                    fit: BoxFit.cover,
+                                  )),
+                            ),
+                            const SizedBox(
+                              width: 30,
+                            ),
+                            Text(
+                              us[index].email,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16.0,
+                                //fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
-          );
-        });
+                );
+              },
+            );
+          }),
+    );
   }
 }
