@@ -5,6 +5,7 @@ import 'package:front/models/user_model.dart';
 import 'package:front/auth/auth_service.dart';
 import 'package:front/pages/orders_page.dart';
 import 'package:front/pages/chat_page.dart';
+import 'package:front/pages/chat_list_page.dart';
 
 class MyUserPage extends StatefulWidget {
   const MyUserPage({super.key});
@@ -42,13 +43,8 @@ class _MyUserPageState extends State<MyUserPage> {
     setState(() {
       user = ApiService().getUserByEmail(currentEmail);
     });
-    /*
-    setState(() {
-      user = ApiService().getUserById(1);
-    });*/
   }
 
-  //final authService = AuthService();
   void logout() async {
     try {
       await authService.signOut();
@@ -81,12 +77,23 @@ class _MyUserPageState extends State<MyUserPage> {
     );
   }
 
-  void _navigateToChatScreen(BuildContext context, userId) async {
+  void _navigateToChatScreen(BuildContext context, currentUserEmail) async {
     //final User uinfo = await ApiService().getUserById(1);
     print('_navigateToChatScreen function got called');
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ChatPage()),
+      MaterialPageRoute(
+          builder: (context) => ChatPage(
+              senderEmail: currentUserEmail, receiverEmail: 'admin@mail.ru')),
+    );
+  }
+
+  void _navigateToChatListScreen(BuildContext context) async {
+    //final User uinfo = await ApiService().getUserById(1);
+    print('_navigateToChatListScreen function got called');
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ChatListPage()),
     );
   }
 
@@ -250,7 +257,13 @@ class _MyUserPageState extends State<MyUserPage> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => {_navigateToChatScreen(context, userData.id)},
+                    onTap: () => {
+                      authService.getCurrentUserEmail().toString() ==
+                              'admin@mail.ru'
+                          ? _navigateToChatListScreen(context)
+                          : _navigateToChatScreen(context,
+                              authService.getCurrentUserEmail().toString())
+                    },
                     child: Container(
                       width: double.infinity,
                       decoration: const BoxDecoration(
@@ -263,12 +276,15 @@ class _MyUserPageState extends State<MyUserPage> {
                         ),
                         //borderRadius: BorderRadius.circular(20.0))
                       ),
-                      child: const Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 10),
                         child: Text(
-                          'Чат',
-                          style: TextStyle(
+                          authService.getCurrentUserEmail().toString() ==
+                                  'admin@mail.ru'
+                              ? 'Чаты с покупателями'
+                              : 'Чат с продавцом',
+                          style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                               color: Color.fromARGB(255, 0, 0, 0)),
