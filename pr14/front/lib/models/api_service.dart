@@ -264,6 +264,23 @@ class ApiService {
     }
   }
 
+  //найти пользователя по id
+  Future<List<User>> getUsers() async {
+    print("getUserById function called");
+    try {
+      final response = await _dio.get('http://192.168.2.159:8080/users');
+      if (response.statusCode == 200) {
+        List<User> data =
+            (response.data as List).map((user) => User.fromJson(user)).toList();
+        return data;
+      } else {
+        throw Exception('Failed to load users');
+      }
+    } catch (e) {
+      throw Exception('Error fetching users: $e');
+    }
+  }
+
 //найти пользователя по id
   Future<User> getUserById(int id) async {
     print("getUserById function called id=$id");

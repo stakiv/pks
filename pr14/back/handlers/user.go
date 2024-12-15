@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"shopApi/models"
 	"strconv"
@@ -46,6 +47,22 @@ func GetUser(db *sqlx.DB) gin.HandlerFunc {
 
 			c.JSON(http.StatusOK, user)
 		}*/
+}
+
+// получение всех пользователй
+
+func GetAllUsers(db *sqlx.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var users []models.User
+		err := db.Select(&users, `SELECT * FROM users`)
+
+		if err != nil {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Пользователи не найден"})
+			fmt.Println("Error")
+			return
+		}
+		c.JSON(http.StatusOK, users)
+	}
 }
 
 // Получение пользователя по email
