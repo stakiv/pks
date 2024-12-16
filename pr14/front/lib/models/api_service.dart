@@ -5,16 +5,15 @@ import 'package:front/models/favourites_model.dart';
 import 'package:front/models/user_model.dart';
 import 'package:front/models/order_model.dart';
 import 'product_model.dart';
+import 'package:front/data.dart';
 
 class ApiService {
   final Dio _dio = Dio();
-  //final ip = '10.192.229.69';
-  //http://192.168.2.159:8080
-
+  final api = Uri.parse(myApi);
 //получение списка продуктов
   Future<List<Product>> getProducts() async {
     try {
-      final response = await _dio.get('http://192.168.2.159:8080/products');
+      final response = await _dio.get('http://$api:8080/products');
       if (response.statusCode == 200) {
         List<Product> products = (response.data as List)
             .map((product) => Product.fromJson(product))
@@ -31,7 +30,7 @@ class ApiService {
 //получение данных продукта по id
   Future<Product> getProductById(int id) async {
     try {
-      final response = await _dio.get('http://192.168.2.159:8080/products/$id');
+      final response = await _dio.get('http://$api:8080/products/$id');
       if (response.statusCode == 200) {
         return Product.fromJson(response.data);
       } else {
@@ -45,8 +44,7 @@ class ApiService {
 //создание продукта
   Future<void> createProduct(Product product) async {
     try {
-      final response =
-          await _dio.post('http://192.168.2.159:8080/products', data: {
+      final response = await _dio.post('http://$api:8080/products', data: {
         'image_url': product.imageUrl,
         'name': product.name,
         'description': product.description,
@@ -68,7 +66,7 @@ class ApiService {
   Future<void> updateProduct(Product product) async {
     try {
       final response = await _dio.put(
-        'http://192.168.2.159:8080/products/${product.id}',
+        'http://$api:8080/products/${product.id}',
         data: {
           'image_url': product.imageUrl,
           'name': product.name,
@@ -90,8 +88,7 @@ class ApiService {
   Future<void> deleteProduct(int id) async {
     print("deleteProduct function called");
     try {
-      final response =
-          await _dio.delete('http://192.168.2.159:8080/products/$id');
+      final response = await _dio.delete('http://$api:8080/products/$id');
       if (response.statusCode == 200) {
         return;
       } else {
@@ -106,16 +103,15 @@ class ApiService {
   Future<void> changeProductStatus(Product product) async {
     print("changeProductStatus function called");
     try {
-      final response = await _dio.put(
-          'http://192.168.2.159:8080/products/update/${product.id}',
-          data: {
-            'image_url': product.imageUrl,
-            'name': product.name,
-            'description': product.description,
-            'price': product.price,
-            'features': product.feature,
-            'stock': product.stock,
-          });
+      final response = await _dio
+          .put('http://$api:8080/products/update/${product.id}', data: {
+        'image_url': product.imageUrl,
+        'name': product.name,
+        'description': product.description,
+        'price': product.price,
+        'features': product.feature,
+        'stock': product.stock,
+      });
       print(response.statusCode);
       if (response.statusCode == 200) {
         return;
@@ -132,7 +128,7 @@ class ApiService {
   Future<List<Cart>> getCart(int userId) async {
     print("getCart function called");
     try {
-      final response = await _dio.get('http://192.168.2.159:8080/cart/$userId');
+      final response = await _dio.get('http://$api:8080/cart/$userId');
       print("Response status code: ${response.statusCode}");
       if (response.statusCode == 200) {
         if (response.data != null) {
@@ -157,8 +153,7 @@ class ApiService {
   Future<void> addToCart(int userId, int productId, int quantity) async {
     print("addToCart function called id=$productId");
     try {
-      final response =
-          await _dio.post('http://192.168.2.159:8080/cart/$userId', data: {
+      final response = await _dio.post('http://$api:8080/cart/$userId', data: {
         'product_id': productId,
         'quantity': quantity,
       });
@@ -174,8 +169,8 @@ class ApiService {
   Future<void> removeFromCart(int userId, int productId) async {
     print("removeFromCart function called id=$productId");
     try {
-      final response = await _dio
-          .delete('http://192.168.2.159:8080/cart/$userId/$productId');
+      final response =
+          await _dio.delete('http://$api:8080/cart/$userId/$productId');
       if (response.statusCode != 200) {
         throw Exception('Failed to remove from cart');
       }
@@ -189,8 +184,7 @@ class ApiService {
   Future<List<Favourites>> getFavorites(int userId) async {
     print("getFavorites function called ");
     try {
-      final response =
-          await _dio.get('http://192.168.2.159:8080/favourites/$userId');
+      final response = await _dio.get('http://$api:8080/favourites/$userId');
       if (response.statusCode == 200) {
         if (response.data != null) {
           List<Favourites> products = (response.data as List)
@@ -213,8 +207,8 @@ class ApiService {
   Future<void> addToFavorites(int userId, int productId) async {
     print("addToFavorites function called id=$productId");
     try {
-      final response = await _dio
-          .post('http://192.168.2.159:8080/favourites/$userId', data: {
+      final response =
+          await _dio.post('http://$api:8080/favourites/$userId', data: {
         'product_id': productId,
       });
       if (response.statusCode != 200) {
@@ -229,8 +223,8 @@ class ApiService {
   Future<void> removeFromFavorites(int userId, int productId) async {
     print("removeFromFavorites function called id=$productId");
     try {
-      final response = await _dio
-          .delete('http://192.168.2.159:8080/favourites/$userId/$productId');
+      final response =
+          await _dio.delete('http://$api:8080/favourites/$userId/$productId');
       if (response.statusCode != 200) {
         throw Exception('Failed to remove from favorites');
       }
@@ -246,8 +240,7 @@ class ApiService {
     String img =
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAd5avdba8EiOZH8lmV3XshrXx7dKRZvhx-A&s';
     try {
-      final response =
-          await _dio.post('http://192.168.2.159:8080/users', data: {
+      final response = await _dio.post('http://$api:8080/users', data: {
         'image_url': img,
         'name': user.name,
         'email': user.email,
@@ -268,7 +261,7 @@ class ApiService {
   Future<List<User>> getUsers() async {
     print("getUserById function called");
     try {
-      final response = await _dio.get('http://192.168.2.159:8080/users');
+      final response = await _dio.get('http://$api:8080/users');
       if (response.statusCode == 200) {
         List<User> data =
             (response.data as List).map((user) => User.fromJson(user)).toList();
@@ -285,7 +278,7 @@ class ApiService {
   Future<User> getUserById(int id) async {
     print("getUserById function called id=$id");
     try {
-      final response = await _dio.get('http://192.168.2.159:8080/users/$id');
+      final response = await _dio.get('http://$api:8080/users/$id');
       if (response.statusCode == 200) {
         User data = User.fromJson(response.data);
         print(data);
@@ -303,7 +296,7 @@ class ApiService {
     print("getUserByEmail function called email=$email");
     try {
       final response =
-          await _dio.get('http://192.168.2.159:8080/users/${email.toString()}');
+          await _dio.get('http://$api:8080/users/${email.toString()}');
       if (response.statusCode == 200) {
         User data = User.fromJson(response.data);
         print(data);
@@ -321,7 +314,7 @@ class ApiService {
     print("updateUser function called id=${user.name}");
     try {
       final response =
-          await _dio.put('http://192.168.2.159:8080/users/${user.id}', data: {
+          await _dio.put('http://$api:8080/users/${user.id}', data: {
         'username': user.name,
         'image_url': user.image,
         'phone': user.phoneNumber,
@@ -340,13 +333,16 @@ class ApiService {
   Future<List<Order>> getOrders(int userId) async {
     print("getOrders function called id=$userId");
     try {
-      final response =
-          await _dio.get('http://192.168.2.159:8080/orders/$userId');
+      final response = await _dio.get('http://$api:8080/orders/$userId');
       if (response.statusCode == 200) {
-        List<Order> orders = (response.data as List)
-            .map((product) => Order.fromJson(product))
-            .toList();
-        return orders;
+        if (response.data != null) {
+          List<Order> orders = (response.data as List)
+              .map((product) => Order.fromJson(product))
+              .toList();
+          return orders;
+        } else {
+          return [];
+        }
       } else {
         throw Exception('Failed to load orders');
       }
@@ -362,7 +358,7 @@ class ApiService {
         "createOrder function called order.products[0].id=${order.products[0].id}");
     try {
       final response = await _dio.post(
-        'http://192.168.2.159:8080/orders/${order.userId}',
+        'http://$api:8080/orders/${order.userId}',
         data: order.toJson(),
       );
       print(order.toJson());

@@ -13,7 +13,7 @@ class MyOrders extends StatefulWidget {
 
 class _MyOrdersState extends State<MyOrders> {
   late Future<User> user;
-  late Future<List<Order>> _orders;
+  late Future<List<Order>>? _orders;
   late List<Order> _ordersUpd;
 
   @override
