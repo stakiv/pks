@@ -30,9 +30,11 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Чат с продавцом',
-          style: TextStyle(
+        title: Text(
+          widget.senderEmail == 'admin@mail.ru'
+              ? 'Чат с покупателем'
+              : 'Чат с продавцом',
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 20.0,
             fontWeight: FontWeight.w700,
