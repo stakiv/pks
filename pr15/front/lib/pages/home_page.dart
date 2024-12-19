@@ -412,6 +412,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
 
                 final items = _filteredProducts;
+                final siz = MediaQuery.of(context).size.width;
                 return GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -435,103 +436,109 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius: BorderRadius.circular(20.0)),
                           padding: const EdgeInsets.symmetric(
                               vertical: 5.0, horizontal: 10.0),
-                          child: Column(
-                            children: [
-                              Image.network(
-                                flavor.imageUrl,
-                                width: 110,
-                                height: 110,
-                                fit: BoxFit.cover,
-                              ),
-                              const SizedBox(
-                                height: 20.0,
-                              ),
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.25,
+                            child: Column(
+                              children: [
+                                Image.network(
+                                  flavor.imageUrl,
+                                  width: MediaQuery.of(context).size.width *
+                                      0.27, //110
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.27,
+                                  fit: BoxFit.cover,
+                                ),
+                                const SizedBox(
+                                  height: 20.0,
+                                ),
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        flavor.name,
+                                        maxLines: 2,
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      const SizedBox(
+                                        height: 3.0,
+                                      ),
+                                      Text(
+                                        flavor.description,
+                                        maxLines: 2,
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Color.fromARGB(
+                                                255, 65, 65, 65)),
+                                      ),
+                                      const SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      Text(
+                                        "Цена: ${flavor.price.toString()}",
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            color:
+                                                Color.fromARGB(255, 65, 65, 65),
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 3.0,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      flavor.name,
-                                      maxLines: 2,
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500),
+                                    IconButton(
+                                      onPressed: () {
+                                        if (favoriteItems.any((product) =>
+                                            product.productid == flavor.id)) {
+                                          _deleteFromFavourites(flavor);
+                                        } else {
+                                          _addToFavorites(flavor);
+                                        }
+                                      },
+                                      icon: favoriteItems.any((product) =>
+                                              product.productid == flavor.id)
+                                          ? const Icon(Icons.favorite,
+                                              color: Color.fromRGBO(
+                                                  160, 149, 108, 1))
+                                          : const Icon(Icons.favorite_border,
+                                              color: Color.fromRGBO(
+                                                  160, 149, 108, 1)),
                                     ),
-                                    const SizedBox(
-                                      height: 3.0,
-                                    ),
-                                    Text(
-                                      flavor.description,
-                                      maxLines: 2,
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          color:
-                                              Color.fromARGB(255, 65, 65, 65)),
-                                    ),
-                                    const SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Text(
-                                      "Цена: ${flavor.price.toString()}",
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          color:
-                                              Color.fromARGB(255, 65, 65, 65),
-                                          fontWeight: FontWeight.w500),
+                                    const SizedBox(width: 20.0),
+                                    IconButton(
+                                      onPressed: () {
+                                        if (cartItems.any((product) =>
+                                            product.productid == flavor.id)) {
+                                          _deleteFromCart(flavor);
+                                        } else {
+                                          addTOCart(flavor);
+                                        }
+                                      },
+                                      icon: cartItems.any((product) =>
+                                              product.productid == flavor.id)
+                                          ? const Icon(Icons.shopping_cart,
+                                              color: Color.fromRGBO(
+                                                  160, 149, 108, 1))
+                                          : const Icon(Icons.add_shopping_cart,
+                                              color: Color.fromRGBO(
+                                                  160, 149, 108, 1)),
                                     ),
                                   ],
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 3.0,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      if (favoriteItems.any((product) =>
-                                          product.productid == flavor.id)) {
-                                        _deleteFromFavourites(flavor);
-                                      } else {
-                                        _addToFavorites(flavor);
-                                      }
-                                    },
-                                    icon: favoriteItems.any((product) =>
-                                            product.productid == flavor.id)
-                                        ? const Icon(Icons.favorite,
-                                            color: Color.fromRGBO(
-                                                160, 149, 108, 1))
-                                        : const Icon(Icons.favorite_border,
-                                            color: Color.fromRGBO(
-                                                160, 149, 108, 1)),
-                                  ),
-                                  const SizedBox(width: 20.0),
-                                  IconButton(
-                                    onPressed: () {
-                                      if (cartItems.any((product) =>
-                                          product.productid == flavor.id)) {
-                                        _deleteFromCart(flavor);
-                                      } else {
-                                        addTOCart(flavor);
-                                      }
-                                    },
-                                    icon: cartItems.any((product) =>
-                                            product.productid == flavor.id)
-                                        ? const Icon(Icons.shopping_cart,
-                                            color: Color.fromRGBO(
-                                                160, 149, 108, 1))
-                                        : const Icon(Icons.add_shopping_cart,
-                                            color: Color.fromRGBO(
-                                                160, 149, 108, 1)),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 3.0,
-                              ),
-                            ],
+                                const SizedBox(
+                                  height: 3.0,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
