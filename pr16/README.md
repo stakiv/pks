@@ -3,12 +3,18 @@
 
 В этой практической необходимо было подготовить приложение к публикации в rustore.
 
-**1. Информация о приложении и категории**
+**1. Создание apk для загрузки в rustore**
+
+С помощью команды `flutter build apk` создаем apk файл приложения
+
+<img src="https://github.com/user-attachments/assets/7513bb19-52b4-4134-8e8d-f3cac5fdf87f" width="100">
+
+**2. Информация о приложении и категории**
 
 <img src="https://github.com/user-attachments/assets/039ceb12-097e-4f01-9a68-a3ef78a42f4e" width="400">
 
 
-**2. Описание**
+**3. Описание**
 
 <img src="https://github.com/user-attachments/assets/9ac4ee75-d26c-412e-89e0-6a6db4075a30" width="420">
 
