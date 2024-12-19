@@ -7,7 +7,7 @@
 
 С помощью команды `flutter build apk` создаем apk файл приложения
 
-<img src="https://github.com/user-attachments/assets/7513bb19-52b4-4134-8e8d-f3cac5fdf87f" width="100">
+<img src="https://github.com/user-attachments/assets/7513bb19-52b4-4134-8e8d-f3cac5fdf87f" width="300">
 
 **2. Информация о приложении и категории**
 
