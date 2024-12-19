@@ -18,7 +18,7 @@
 
 <img src="https://github.com/user-attachments/assets/9ac4ee75-d26c-412e-89e0-6a6db4075a30" width="420">
 
-**3. Медиафайлы для каталога**
+**4. Медиафайлы для каталога**
 
 Иконка
 
