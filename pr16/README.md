@@ -5,7 +5,8 @@
 
 **1. Информация о приложении и категории**
 
-![image](https://github.com/user-attachments/assets/039ceb12-097e-4f01-9a68-a3ef78a42f4e)
+<img src="![image](https://github.com/user-attachments/assets/039ceb12-097e-4f01-9a68-a3ef78a42f4e)" width="400">
+
 
 **2. Описание**
 
